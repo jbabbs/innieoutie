@@ -62,7 +62,12 @@ The Angular component contains an example of Electron and NodeJS native lib impo
 You can desactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
 ## To build for production
+Create the installer distributable, located in the `release` folder:
+``` bash
+npm run package
+```
 
+Legacy packager
 - Using development variables (environments/index.ts) :  `npm run electron:dev`
 - Using production variables (environments/index.prod.ts) :  `npm run electron:prod`
 
@@ -104,6 +109,6 @@ Note that you can't use Electron or NodeJS native libraries in this case. Please
 
 You can find end-to-end tests in /e2e folder.
 
-You can run tests with the command lines below : 
+You can run tests with the command lines below :
 - **in a terminal window** -> First, start a web server on port 4200 : `npm run start:web`  
 - **in another terminal window** -> Then, launch Protractor (E2E framework): `npm run e2e`
