@@ -14,7 +14,7 @@ matrix:
 
 build: off
 
-version: '{build}'
+version: 1.0.{build}
 
 shallow_clone: true
 
@@ -28,6 +28,8 @@ install:
 test_script:
   - node --version
   - yarn package
+
+skip_non_tags: true
 
 deploy:
   provider: GitHub
