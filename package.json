@@ -40,7 +40,9 @@
     "compile": "webpack --display-error-details && npm run compile:electron:main",
     "compile:prod": "cross-env NODE_ENV=production npm run compile",
     "release": "npm run compile && electron-builder --publish never",
-    "release:prod": "npm run compile:prod && electron-builder--publish never"
+    "release:mac": "npm run compile && electron-builder --mac --publish never",
+    "release:winlinux": "npm run compile && electron-builder --win --linux --publish never",
+    "release:prod": "npm run compile:prod && electron-builder --publish never"
   },
   "build": {
     "productName": "innieoutie",
