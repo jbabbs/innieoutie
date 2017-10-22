@@ -1,4 +1,5 @@
 import { app, BrowserWindow, screen } from 'electron';
+import { setMenu } from './src/menus';
 import * as path from 'path';
 
 let win, serve;
@@ -38,6 +39,8 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  setMenu();
 }
 
 try {
