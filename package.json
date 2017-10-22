@@ -69,7 +69,8 @@
           "type": "link",
           "path": "/Applications"
         }
-      ]
+      ],
+      "artifactName": "${productName} ${version}.Setup.${ext}"
     },
     "win": {
       "target": [
@@ -84,6 +85,9 @@
         "deb",
         "AppImage"
       ]
+    },
+    "snap": {
+      "artifactName": "${productName} ${version}.Setup.${ext}"
     },
     "directories": {
       "output": "release"
