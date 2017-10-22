@@ -70,7 +70,7 @@
           "path": "/Applications"
         }
       ],
-      "artifactName": "${productName} ${version}.Setup.${ext}"
+      "artifactName": "${productName}-${version}.Setup.${ext}"
     },
     "win": {
       "target": [
@@ -78,7 +78,7 @@
       ]
     },
     "nsis": {
-      "artifactName": "${productName} ${version}.Setup.${ext}"
+      "artifactName": "${productName}-${version}.Setup.${ext}"
     },
     "linux": {
       "target": [
@@ -87,7 +87,7 @@
       ]
     },
     "snap": {
-      "artifactName": "${productName} ${version}.Setup.${ext}"
+      "artifactName": "${productName}-${version}.Setup.${ext}"
     },
     "directories": {
       "output": "release"
