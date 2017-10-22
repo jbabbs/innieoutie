@@ -39,8 +39,8 @@
     "compile:electron:main": "tsc main.ts --outDir dist && copyfiles package.json dist && cd dist && npm install --prod && cd ..",
     "compile": "webpack --display-error-details && npm run compile:electron:main",
     "compile:prod": "cross-env NODE_ENV=production npm run compile",
-    "release": "yarn compile && electron-builder --publish never",
-    "release:prod": "yarn compile:prod && electron-builder--publish never"
+    "release": "npm run compile && electron-builder --publish never",
+    "release:prod": "npm run compile:prod && electron-builder--publish never"
   },
   "build": {
     "productName": "innieoutie",
@@ -49,7 +49,10 @@
       {
         "from": "dist/",
         "to": ".",
-        "filter": ["**/*", "!**/node_modules"]
+        "filter": [
+          "**/*",
+          "!**/node_modules"
+        ]
       }
     ],
     "dmg": {
