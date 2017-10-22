@@ -34,4 +34,4 @@ deploy:
   provider: GitHub
   auth_token:
     secure: CZ5K7WGDzMAmR+qnbmDtiPCAcjphlh1/zATflHqdp3HM+oFBsiWistS385S15j+5
-  artifact: 'release\*.Setup.exe'
+  artifact: '**\*.Setup.exe'
