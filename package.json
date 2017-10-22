@@ -67,7 +67,7 @@
       ]
     },
     "nsis": {
-      "artifactName": "${productName} ${version}.Setup.${ext}"
+      "artifactName": "${productName} ${buildVersion}.Setup.${ext}"
     },
     "linux": {
       "target": [
