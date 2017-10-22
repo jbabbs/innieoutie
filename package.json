@@ -66,6 +66,9 @@
         "nsis"
       ]
     },
+    "nsis": {
+      "artifactName": "${productName} ${version}.Setup.${ext}"
+    },
     "linux": {
       "target": [
         "deb",
