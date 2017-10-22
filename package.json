@@ -1,6 +1,6 @@
 {
   "name": "innieoutie",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "GUI Client for Websockets",
   "homepage": "https://github.com/jbabbs/innieoutie",
   "author": {
@@ -67,7 +67,7 @@
       ]
     },
     "nsis": {
-      "artifactName": "${productName} ${buildVersion}.Setup.${ext}"
+      "artifactName": "${productName} ${version}.Setup.${ext}"
     },
     "linux": {
       "target": [
