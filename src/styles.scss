@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+$body-bg: #000;
+$body-color: #909;
+
+// Bootstrap and its default variables
+@import "~bootstrap/scss/bootstrap";
+
 html, body {
   margin: 0;
   padding: 0;
