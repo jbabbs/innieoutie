@@ -45,7 +45,10 @@ deploy:
   provider: releases
   api_key:
     secure: PT4h/+7IP90GGnzyy+yOJyBaeBpaKfI3XocefLwkIboyjLo8FvSKYclp9EcTLOQksZtyy4krGC3x7HBUhkDEvkITLKTjebwV/uWgp694u2iMDuBJjqrzGP0FL6+sPYoOKRycK1Vs35XVKXgSMvm1rVPdkufRiQNqxN4EM0kYNm7vx/AkrVpcdl51pRWzHDFZ8fn6lTn2f/XFJynse9JfVHO/oHMLXCrQHc+3gZHJavg3XQjz/N/hr1Afl0Wr3A3J9zEdackbqiw3HOrZ6q0mLi/setb9SAzXAGAYAQdNiGJvRFSPQ3R1xsUWlvBw4uO/88GQGklc2xu4s/Jc1dDDRs7pUoktRtwkFlDEGVCWk8hYNHyNKkUucWzpwLOWtc5WVR6KqL/Z4pjeMCuMgtCzndl3EiLlVWdRfqQLdw+2x3YJ9Re7AZemxxDSfZg0oy9GJI6IYMGmKqJ13STLTQ10tt+0PAetSsi2be1v5uERoTsOtJawuIGfxr2uU/yN7azOq5YtwDEHfYJewd1Zt/eySbzh7FcmKT8J9gqnf+BQbNUUcww6AuY/hSq4BVRxbw81Ax5TJ/I3IC1m9DgMqLs69UVpM+V4ciSOAbegs+y1zZLe9xqYBmYRKY50nUFhsUnAQWDEzvP/ufarXu36d/n3m3v632QMLdlBDlYLXaOQfdk=
-  file: "*.Setup.*"
+  file:
+    - "release/*.dmg"
+    - "release/*.gz"
+    - "release/*.exe"
   fileglob: true
   on:
     repo: Contagious-Solutions/innieoutie
