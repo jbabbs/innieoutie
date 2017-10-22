@@ -50,6 +50,7 @@ deploy:
     - "release/*.AppImage"
     - "release/*.exe"
   file_glob: true
+  skip_cleanup: true
   on:
     repo: Contagious-Solutions/innieoutie
-    branch: travis-ci
+    tags: true
