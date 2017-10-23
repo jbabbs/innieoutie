@@ -35,11 +35,18 @@
     "test": "karma start ./karma.conf.js",
     "pree2e": "webdriver-manager update --standalone false --gecko false --quiet && npm run build",
     "e2e": "protractor ./protractor.conf.js",
-    "postinstall": "concurrently \"electron-builder install-app-deps\""
+    "postinstall": "concurrently \"electron-builder install-app-deps\"",
+    "compile:electron:main": "tsc main.ts --outDir dist && copyfiles package.json dist && cd dist && npm install --prod && cd ..",
+    "compile": "webpack --display-error-details && npm run compile:electron:main",
+    "compile:prod": "cross-env NODE_ENV=production npm run compile",
+    "release": "npm run compile && electron-builder --publish never",
+    "release:mac": "npm run compile && electron-builder --mac --publish never",
+    "release:winlinux": "npm run compile && electron-builder --win --linux --publish never",
+    "release:prod": "npm run compile:prod && electron-builder --publish never"
   },
   "build": {
     "productName": "innieoutie",
-    "appId": "org.develar.ElectronReact",
+    "appId": "org.contagious.innieoutie",
     "files": [
       {
         "from": "dist/",
@@ -62,7 +69,8 @@
           "type": "link",
           "path": "/Applications"
         }
-      ]
+      ],
+      "artifactName": "${productName}-${version}.Setup.${ext}"
     },
     "win": {
       "target": [
@@ -70,13 +78,16 @@
       ]
     },
     "nsis": {
-      "artifactName": "${productName} ${version}.Setup.${ext}"
+      "artifactName": "${productName}-${version}.Setup.${ext}"
     },
     "linux": {
       "target": [
         "deb",
         "AppImage"
       ]
+    },
+    "snap": {
+      "artifactName": "${productName}-${version}.Setup.${ext}"
     },
     "directories": {
       "output": "release"
