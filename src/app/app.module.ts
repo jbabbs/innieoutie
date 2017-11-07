@@ -13,11 +13,12 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { ElectronService } from './providers/electron.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatabaseService } from './services/database.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +27,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     NgbModule.forRoot(),
   ],
-  providers: [ElectronService],
+  providers: [
+    ElectronService,
+    DatabaseService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

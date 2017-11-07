@@ -1,40 +1,37 @@
-import {app, Menu} from 'electron';
+import { app, Menu } from 'electron';
+
+const isWindows = process.platform === 'win32';
+const isMac = process.platform === 'darwin';
 
 export function setMenu() {
-  let template: any = [
+  const template: any = [
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'New Workspace',
+          click() {
+            app.quit();
+          }
+        },
+        {
+          label: 'Load Workspace',
+          click() {
+            app.quit();
+          }
+        }
+      ]
+    },
     {
       label: 'Edit',
       submenu: [
-        {role: 'undo'},
-        {role: 'redo'},
-        {type: 'separator'},
-        {role: 'cut'},
-        {role: 'copy'},
-        {role: 'paste'},
-        {role: 'pasteandmatchstyle'},
-        {role: 'delete'},
-        {role: 'selectall'}
-      ]
-    },
-    {
-      label: 'View',
-      submenu: [
-        {role: 'reload'},
-        {role: 'forcereload'},
-        {role: 'toggledevtools'},
-        {type: 'separator'},
-        {role: 'resetzoom'},
-        {role: 'zoomin'},
-        {role: 'zoomout'},
-        {type: 'separator'},
-        {role: 'togglefullscreen'}
-      ]
-    },
-    {
-      role: 'window',
-      submenu: [
-        {role: 'minimize'},
-        {role: 'close'}
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' }, // just adds a line visually
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'selectall' }
       ]
     },
     {
@@ -46,9 +43,9 @@ export function setMenu() {
         }
       ]
     }
-  ]
+  ];
 
-  if (process.platform === 'darwin') {
+  if (isMac) {
     template.unshift({
       label: app.getName(),
       submenu: [
@@ -62,31 +59,8 @@ export function setMenu() {
         {type: 'separator'},
         {role: 'quit'}
       ]
-    })
-
-    // Edit menu
-    template[1].submenu.push(
-      {type: 'separator'},
-      {
-        label: 'Speech',
-        submenu: [
-          {role: 'startspeaking'},
-          {role: 'stopspeaking'}
-        ]
-      }
-    )
-
-    // Window menu
-    template[3].submenu = [
-      {role: 'close'},
-      {role: 'minimize'},
-      {role: 'zoom'},
-      {type: 'separator'},
-      {role: 'front'}
-    ]
+    });
   }
-
-  template = [];
 
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)

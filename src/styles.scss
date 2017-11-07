@@ -1,8 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-$body-bg: #000;
-$body-color: #909;
-
-// Bootstrap and its default variables
+@import "./bootstrap-overrides";
 @import "~bootstrap/scss/bootstrap";
 @import "~font-awesome/css/font-awesome.css";
 
