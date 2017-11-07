@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ElectronService } from './providers/electron.service';
+import { ElectronService } from './services/electron.service';
 import { DatabaseService } from './services/database.service';
 
 @Component({

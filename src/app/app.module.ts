@@ -11,7 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { ElectronService } from './providers/electron.service';
+import { ElectronService } from './services/electron.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatabaseService } from './services/database.service';
 
