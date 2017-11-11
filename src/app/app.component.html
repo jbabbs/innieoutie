@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<code>{{currentProject?.name | json}}</code>
+Test
+<app-no-project *ngIf="!currentProject"></app-no-project>
+<app-project *ngIf="currentProject"></app-project>

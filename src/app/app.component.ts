@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ElectronService } from './services/electron.service';
-import { DatabaseService } from './services/database.service';
+import { DatabaseService } from './services/db/database.service';
+import { CurrentProjectService } from './services/current-project.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +9,12 @@ import { DatabaseService } from './services/database.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  currentProject
+
   constructor(
     public electronService: ElectronService,
-    public db: DatabaseService,
+    public currentProjectService: CurrentProjectService,
   ) {
-
     if (electronService.isElectron()) {
       // Check if electron is correctly injected (see externals in webpack.config.js)
       console.log('renderer', electronService.ipcRenderer);
@@ -23,15 +25,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async ngOnInit() {
-    const db2 = await this.db.get();
-    const doc = db2.projects.newDocument({
-      name: 'thisisanindex2'
-    });
-    doc.save().then(() => {
-      db2.projects.find().$.subscribe(all => {
-        console.log(all);
-      });
-    });
+  ngOnInit() {
+    this.currentProject = this.currentProjectService.get();
+    setInterval(() => {
+      this.currentProject = this.currentProjectService.get();
+      console.log(this.currentProject);
+    }, 3000);
   }
 }

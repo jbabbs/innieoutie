@@ -3,7 +3,7 @@
  * @type {[type]}
  */
 
-import { RxDocument, RxCollection, RxDatabase } from 'rxdb';
+import { RxCollection, RxDatabase } from 'rxdb';
 
 declare interface RxProjectType {
   name?: string;
@@ -21,6 +21,7 @@ export class RxProjectDatabase extends RxDatabase {
 
 declare let _default: {
   RxProjectCollection,
-  RxProjectDatabase
+  RxProjectDatabase,
+  RxProjectType,
 };
 export default _default;
