@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectModalComponent } from './project-modal.component';
+import { NewProjectModalComponent } from './new-project-modal.component';
 
-describe('ProjectModalComponent', () => {
-  let component: ProjectModalComponent;
-  let fixture: ComponentFixture<ProjectModalComponent>;
+describe('NewProjectModalComponent', () => {
+  let component: NewProjectModalComponent;
+  let fixture: ComponentFixture<NewProjectModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectModalComponent ]
+      declarations: [ NewProjectModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProjectModalComponent);
+    fixture = TestBed.createComponent(NewProjectModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

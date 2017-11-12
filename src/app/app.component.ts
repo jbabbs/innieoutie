@@ -1,35 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ElectronService } from './services/electron.service';
-import { DatabaseService } from './services/db/database.service';
-import { CurrentProjectService } from './services/current-project.service';
+import { AppStore } from './redux/app.store';
+import { AppState } from './redux/app.reducer';
+import { Store } from 'redux';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  currentProject
+export class AppComponent implements OnInit, OnDestroy {
+  public projectLoaded: boolean;
+  private storeSubscription: any;
 
   constructor(
     public electronService: ElectronService,
-    public currentProjectService: CurrentProjectService,
+    @Inject(AppStore) private store: Store<AppState>,
   ) {
     if (electronService.isElectron()) {
-      // Check if electron is correctly injected (see externals in webpack.config.js)
-      console.log('renderer', electronService.ipcRenderer);
-      // Check if nodeJs childProcess is correctly injected (see externals in webpack.config.js)
-      console.log('childProcess', electronService.childProcess);
+      // Check if renderer and electron service is correctly injected (see externals in webpack.config.js)
+      console.log('renderer', electronService.ipcRenderer, 'childProcess', electronService.childProcess);
     } else {
       console.log('Mode web');
     }
   }
 
   ngOnInit() {
-    this.currentProject = this.currentProjectService.get();
-    setInterval(() => {
-      this.currentProject = this.currentProjectService.get();
-      console.log(this.currentProject);
-    }, 3000);
+    this.storeSubscription = this.store.subscribe(() => {
+      this.updateState()
+    });
+  }
+
+  ngOnDestroy() {
+    this.storeSubscription();
+  }
+
+  updateState() {
+    const state = this.store.getState();
+    this.projectLoaded = !!state.currentProject;
   }
 }

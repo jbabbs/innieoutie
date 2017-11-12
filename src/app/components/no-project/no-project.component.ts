@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectModalComponent } from '../project-modal/project-modal.component';
-import { ProjectDBService } from '../../services/db/project-db.service';
+import { NewProjectModalComponent } from '../new-project-modal/new-project-modal.component';
 import { ErrorModalComponent } from '../error-modal/error-modal.component';
-import { CurrentProjectService } from '../../services/current-project.service';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'app-no-project',
@@ -14,8 +13,7 @@ export class NoProjectComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private projectDBService: ProjectDBService,
-    private currentProjectService: CurrentProjectService,
+    private dbService: DbService,
   ) { }
 
   ngOnInit() {
@@ -23,14 +21,9 @@ export class NoProjectComponent implements OnInit {
   }
 
   onNewProjectClick() {
-    const modalRef = this.modalService.open(ProjectModalComponent);
-    modalRef.result.then(async projectName => {
-      try {
-        const project = await this.projectDBService.create(projectName);
-        this.currentProjectService.set(project);
-      } catch (e) {
-        this.modalService.open(ErrorModalComponent);
-      }
+    const modalRef = this.modalService.open(NewProjectModalComponent);
+    modalRef.result.then(projectName => {
+      this.dbService.createProjectAndSetActive(projectName);
     }).catch(err => {
       // modal dismissed
     });

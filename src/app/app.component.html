@@ -1,4 +1,2 @@
-<code>{{currentProject?.name | json}}</code>
-Test
-<app-no-project *ngIf="!currentProject"></app-no-project>
-<app-project *ngIf="currentProject"></app-project>
+<app-no-project *ngIf="!projectLoaded"></app-no-project>
+<app-main *ngIf="projectLoaded"></app-main>
