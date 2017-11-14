@@ -4,6 +4,10 @@ import { AppStore } from './redux/app.store';
 import { AppState } from './redux/app.reducer';
 import { Store } from 'redux';
 import { Subscription } from 'rxjs/Subscription';
+import { NewProjectModalComponent } from './modals/new-project-modal/new-project-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DbService } from './services/db.service';
+import { Project } from './redux/project/project.model';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +15,13 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public projectLoaded: boolean;
+  public projectLoaded = true;
   private storeSubscription: any;
 
   constructor(
-    public electronService: ElectronService,
+    private electronService: ElectronService,
+    private modalService: NgbModal,
+    private dbService: DbService,
     @Inject(AppStore) private store: Store<AppState> | null,
   ) {
     if (electronService.isElectron()) {
@@ -24,20 +30,32 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       console.log('Mode web');
     }
+
+    // app subscribes
+    this.storeSubscription = this.store.subscribe(() => {
+      this.onStateChange()
+    });
   }
 
   ngOnInit() {
-    this.storeSubscription = this.store.subscribe(() => {
-      this.updateState()
-    });
+    this.onStateChange()
   }
 
   ngOnDestroy() {
     this.storeSubscription();
   }
 
-  updateState() {
+  onStateChange() {
     const state = this.store.getState();
     this.projectLoaded = !!state.currentProject;
+  }
+
+  onNewProjectClick() {
+    const modalRef = this.modalService.open(NewProjectModalComponent);
+    modalRef.result.then(projectName => {
+      this.dbService.createProjectAndSetActive(projectName);
+    }).catch(err => {
+      // modal dismissed
+    });
   }
 }

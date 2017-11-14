@@ -9,7 +9,7 @@ export class ConnectionsTabComponent implements OnInit {
   public connections: Array<any> = [];
 
   constructor() {
-    this.connections = (new Array(30)).map(() => ({name: 'connection'}));
+    //this.connections = (new Array(30)).map(() => ({name: 'connection'}));
   }
 
   ngOnInit() {

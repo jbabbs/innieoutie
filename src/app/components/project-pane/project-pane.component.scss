@@ -1,33 +1,36 @@
 @import 'src/styles/variables';
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
 
 $height: 2.25em;
 $padding: $min-padding;
 
 .tab-set {
   flex-grow: 1;
-  background-color: maroon;
   display: flex;
   flex-direction: column;
 }
 
+.project-dropdown-trigger {
+  color: $primary;
+}
+
 .project-title {
-  background-color: grey;
   display: flex;
   justify-content: space-between;
   align-self: stretch;
   height: $height;
   line-height: $height;
   min-height: $height;
+  border-bottom: $grid-border;
 }
 
 .title-text {
   padding: 0 $padding;
   flex-grow: 1;
-  background-color: red;
 }
 
 .title-options {
-  background-color: white;
   text-align: center;
   width: $height;
 }

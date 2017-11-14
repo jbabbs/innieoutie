@@ -1,6 +1,12 @@
 <div class="project-title">
-  <div class="title-text">Project Title</div>
-  <div class="title-options"><i class="fa fa-ellipsis-v"></i></div>
+  <div class="title-text">{{currentProject?.name}}</div>
+  <div ngbDropdown class="title-options">
+    <div ngbDropdownToggle class="project-dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
+    <div ngbDropdownMenu>
+      <button class="dropdown-item">New Project</button>
+      <button class="dropdown-item" (click)="onDeleteProjectClick()">Delete Project</button>
+    </div>
+  </div>
 </div>
 <ngb-tabset class="tab-set">
   <ngb-tab title="Connections">

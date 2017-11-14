@@ -1,7 +1,7 @@
-@import 'src/styles/styles';
+@import 'src/styles/variables';
 
 .quick-send-bar {
-  background-color: pink;
+  border-top: $grid-border;
   padding: $min-padding;
   display: flex;
   align-content: center;

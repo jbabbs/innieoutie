@@ -8,7 +8,6 @@ const initialState: Project = {
 };
 
 export const ProjectReducer = (state: Project = initialState, action: Action): Project => {
-  console.log('state before: ', state);
   switch (action.type) {
     case ProjectActions.SET_PROJECT_NAME:
       const name: string = (<SetProjectNameAction>action).name;

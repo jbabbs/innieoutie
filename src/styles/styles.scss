@@ -14,7 +14,20 @@ html, body {
   flex-direction: column;
 }
 
-// Nasty Flex box stuff goes here, everything else should be encapsulated in the component css
+.nav.nav-tabs {
+  margin-top: $min-padding;
+}
+
+.nav.nav-tabs > :first-child {
+  margin-left: $min-padding;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+// Nasty Flex box stuff goes here, everything else should be encapsulated inside the component css
+// Consider using `display: grid`
 app-project-pane {
   height: 100%;
   display: flex;
@@ -35,7 +48,7 @@ app-project-pane {
 
         .connection-items, .message-items {
           flex-grow: 1;
-          overflow-y: scroll;
+          overflow-y: auto;
         }
       }
     }

@@ -9,11 +9,9 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 
 import { ElectronService } from './services/electron.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NoProjectComponent } from './components/no-project/no-project.component';
-import { MainComponent } from './components/main/main.component';
-import { NewProjectModalComponent } from './components/modals/new-project-modal/new-project-modal.component';
-import { ErrorModalComponent } from './components/modals/error-modal/error-modal.component';
+import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NewProjectModalComponent } from './modals/new-project-modal/new-project-modal.component';
+import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
 import { appStoreProviders } from './redux/app.store';
 import { DbService } from './services/db.service';
 import { ProjectPaneComponent } from './components/project-pane/project-pane.component';
@@ -27,8 +25,6 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
 @NgModule({
   declarations: [
     AppComponent,
-    NoProjectComponent,
-    MainComponent,
     NewProjectModalComponent,
     ErrorModalComponent,
     ProjectPaneComponent,
@@ -44,6 +40,7 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
+    //NgbDropdownModule,
   ],
   providers: [
     ElectronService,

@@ -1,1 +1,33 @@
+@import 'src/styles/variables';
 
+.main-component {
+  height: 100%;
+  display: flex;
+}
+
+.left-half {
+  width: 22rem;
+  border-right: $grid-border;
+}
+
+.right-half {
+  flex-grow: 1;
+}
+
+.no-project {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  margin: 5px 0;
+}

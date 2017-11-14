@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./client-pane.component.scss']
 })
 export class ClientPaneComponent implements OnInit {
-  clients: Array<any> = [
-    { tabTitle: 'Client1' },
-    { tabTitle: 'Client2' }
-  ]
+  public clients: Array<any> = [];
+  // clients: Array<any> = [
+  //   { tabTitle: 'Client1' },
+  //   { tabTitle: 'Client2' }
+  // ]
 
   constructor() { }
 

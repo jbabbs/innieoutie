@@ -9,7 +9,7 @@ export class MessagesTabComponent implements OnInit {
   public messageItems: Array<any> = [  ]
 
   constructor() {
-    this.messageItems = (new Array(30)).map(() => ({name: 'message'}));
+    //this.messageItems = (new Array(30)).map(() => ({name: 'message'}));
   }
 
   ngOnInit() {
