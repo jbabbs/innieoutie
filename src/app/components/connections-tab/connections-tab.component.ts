@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NewConnectionModalComponent } from '../../modals/new-connection-modal/new-connection-modal.component';
 
 @Component({
   selector: 'app-connections-tab',
@@ -8,14 +10,19 @@ import { Component, OnInit } from '@angular/core';
 export class ConnectionsTabComponent implements OnInit {
   public connections: Array<any> = [];
 
-  constructor() {
+  constructor(private modalService: NgbModal) {
     //this.connections = (new Array(30)).map(() => ({name: 'connection'}));
   }
 
   ngOnInit() {
   }
 
-  onNewClick() {
+  onNewConnectionClick() {
+    this.modalService.open(NewConnectionModalComponent, {size: 'lg'}).result.then(
+      connection => {
+        console.log(connection);
+      }).catch(err => {
 
+    });
   }
 }

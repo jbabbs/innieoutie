@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import 'polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -21,6 +21,7 @@ import { MessageLogComponent } from './components/message-log/message-log.compon
 import { QuickSendBarComponent } from './components/quick-send-bar/quick-send-bar.component';
 import { ConnectionsTabComponent } from './components/connections-tab/connections-tab.component';
 import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
+import { NewConnectionModalComponent } from './modals/new-connection-modal/new-connection-modal.component';
 
 @NgModule({
   declarations: [
@@ -34,10 +35,12 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
     QuickSendBarComponent,
     ConnectionsTabComponent,
     MessagesTabComponent,
+    NewConnectionModalComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     NgbModule.forRoot(),
     //NgbDropdownModule,
@@ -52,6 +55,7 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
   ],
   entryComponents: [
     NewProjectModalComponent,
+    NewConnectionModalComponent,
     ErrorModalComponent,
   ]
 })

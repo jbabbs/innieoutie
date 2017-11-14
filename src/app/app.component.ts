@@ -53,7 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
   onNewProjectClick() {
     const modalRef = this.modalService.open(NewProjectModalComponent);
     modalRef.result.then(projectName => {
-      this.dbService.createProjectAndSetActive(projectName);
+      this.dbService.createProjectAndSetCurrent(projectName);
     }).catch(err => {
       // modal dismissed
     });

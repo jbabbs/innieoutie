@@ -9,7 +9,7 @@ export interface SetCurrentProjectAction extends Action {
   project: Project;
 }
 
-export const setCurrentProject: ActionCreator<SetCurrentProjectAction> = (project) => ({
+export const setCurrentProject: ActionCreator<SetCurrentProjectAction> = (project: Project) => ({
   type: AppActions.SET_CURRENT_PROJECT,
   project,
 })

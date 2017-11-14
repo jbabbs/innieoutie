@@ -14,21 +14,26 @@ export class DbService {
     this.loadCurrentProject();
   }
 
-  async createProjectAndSetActive(name: string) {
-    const project = new ProjectEntity(name);
-    await project.save();
-    this.store.dispatch(setCurrentProject(project));
+  async createProjectAndSetCurrent(project: IProject) {
+    const projectEntity = new ProjectEntity(project);
+    await projectEntity.save();
+    this.store.dispatch(setCurrentProject(projectEntity));
   }
 
-  async deleteProject(id: number) {
-    await db.projects.delete(id);
+  async deleteProjectAndUnsetCurrent(id: number) {
+    const project = await ProjectEntity.fetch(id);
+    await project.delete();
     this.store.dispatch(setCurrentProject(null));
   }
 
   async loadCurrentProject(): Promise<void> {
-    const project: IProject = await db.projects.toCollection().first();
+    const project: ProjectEntity = await ProjectEntity.fetchCurrent();
     if (project) {
       this.store.dispatch(setCurrentProject(project));
     }
+  }
+
+  async addConnectionToCurrentProject() {
+
   }
 }

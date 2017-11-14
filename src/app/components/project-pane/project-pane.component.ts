@@ -34,7 +34,7 @@ export class ProjectPaneComponent implements OnInit, OnDestroy {
 
   onDeleteProjectClick() {
     const state = this.store.getState();
-    this.dbService.deleteProject(state.currentProject.id);
+    this.dbService.deleteProjectAndUnsetCurrent(state.currentProject.id);
   }
 
   onStateChange() {
@@ -42,5 +42,4 @@ export class ProjectPaneComponent implements OnInit, OnDestroy {
     this.currentProject = state.currentProject;
     this.changeDetectorRef.detectChanges();
   }
-
 }
