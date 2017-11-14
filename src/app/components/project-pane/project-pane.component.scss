@@ -1,0 +1,33 @@
+@import 'src/styles/variables';
+
+$height: 2.25em;
+$padding: $min-padding;
+
+.tab-set {
+  flex-grow: 1;
+  background-color: maroon;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-title {
+  background-color: grey;
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  height: $height;
+  line-height: $height;
+  min-height: $height;
+}
+
+.title-text {
+  padding: 0 $padding;
+  flex-grow: 1;
+  background-color: red;
+}
+
+.title-options {
+  background-color: white;
+  text-align: center;
+  width: $height;
+}

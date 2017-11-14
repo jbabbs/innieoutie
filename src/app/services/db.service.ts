@@ -10,7 +10,7 @@ import { setCurrentProject } from '../redux/app.actions';
 @Injectable()
 export class DbService {
 
-  constructor(@Inject(AppStore) private store: Store<AppState>) {
+  constructor(@Inject(AppStore) private store: Store<AppState> | null) {
     this.loadCurrentProject();
   }
 

@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     public electronService: ElectronService,
-    @Inject(AppStore) private store: Store<AppState>,
+    @Inject(AppStore) private store: Store<AppState> | null,
   ) {
     if (electronService.isElectron()) {
       // Check if renderer and electron service is correctly injected (see externals in webpack.config.js)

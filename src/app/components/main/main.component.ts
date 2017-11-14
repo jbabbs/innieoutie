@@ -17,7 +17,7 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(
     private db: DbService,
     private cd: ChangeDetectorRef,
-    @Inject(AppStore) private store: Store<AppState>) { }
+    @Inject(AppStore) private store: Store<AppState> | null) { }
 
   ngOnInit() {
     this.storeSubscription = this.store.subscribe(() => {

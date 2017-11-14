@@ -1,0 +1,16 @@
+@import "src/styles/variables";
+
+$item-border: 1px solid grey;
+
+.connection-actions-bar {
+  padding: $min-padding;
+}
+
+.connection-item {
+  &:last-child {
+    border-bottom: $item-border;
+  }
+  border-top: $item-border;
+  padding: $min-padding;
+  background-color: orange;
+}

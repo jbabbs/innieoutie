@@ -1,0 +1,9 @@
+<div class="connection-actions-bar clearfix">
+  <button class="pull-right btn" (click)="onNewClick()">New</button>
+</div>
+<div class="connection-items">
+  <div *ngFor="let connection of connections" class="connection-item">
+    {{connection?.name}} 1
+  </div>
+</div>
+

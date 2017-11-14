@@ -1,4 +1,10 @@
-<p>
-  <button class="btn btn-primary" (click)="onDeleteClick()">Delete project</button>
-  {{currentProject?.name}}
-</p>
+<div class="main-component">
+  <div class="left-half">
+    <app-project-pane></app-project-pane>
+  </div>
+  <div class="right-half">
+    <app-client-pane></app-client-pane>
+  </div>
+</div>
+
+

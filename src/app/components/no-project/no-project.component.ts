@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NewProjectModalComponent } from '../new-project-modal/new-project-modal.component';
-import { ErrorModalComponent } from '../error-modal/error-modal.component';
+import { NewProjectModalComponent } from '../modals/new-project-modal/new-project-modal.component';
+import { ErrorModalComponent } from '../modals/error-modal/error-modal.component';
 import { DbService } from '../../services/db.service';
 
 @Component({

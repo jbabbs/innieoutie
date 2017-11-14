@@ -1,0 +1,12 @@
+@import 'src/styles/styles';
+
+.quick-send-bar {
+  background-color: pink;
+  padding: $min-padding;
+  display: flex;
+  align-content: center;
+}
+
+.text-input {
+  flex-grow: 1;
+}

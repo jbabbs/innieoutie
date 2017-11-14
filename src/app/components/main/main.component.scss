@@ -1,0 +1,14 @@
+.main-component {
+  background-color: green;
+  height: 100%;
+  display: flex;
+}
+
+.left-half {
+  width: 22rem;
+  background-color: aqua;
+}
+
+.right-half {
+  flex-grow: 1;
+}

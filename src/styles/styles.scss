@@ -1,0 +1,86 @@
+@import "bootstrap-overrides";
+@import "~bootstrap/scss/bootstrap";
+@import "~font-awesome/css/font-awesome.css";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+@mixin fill-parent-vertical() {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+// Nasty Flex box stuff goes here, everything else should be encapsulated in the component css
+app-project-pane {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  ul.nav-tabs {
+    min-height: 2.25rem;
+  }
+
+  .tab-content {
+    @include fill-parent-vertical();
+
+    .tab-pane {
+      @include fill-parent-vertical();
+
+      app-connections-tab, app-messages-tab {
+        @include fill-parent-vertical();
+
+        .connection-items, .message-items {
+          flex-grow: 1;
+          overflow-y: scroll;
+        }
+      }
+    }
+  }
+}
+
+app-client-pane {
+  ul.nav-tabs {
+    min-height: 2.25rem;
+  }
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .client-pane {
+    @include fill-parent-vertical();
+
+    ngb-tabset {
+      @include fill-parent-vertical();
+
+      .tab-content {
+        @include fill-parent-vertical();
+
+        .tab-pane {
+          @include fill-parent-vertical();
+
+          .client-tab-content {
+            @include fill-parent-vertical();
+
+            app-network-log {
+              flex-grow: 1;
+            }
+
+            app-message-log {
+              flex-grow: 1;
+            }
+
+            app-quick-send-bar {
+              min-height: 2.25rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
