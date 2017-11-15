@@ -35,7 +35,7 @@ export class DbService {
     const project: IProject = await db.projects.toCollection().first();
     // It is possible there are no projects created
     if (project) {
-      project.connections = await db.connections.where('projectId').equals(project.id).toArray();
+      project.connections = await db.connections.where('projectId').equals(project.id).toArray() || [];
       this.store.dispatch(setCurrentProject(project));
     }
   }

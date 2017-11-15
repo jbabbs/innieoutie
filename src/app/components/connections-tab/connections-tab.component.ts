@@ -53,6 +53,10 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
 
   onStateChange() {
     const state = this.store.getState();
-    this.connections = state.currentProject.connections;
+    if (!state.currentProject) {
+      this.connections = [];
+    } else {
+      this.connections = state.currentProject.connections;
+    }
   }
 }
