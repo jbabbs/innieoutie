@@ -1,28 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewConnectionModalComponent } from '../../modals/new-connection-modal/new-connection-modal.component';
+import { AppState } from '../../redux/app.reducer';
+import { Store } from 'redux';
+import { AppStore } from '../../redux/app.store';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'app-connections-tab',
   templateUrl: './connections-tab.component.html',
   styleUrls: ['./connections-tab.component.scss']
 })
-export class ConnectionsTabComponent implements OnInit {
+export class ConnectionsTabComponent implements OnInit, OnDestroy {
   public connections: Array<any> = [];
+  private storeUnsubscribe;
 
-  constructor(private modalService: NgbModal) {
-    //this.connections = (new Array(30)).map(() => ({name: 'connection'}));
+  constructor(
+    private modalService: NgbModal,
+    private dbService: DbService,
+    @Inject(AppStore) private store: Store<AppState> | null
+  ) {
   }
 
   ngOnInit() {
+    this.storeUnsubscribe = this.store.subscribe(() => { this.onStateChange(); });
+    this.onStateChange();
+  }
+
+  ngOnDestroy() {
+    this.storeUnsubscribe();
   }
 
   onNewConnectionClick() {
     this.modalService.open(NewConnectionModalComponent, {size: 'lg'}).result.then(
       connection => {
-        console.log(connection);
-      }).catch(err => {
+        this.dbService.addConnectionToCurrentProject(connection);
+      }
+    ).catch(
+      err => {
 
-    });
+      }
+    );
+  }
+
+  onConnectClick(connection) {
+
+  }
+
+  onDeleteConnectionClick(connection) {
+    this.dbService.deleteConnection(connection.id);
+  }
+
+  onStateChange() {
+    const state = this.store.getState();
+    this.connections = state.currentProject.connections;
   }
 }

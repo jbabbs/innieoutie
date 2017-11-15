@@ -13,7 +13,7 @@ export interface AppState {
 const initialState: AppState = {
   prefs: { },
   currentProject: null,
-}
+};
 
 export const appReducer: Reducer<AppState> = (state: AppState = initialState, action: Action): AppState => {
   switch (action.type) {
@@ -26,6 +26,6 @@ export const appReducer: Reducer<AppState> = (state: AppState = initialState, ac
         currentProject: state.currentProject ? ProjectReducer(state.currentProject, action) : null
       };
   }
-}
+};
 
 export default appReducer;

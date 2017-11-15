@@ -12,14 +12,14 @@ import { Project } from '../../redux/project/project.model';
 })
 export class ProjectPaneComponent implements OnInit, OnDestroy {
   public currentProject: Project;
-  public storeSubscription: any;
+  public storeUnsubscribe: any;
 
   constructor(
     private dbService: DbService,
     private changeDetectorRef: ChangeDetectorRef,
     @Inject(AppStore) private store: Store<AppState> | null,
   ) {
-    this.storeSubscription = this.store.subscribe(() => {
+    this.storeUnsubscribe = this.store.subscribe(() => {
       this.onStateChange()
     });
   }
@@ -29,7 +29,7 @@ export class ProjectPaneComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.storeSubscription();
+    this.storeUnsubscribe();
   }
 
   onDeleteProjectClick() {

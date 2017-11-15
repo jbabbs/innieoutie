@@ -2,17 +2,13 @@
 @import "~bootstrap/scss/_functions";
 @import "~bootstrap/scss/_variables";
 
-$height: 2.25em;
+$height: $min-button-height;
 $padding: $min-padding;
 
 .tab-set {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-}
-
-.project-dropdown-trigger {
-  color: $primary;
 }
 
 .project-title {

@@ -3,7 +3,14 @@
 </div>
 <div class="connection-items">
   <div *ngFor="let connection of connections" class="connection-item">
-    {{connection?.name}} 1
+    <div class="connection-text">{{connection?.name}}</div>
+    <div ngbDropdown class="connection-options">
+      <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
+      <div ngbDropdownMenu>
+        <button class="dropdown-item" (click)="onDeleteConnectionClick(connection)">Delete</button>
+        <button class="dropdown-item" (click)="onConnectClick(connection)">Connect</button>
+      </div>
+    </div>
   </div>
 </div>
 

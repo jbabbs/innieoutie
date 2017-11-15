@@ -26,6 +26,14 @@ html, body {
   display: none;
 }
 
+.dropdown-trigger {
+  color: $primary;
+  text-align: center;
+  width: $min-button-height;
+  height: $min-button-height;
+  line-height: $min-button-height;
+}
+
 // Nasty Flex box stuff goes here, everything else should be encapsulated inside the component css
 // Consider using `display: grid`
 app-project-pane {

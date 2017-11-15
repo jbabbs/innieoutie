@@ -1,15 +1,20 @@
 @import "src/styles/variables";
 
-$item-border: 1px solid grey;
-
 .connection-actions-bar {
   padding: $min-padding;
 }
 
 .connection-item {
   &:last-child {
-    border-bottom: $item-border;
+    border-bottom: $grid-border;
   }
-  border-top: $item-border;
-  padding: $min-padding;
+  border-top: $grid-border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.connection-text {
+  flex-grow: 1;
+  padding-left: $min-padding;
 }

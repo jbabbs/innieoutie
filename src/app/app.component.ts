@@ -16,7 +16,7 @@ import { Project } from './redux/project/project.model';
 })
 export class AppComponent implements OnInit, OnDestroy {
   public projectLoaded = true;
-  private storeSubscription: any;
+  private storeUnsubscribe: any;
 
   constructor(
     private electronService: ElectronService,
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     // app subscribes
-    this.storeSubscription = this.store.subscribe(() => {
+    this.storeUnsubscribe = this.store.subscribe(() => {
       this.onStateChange()
     });
   }
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.storeSubscription();
+    this.storeUnsubscribe();
   }
 
   onStateChange() {
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
   onNewProjectClick() {
     const modalRef = this.modalService.open(NewProjectModalComponent);
     modalRef.result.then(projectName => {
-      this.dbService.createProjectAndSetCurrent(projectName);
+      this.dbService.createProjectAndSetCurrent({ name: projectName});
     }).catch(err => {
       // modal dismissed
     });
