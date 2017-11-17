@@ -9,7 +9,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 
 import { ElectronService } from './services/electron.service';
-import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewProjectModalComponent } from './modals/new-project-modal/new-project-modal.component';
 import { ErrorModalComponent } from './modals/error-modal/error-modal.component';
 import { appStoreProviders } from './redux/app.store';
@@ -22,6 +22,7 @@ import { QuickSendBarComponent } from './components/quick-send-bar/quick-send-ba
 import { ConnectionsTabComponent } from './components/connections-tab/connections-tab.component';
 import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
 import { NewConnectionModalComponent } from './modals/new-connection-modal/new-connection-modal.component';
+import { WebSocketService } from './services/web-socket.service';
 
 @NgModule({
   declarations: [
@@ -43,12 +44,12 @@ import { NewConnectionModalComponent } from './modals/new-connection-modal/new-c
     ReactiveFormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    //NgbDropdownModule,
   ],
   providers: [
     ElectronService,
     appStoreProviders,
     DbService,
+    WebSocketService,
   ],
   bootstrap: [
     AppComponent

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { AppStore } from '../../redux/app.store';
+import { Store } from 'redux';
+import { AppState } from '../../redux/app.reducer';
 
 @Component({
   selector: 'app-client-pane',
@@ -7,14 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientPaneComponent implements OnInit {
   public clients: Array<any> = [];
-  // clients: Array<any> = [
-  //   { tabTitle: 'Client1' },
-  //   { tabTitle: 'Client2' }
-  // ]
+  private storeUnsubscribe;
 
-  constructor() { }
+  constructor(@Inject(AppStore) private store: Store<AppState> | null) {
+    this.storeUnsubscribe = store.subscribe(() => this.onStateChange());
+  }
 
   ngOnInit() {
   }
 
+  onStateChange() {
+    const state = this.store.getState();
+    if (state.currentProject) {
+      this.clients = state.currentProject.clients;
+    } else {
+      this.clients = [];
+    }
+  }
 }

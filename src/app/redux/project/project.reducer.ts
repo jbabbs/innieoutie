@@ -1,27 +1,36 @@
 import { Action } from 'redux';
 import { Project } from './project.model';
-import { AddConnectionAction, ProjectActions, RemoveConnectionAction, SetProjectNameAction } from './project.actions';
+import { ProjectActions, SetProjectNameAction } from './project.actions';
+import { ConnectionsReducer } from '../connection/connections.reducer';
+import { ClientsReducer } from '../client/clients.reducer';
+import { ClientActions } from '../client/client.actions';
 
 const initialState: Project = {
   id: null,
   name: null,
   connections: [],
+  clients: [],
+  nextClientNumber: 1,
 };
 
 export const ProjectReducer = (state: Project = initialState, action: Action): Project => {
   switch (action.type) {
     case ProjectActions.SET_PROJECT_NAME:
+    {
       const name: string = (<SetProjectNameAction>action).name;
       return Object.assign({}, state, { name });
-    case ProjectActions.ADD_CONNECTION:
-      const conn = (<AddConnectionAction>action).connection;
-      const newConnections = [...state.connections, conn];
-      return Object.assign({}, state, { connections: newConnections });
-    case ProjectActions.REMOVE_CONNECTION:
-      const id = (<RemoveConnectionAction>action).connectionId;
-      const newConnections2 = state.connections.filter(con => con.id !== id);
-      return Object.assign({}, state, { connections: newConnections2 });
+    }
+    case ClientActions.CREATE_CLIENT:
+    {
+      const clients = ClientsReducer(state.clients, action);
+      const nextClientNumber = state.nextClientNumber + 1;
+      return Object.assign({}, state, { nextClientNumber, clients });
+    }
     default:
-      return state;
+    {
+      const clients = ClientsReducer(state.clients, action);
+      const connections = ConnectionsReducer(state.connections, action);
+      return Object.assign({}, state, { clients, connections });
+    }
   }
 };

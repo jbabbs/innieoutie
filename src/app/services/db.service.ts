@@ -6,7 +6,7 @@ import { AppState } from '../redux/app.reducer';
 import { IProject } from '../db/project.interface';
 import { setCurrentProject } from '../redux/app.actions';
 import { IConnection } from '../db/connection.interface';
-import { addConnection, removeConnection } from '../redux/project/project.actions';
+import { createConnection, removeConnection } from '../redux/connection/connection.actions';
 
 @Injectable()
 export class DbService {
@@ -50,11 +50,10 @@ export class DbService {
       const id = await db.connections.put(connection);
       connection.id = id;
     });
-    this.store.dispatch(addConnection(connection));
+    this.store.dispatch(createConnection(connection));
   }
 
   async deleteConnection(connectionId: number) {
-    console.log('delete', connectionId);
     await db.connections.delete(connectionId);
     this.store.dispatch(removeConnection(connectionId));
   }

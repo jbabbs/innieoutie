@@ -1,13 +1,13 @@
 <div class="client-pane">
   <ngb-tabset>
     <ngb-tab *ngFor="let client of clients" class="tab">
-      <ng-template ngbTabTitle>{{client?.tabTitle}}&nbsp;<i class="fa fa-times-circle" (click)="onTabCloseClick(client)"></i></ng-template>
+      <ng-template ngbTabTitle>{{client?.name}}&nbsp;<i class="fa fa-times-circle" (click)="onTabCloseClick(client)"></i></ng-template>
       <ng-template ngbTabContent>
         <div class="client-tab-content">
           <div>Client Details Go Here</div>
           <app-network-log class="network-log"></app-network-log>
           <app-message-log class="message-log"></app-message-log>
-          <app-quick-send-bar class="quick-bar"></app-quick-send-bar>
+          <app-quick-send-bar class="quick-bar" [client]="client"></app-quick-send-bar>
         </div>
       </ng-template>
     </ngb-tab>

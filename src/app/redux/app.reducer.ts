@@ -18,13 +18,17 @@ const initialState: AppState = {
 export const appReducer: Reducer<AppState> = (state: AppState = initialState, action: Action): AppState => {
   switch (action.type) {
     case AppActions.SET_CURRENT_PROJECT:
-      const project: Project = (<SetCurrentProjectAction>action).project;
-      return Object.assign({}, state, { currentProject: project});
+    {
+      const projectIn: Project = (<SetCurrentProjectAction>action).project;
+      const projectOut: Project = Object.assign({}, projectIn, {nextClientNumber: 1});
+      return Object.assign({}, state, { currentProject: projectOut });
+    }
     default:
-      return {
-        prefs: PrefsReducer(state.prefs, action),
-        currentProject: state.currentProject ? ProjectReducer(state.currentProject, action) : null
-      };
+    {
+      const prefs = PrefsReducer(state.prefs, action);
+      const currentProject = state.currentProject === null ? null : ProjectReducer(state.currentProject, action);
+      return Object.assign({}, state, { prefs, currentProject });
+    }
   }
 };
 
