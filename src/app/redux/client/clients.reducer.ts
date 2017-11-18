@@ -6,11 +6,14 @@ export const ClientsReducer = (state: Array<Client> = [], action: Action): Array
   switch (action.type) {
     case ClientActions.SET_CLIENT_NAME:
     {
-      const id = (<SetClientNameAction>action).id;
-      const name = (<SetClientNameAction>action).name;
-      const client = state.find(c => c.id === id);
-      Object.assign({})
-      return Object.assign({}, state, { name });
+      const { id, name } = <SetClientNameAction>action;
+      return state.map(c => {
+        if (c.id === id) {
+          return Object.assign({}, c, { name });
+        } else {
+          return c;
+        }
+      });
     }
     case ClientActions.CREATE_CLIENT:
     {

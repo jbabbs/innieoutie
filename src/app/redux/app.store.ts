@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Provider } from '@angular/core';
 import { createStore, Store, compose, StoreEnhancer, applyMiddleware } from 'redux';
 import { AppState, default as appReducer } from './app.reducer';
 
@@ -22,6 +22,6 @@ export function createAppStore(): Store<AppState> {
   );
 }
 
-export const appStoreProviders = [
+export const appStoreProviders: Provider = [
   { provide: AppStore, useFactory: createAppStore }
 ];
