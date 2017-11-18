@@ -1,0 +1,12 @@
+@import 'src/styles/variables';
+
+.client-details {
+  display: flex;
+  justify-content: space-between;
+  padding: $min-padding;
+  border-bottom: $grid-border
+}
+
+.message-log {
+  border-right: $grid-border;
+}

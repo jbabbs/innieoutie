@@ -3,9 +3,9 @@ import { Store } from 'redux';
 import { AppState } from '../redux/app.reducer';
 import { AppStore } from '../redux/app.store';
 import { IConnection } from '../db/connection.interface';
-import { Client, WebSocketReadyState } from '../redux/client/client.model';
+import { Client } from '../redux/client/client.model';
 import { WebSocketSubjectConfig } from 'rxjs/observable/dom/WebSocketSubject';
-import { connectClient, createClient } from '../redux/client/client.actions';
+import { connectClient, createClient, receiveMessage, sendMessage } from '../redux/client/client.actions';
 import { webSocket } from 'rxjs/observable/dom/webSocket';
 
 @Injectable()
@@ -24,25 +24,28 @@ export class WebSocketService {
     const nextId = state.currentProject.nextClientNumber;
     const webSocket$ = webSocket<string>(config);
     const name = `Client ${nextId}`;
-    const readyState = WebSocketReadyState.CLOSED;
-    const client: Client = { webSocket$, name, readyState, config, connection, id: nextId };
+    const client: Client = { webSocket$, name, config, connection, id: nextId, messages: [] };
     this.store.dispatch(createClient(client));
     return client;
   }
 
-  createClientAndConnect(connection: IConnection) {
-    const client: Client = this.createClient(connection);
+  connectClient(client: Client) {
     const clientId: number = client.id;
-    const readyState = WebSocketReadyState.CONNECTING;
     const subscription = client.webSocket$.subscribe(msg => {
-      console.log('response from server: ', msg);
+      this.store.dispatch(receiveMessage(client.id, msg));
     }, err => {
       console.error('err on socket: ', err);
     });
-    this.store.dispatch(connectClient({subscription, clientId, readyState}))
+    this.store.dispatch(connectClient({subscription, clientId}));
+  }
+
+  createClientAndConnect(connection: IConnection) {
+    const client: Client = this.createClient(connection);
+    this.connectClient(client);
   }
 
   sendMessage(message: string, client: Client) {
     client.webSocket$.next(JSON.stringify(message));
+    this.store.dispatch(sendMessage(client.id, message));
   }
 }

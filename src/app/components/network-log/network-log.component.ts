@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Client } from '../../redux/client/client.model';
 
 @Component({
   selector: 'app-network-log',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./network-log.component.scss']
 })
 export class NetworkLogComponent implements OnInit {
-
+  @Input() public client: Client;
   constructor() { }
 
   ngOnInit() {

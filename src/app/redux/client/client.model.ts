@@ -1,14 +1,7 @@
 import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/observable/dom/WebSocketSubject';
 import { IConnection } from '../../db/connection.interface';
 import { Subscription } from 'rxjs/Subscription';
-
-// constants are defined here -> https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
-export enum WebSocketReadyState {
-  CONNECTING =  0,
-  OPEN =  1,
-  CLOSING =  2,
-  CLOSED =  3,
-}
+import { ClientMessage } from './client-message.model';
 
 export interface Client {
   id: number;
@@ -16,6 +9,8 @@ export interface Client {
   webSocket$: WebSocketSubject<string>,
   subcription?: Subscription, // subscribing connects the socket
   config: WebSocketSubjectConfig,
-  readyState: WebSocketReadyState,
   connection: IConnection,
+  messages: Array<ClientMessage>,
+  connectedAtTime?: number; // unix timestamp
+  disconnectedAtTime?: number; // unit timestamp
 }

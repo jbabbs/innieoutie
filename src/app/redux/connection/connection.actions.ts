@@ -10,14 +10,14 @@ export interface AddConnectionAction extends Action {
   connection: IConnection;
 }
 
-export interface RemoveConnectionAction extends Action {
-  id: number;
-}
-
 export const createConnection: ActionCreator<AddConnectionAction> = (connection: IConnection) => ({
   type: ConnectionActions.CREATE_CONNECTION,
   connection
 });
+
+export interface RemoveConnectionAction extends Action {
+  id: number;
+}
 
 export const removeConnection: ActionCreator<RemoveConnectionAction> = (id: number) => ({
   type: ConnectionActions.REMOVE_CONNECTION,

@@ -1,12 +1,26 @@
 <div class="client-pane">
   <ngb-tabset>
     <ngb-tab *ngFor="let client of clients" class="tab">
-      <ng-template ngbTabTitle>{{client?.name}}&nbsp;<i class="fa fa-times-circle" (click)="onTabCloseClick(client)"></i></ng-template>
+      <ng-template ngbTabTitle>
+        <i [style.color]="getConnectionStateColor()" class="fa fa-circle"></i>
+        <span>{{client?.name}}</span>
+        &nbsp;
+        <i class="fa fa-times-circle" (click)="onTabCloseClick(client)"></i>
+      </ng-template>
       <ng-template ngbTabContent>
         <div class="client-tab-content">
-          <div>Client Details Go Here</div>
-          <app-network-log class="network-log"></app-network-log>
-          <app-message-log class="message-log"></app-message-log>
+          <div class="client-details">
+            <div class="connection-state">Connected</div>
+            <div class="connection-uptime">{{getClientUptime(client)}}</div>
+            <div class="connection-actions">
+              <button class="btn btn-primary">Disconnect</button>
+              <button class="btn btn-primary">Reconnect</button>
+            </div>
+          </div>
+          <div class="logs">
+            <app-message-log class="message-log" [client]="client"></app-message-log>
+            <app-network-log class="network-log" [client]="client"></app-network-log>
+          </div>
           <app-quick-send-bar class="quick-bar" [client]="client"></app-quick-send-bar>
         </div>
       </ng-template>

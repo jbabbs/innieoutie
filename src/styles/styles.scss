@@ -87,14 +87,18 @@ app-client-pane {
           .client-tab-content {
             @include fill-parent-vertical();
 
-            app-network-log {
+            .logs {
               flex-grow: 1;
-            }
+              display: flex;
 
-            app-message-log {
-              flex-grow: 1;
-            }
+              app-network-log {
+                flex: 1;
+              }
 
+              app-message-log {
+                flex: 1;
+              }
+            }
             app-quick-send-bar {
               min-height: 2.25rem;
             }
