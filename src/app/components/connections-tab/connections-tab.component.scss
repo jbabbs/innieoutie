@@ -6,9 +6,9 @@
 
 .connection-item {
   &:last-child {
-    border-bottom: $grid-border;
+    border-bottom: 1px solid $grid-border-color;
   }
-  border-top: $grid-border;
+  border-top: 1px solid $grid-border-color;
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -3,5 +3,5 @@
     <option *ngFor="let option of ['String', 'JSON']">{{option}}</option>
   </select>
   <input class="text-input" [(ngModel)]="message"/>
-  <button class="btn btn-primary" (click)="onSendClick()">Send</button>
+  <button class="btn btn-primary" (click)="onSendClick()" [disabled]="!message">Send</button>
 </div>
