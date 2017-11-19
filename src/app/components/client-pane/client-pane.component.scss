@@ -4,7 +4,8 @@
   display: flex;
   justify-content: space-between;
   padding: $min-padding;
-  border-bottom: $grid-border
+  border-bottom: $grid-border;
+  align-items: center;
 }
 
 .message-log {

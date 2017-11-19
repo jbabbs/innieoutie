@@ -9,7 +9,7 @@ html, body {
 }
 
 @mixin fill-parent-vertical() {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
@@ -97,6 +97,19 @@ app-client-pane {
 
               app-message-log {
                 flex: 1;
+                @include fill-parent-vertical();
+                .table-container {
+                  @include fill-parent-vertical();
+                  table {
+                    margin-bottom: 0;
+                    @include fill-parent-vertical();
+                    tbody {
+                      @include fill-parent-vertical();
+                      overflow-y: auto;
+                    }
+                  }
+
+                }
               }
             }
             app-quick-send-bar {

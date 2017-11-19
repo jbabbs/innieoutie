@@ -6,7 +6,6 @@
     <thead>
       <th></th>
       <th>Time</th>
-      <th>Name</th>
       <th>Data</th>
       <th></th>
     </thead>
@@ -14,7 +13,6 @@
       <tr *ngFor="let message of client.messages">
         <td>{{messageDirection(message)}}</td>
         <td>{{message.time}}</td>
-        <td>{{message.name}}</td>
         <td>{{message.data}}</td>
       </tr>
     </tbody>
