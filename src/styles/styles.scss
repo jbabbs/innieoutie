@@ -98,17 +98,9 @@ app-client-pane {
               app-message-log {
                 flex: 1;
                 @include fill-parent-vertical();
-                .table-container {
+                .table-body-container {
+                  overflow: auto;
                   @include fill-parent-vertical();
-                  table {
-                    margin-bottom: 0;
-                    @include fill-parent-vertical();
-                    tbody {
-                      @include fill-parent-vertical();
-                      overflow-y: auto;
-                    }
-                  }
-
                 }
               }
             }

@@ -4,10 +4,33 @@ app-message-log {
   padding: $min-padding;
 }
 
-.title-container {
+.title {
   padding: $min-padding;
 }
 
-table {
-  width: 100%;
+.table-body, .table-header {
+  padding: $min-padding;
+}
+
+.table-body {
+  height: 0;
+}
+
+.table-header, .table-row {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.time-col, .data-col {
+  flex: 1;
+}
+
+.direction-col {
+  max-width: 5rem;
+  width: 5rem;
+}
+.actions-col {
+  width: $min-button-height;
+  text-align: center;
 }
