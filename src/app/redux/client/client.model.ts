@@ -6,7 +6,8 @@ import { ClientMessage } from './client-message.model';
 export interface Client {
   id: number;
   name: string;
-  webSocket$: WebSocketSubject<string>,
+  //webSocket$: WebSocketSubject<string>,
+  socket: WebSocket,
   connection: IConnection,
   messages: Array<ClientMessage>,
   connectedAtTime?: number; // unix timestamp

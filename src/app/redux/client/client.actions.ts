@@ -102,10 +102,10 @@ export const removeClient = (clientId: number) => ({
   clientId: clientId,
 });
 
-export const reconnectClient = (webSocket$, clientId) => ({
+export const reconnectClient = (socket, clientId) => ({
   type: ClientActions.RECONNECT_CLIENT,
   clientId,
-  webSocket$,
+  socket,
 });
 
 

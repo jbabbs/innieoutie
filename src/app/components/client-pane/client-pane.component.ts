@@ -53,10 +53,10 @@ export class ClientPaneComponent implements OnInit {
   }
 
   getConnectionStateColor(client: Client) {
-    if (!client.webSocket$.socket) {
+    if (!client.socket) {
       return 'transparent';
     }
-    switch (client.webSocket$.socket.readyState) {
+    switch (client.socket.readyState) {
       case WebSocket.CONNECTING: return 'yellow';
       case WebSocket.OPEN: return 'green';
       case WebSocket.CLOSING: return 'yellow';
@@ -66,10 +66,10 @@ export class ClientPaneComponent implements OnInit {
   }
 
   getClientStateText(client: Client) {
-    if (!client.webSocket$.socket) {
+    if (!client.socket) {
       return 'Not Connected';
     }
-    switch (client.webSocket$.socket.readyState) {
+    switch (client.socket.readyState) {
       case WebSocket.CONNECTING: return 'Connecting...';
       case WebSocket.OPEN: return 'Connected';
       case WebSocket.CLOSING: return 'Closing...';
@@ -80,10 +80,10 @@ export class ClientPaneComponent implements OnInit {
 
 
   getClientUptime(client: Client) {
-    if (!client.webSocket$.socket) {
+    if (!client.socket) {
       return '';
     }
-    switch (client.webSocket$.socket.readyState) {
+    switch (client.socket.readyState) {
       case WebSocket.CONNECTING: return '0.000';
       case WebSocket.OPEN: return formatTimeSince(client.connectedAtTime);
       default: return '';
@@ -95,22 +95,22 @@ export class ClientPaneComponent implements OnInit {
   }
 
   onConnectClick(client: Client) {
-    this.wsService.connectClient(client);
+    this.wsService.reconnectClient(client);
   }
 
   shouldShowDisconnect(client: Client) {
-    if (!client.webSocket$.socket) {
+    if (!client.socket) {
       return false;
     }
-    const readyState = client.webSocket$.socket.readyState
+    const readyState = client.socket.readyState
     return readyState === WebSocket.CLOSING || readyState === WebSocket.OPEN || readyState === WebSocket.CONNECTING;
   }
 
   shouldShowConnect(client: Client) {
-    if (!client.webSocket$.socket) {
+    if (!client.socket) {
       return true;
     }
-    const readyState = client.webSocket$.socket.readyState
+    const readyState = client.socket.readyState
     return readyState === WebSocket.CLOSED;
   }
 

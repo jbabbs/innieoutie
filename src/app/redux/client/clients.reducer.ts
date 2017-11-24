@@ -23,9 +23,9 @@ export const ClientsReducer = (state: Array<Client> = [], action: any): Array<Cl
     }
     case ClientActions.RECONNECT_CLIENT:
     {
-      const { webSocket$, clientId } = <any>action;
+      const { socket, clientId } = <any>action;
       const client = state.find(c => c.id === clientId );
-      const newClient = Object.assign({}, client, { webSocket$ });
+      const newClient = Object.assign({}, client, { socket });
       const newState = state.map(c => {
         if (c.id === clientId) {
           return newClient;

@@ -4,11 +4,9 @@ import { AppState } from '../redux/app.reducer';
 import { AppStore } from '../redux/app.store';
 import { IConnection } from '../db/connection.interface';
 import { Client } from '../redux/client/client.model';
-import { WebSocketSubjectConfig } from 'rxjs/observable/dom/WebSocketSubject';
 import {
-  connectClient, createClient, receiveMessage, sendMessage, clientOpened, closeClient, removeClient, reconnectClient
+  createClient, receiveMessage, sendMessage, clientOpened, closeClient, removeClient, reconnectClient
 } from '../redux/client/client.actions';
-import { webSocket } from 'rxjs/observable/dom/webSocket';
 
 @Injectable()
 export class WebSocketService {
@@ -17,66 +15,50 @@ export class WebSocketService {
     @Inject(AppStore) private store: Store<AppState> | null
   ) { }
 
-  _constructSocket(url, proto, clientId) {
-    // const config: WebSocketSubjectConfig = {
-    //   url: `ws://${url}`,
-    //   protocol: proto,
-    //   openObserver: {
-    //     next: () => {
-    //       this.store.dispatch(clientOpened(clientId));
-    //     },
-    //     error: () => { }
-    //   }
-    // }
-    //
-    // return webSocket<string>(config);
+  reconnectClient(client: Client) {
+    const connection = client.connection;
+    const id = client.id;
+    const url = `ws://${connection.url}`;
+    const socket = new WebSocket(url, connection.protocolString || undefined);
+    socket.onopen = () => {
+      this.store.dispatch(clientOpened(id));
+    };
+    socket.onmessage = (msg: MessageEvent) => {
+      this.store.dispatch(receiveMessage(id, JSON.parse(msg.data)));
+    }
+    this.store.dispatch(reconnectClient(socket, id));
   }
-
-  createClient(connection: IConnection) {
-    // const state = this.store.getState();
-    // const nextId = state.currentProject.nextClientNumber;
-    // const webSocket$ = this._constructSocket(connection.url, connection.protocolString, nextId);
-    // const name = `Client ${nextId}`;
-    // const client: Client = { webSocket$, name, connection, id: nextId, messages: [] };
-    // this.store.dispatch(createClient(client));
-    // return client;
-  }
-
-  connectClient(client: Client) {
-    // const clientId: number = client.id;
-    // client.webSocket$.subscribe(msg => {
-    //   this.store.dispatch(receiveMessage(client.id, msg));
-    // }, err => {
-    //   console.error('err on socket: ', err);
-    // }, () => {
-    //   //console.log('client complete');
-    // });
-    // this.store.dispatch(connectClient({clientId}));
-  }
-
-  // connectClosedClient(client: Client) {
-  //   const { connection } = client;
-  //   const webSocket$ = this._constructSocket(connection.url, connection.protocolString, client.id);
-  //   this.store.dispatch(reconnectClient(webSocket$, client.id));
-  // }
 
   createClientAndConnect(connection: IConnection) {
-    // const client: Client = this.createClient(connection);
-    // this.connectClient(client);
+    const state = this.store.getState();
+    const id = state.currentProject.nextClientNumber;
+    const name = `Client ${id}`;
+    const url = `ws://${connection.url}`;
+    const socket = new WebSocket(url, connection.protocolString || undefined);
+    socket.onopen = () => {
+      this.store.dispatch(clientOpened(id));
+    };
+    socket.onmessage = (msg: MessageEvent) => {
+      this.store.dispatch(receiveMessage(id, JSON.parse(msg.data)));
+    }
+    const client: Client = { socket, name, connection, id, messages: [] };
+    this.store.dispatch(createClient(client));
   }
 
   sendMessage(message: string, client: Client) {
-    // client.webSocket$.next(JSON.stringify(message));
-    // this.store.dispatch(sendMessage(client.id, message));
+    client.socket.send(JSON.stringify(message));
+    this.store.dispatch(sendMessage(client.id, message));
   }
 
   disconnectClient(client: Client) {
-    // client.webSocket$.unsubscribe();
-    // this.store.dispatch(closeClient(client.id));
+    client.socket.onclose = () => {
+      this.store.dispatch(closeClient(client.id));
+    }
+    client.socket.close();
   }
 
   disconnectClientAndRemove(client: Client) {
-    // this.disconnectClient(client);
-    // this.store.dispatch((removeClient(client.id)));
+    this.disconnectClient(client);
+    this.store.dispatch((removeClient(client.id)));
   }
 }

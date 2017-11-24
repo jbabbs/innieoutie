@@ -29,7 +29,7 @@ export class QuickSendBarComponent implements OnInit {
 
   isSendDisabled() {
     let connected = false;
-    if (this.client.webSocket$.socket && this.client.webSocket$.socket.readyState === WebSocket.OPEN) {
+    if (this.client.socket && this.client.socket.readyState === WebSocket.OPEN) {
       connected = true;
     }
     return !this.message || !connected;
