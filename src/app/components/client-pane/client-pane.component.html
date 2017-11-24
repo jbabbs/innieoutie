@@ -1,20 +1,21 @@
 <div class="client-pane">
-  <ngb-tabset>
-    <ngb-tab *ngFor="let client of clients" class="tab">
+  <ngb-tabset [activeId]="getActiveTabId()" (tabChange)="onTabChange($event)">
+    <ngb-tab [id]="'client-tab-'+$index" *ngFor="let client of clients; let $index = index" class="tab">
       <ng-template ngbTabTitle>
-        <i [style.color]="getConnectionStateColor()" class="fa fa-circle"></i>
+        <i [style.color]="getConnectionStateColor(client)" class="fa fa-circle"></i>
         <span>{{client?.name}}</span>
         &nbsp;
-        <i class="fa fa-times-circle" (click)="onTabCloseClick(client)"></i>
+        <i class="fa fa-times-circle" (click)="onTabCloseClick(client, $event)"></i>
       </ng-template>
       <ng-template ngbTabContent>
         <div class="client-tab-content">
           <div class="client-details">
-            <div class="connection-state">Connected</div>
+            <div class="connection-state">{{getClientStateText(client)}}</div>
             <div class="connection-uptime">{{getClientUptime(client)}}</div>
             <div class="connection-actions">
-              <button class="btn btn-primary">Disconnect</button>
-              <button class="btn btn-primary">Reconnect</button>
+              <button class="btn btn-primary" (click)="onDisconnectClick(client)" *ngIf="shouldShowDisconnect(client)">Disconnect</button>
+              <button class="btn btn-primary" (click)="onConnectClick(client)" *ngIf="shouldShowConnect(client)">Connect</button>
+              <!--<button class="btn btn-primary" (click)="onReconnectClick(client)">Reconnect</button>-->
             </div>
           </div>
           <div class="logs">

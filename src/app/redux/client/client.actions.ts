@@ -9,6 +9,7 @@ export enum ClientActions {
   REMOVE_CLIENT = 'REMOVE_CLIENT',
   CONNECT_CLIENT = 'CONNECT_CLIENT',
   CLIENT_CLOSED = 'CLIENT_CLOSED',
+  CLIENT_OPEN = 'CLIENT_OPENED',
   CLIENT_ERROR = 'CLIENT_ERROR',
   RECONNECT_CLIENT = 'RECONNECT_CLIENT',
   SEND_MESSAGE = 'SEND_MESSAGE',
@@ -38,24 +39,12 @@ export const createClient: ActionCreator<CreateClientAction> = (client: Client) 
 
 export interface ConnectClientAction extends Action {
   clientId: number;
-  subscription: Subscription;
 }
 
-export const connectClient: ActionCreator<ConnectClientAction> =
-  (clientId: number, subscription: Subscription) => ({
+export const connectClient: ActionCreator<ConnectClientAction> = (clientId: number) => ({
     type: ClientActions.CONNECT_CLIENT,
     clientId,
-    subscription,
   });
-
-export interface RemoveClientAction extends Action {
-  id: number;
-}
-
-export const removeClient: ActionCreator<RemoveClientAction> = (id: number) => ({
-  type: ClientActions.REMOVE_CLIENT,
-  id,
-});
 
 export interface SendMessageAction extends Action {
   clientId: number;
@@ -96,6 +85,28 @@ export const receiveMessage: ActionCreator<ReceiveMessageAction> = (clientId: nu
     message,
   }
 };
+
+export const clientOpened = (clientId: number) => ({
+  type: ClientActions.CLIENT_OPEN,
+  clientId: clientId,
+  time: +new Date(),
+})
+
+export const closeClient = (clientId: number) => ({
+  type: ClientActions.CLIENT_CLOSED,
+  clientId: clientId,
+})
+
+export const removeClient = (clientId: number) => ({
+  type: ClientActions.REMOVE_CLIENT,
+  clientId: clientId,
+});
+
+export const reconnectClient = (webSocket$, clientId) => ({
+  type: ClientActions.RECONNECT_CLIENT,
+  clientId,
+  webSocket$,
+});
 
 
 

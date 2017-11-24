@@ -7,4 +7,5 @@ export interface Project {
   connections: Array<IConnection>;
   clients: Array<Client>;
   nextClientNumber: number;
+  activeClientTabIdx: number;
 }

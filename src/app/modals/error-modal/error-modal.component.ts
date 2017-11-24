@@ -8,7 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ErrorModalComponent implements OnInit {
 
-  constructor(private activeModal: NgbActiveModal) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }

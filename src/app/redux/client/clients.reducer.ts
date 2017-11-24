@@ -1,11 +1,9 @@
-import { Action } from 'redux';
 import { Client } from './client.model';
 import {
-  ClientActions, CreateClientAction, ReceiveMessageAction, RemoveClientAction, SendMessageAction,
-  SetClientNameAction
+  ClientActions, CreateClientAction, SetClientNameAction
 } from './client.actions';
 
-export const ClientsReducer = (state: Array<Client> = [], action: Action): Array<Client> => {
+export const ClientsReducer = (state: Array<Client> = [], action: any): Array<Client> => {
   switch (action.type) {
     case ClientActions.SET_CLIENT_NAME:
     {
@@ -23,16 +21,32 @@ export const ClientsReducer = (state: Array<Client> = [], action: Action): Array
       const client = (<CreateClientAction>action).client;
       return [...state, client];
     }
+    case ClientActions.RECONNECT_CLIENT:
+    {
+      const { webSocket$, clientId } = <any>action;
+      const client = state.find(c => c.id === clientId );
+      const newClient = Object.assign({}, client, { webSocket$ });
+      const newState = state.map(c => {
+        if (c.id === clientId) {
+          return newClient;
+        } else {
+          return c;
+        }
+      })
+      return newState;
+    }
     case ClientActions.REMOVE_CLIENT:
     {
-      const id = (<RemoveClientAction>action).id;
-      const connections = state.filter(client => client.id !== id);
-      return Object.assign({}, state, { connections });
+      const clientId = action.clientId;
+      return state.filter(client => client.id !== clientId);
+    }
+    case ClientActions.CLIENT_CLOSED:
+    {
+      return state;
     }
     case ClientActions.SEND_MESSAGE:
     {
-      const message = (<SendMessageAction>action).message;
-      const clientId = (<SendMessageAction>action).clientId;
+      const { message, clientId } = <any>action;
       const client = state.find(c => c.id === clientId );
       const messages = [...client.messages, message];
       const newClient = Object.assign({}, client, { messages });
@@ -47,8 +61,7 @@ export const ClientsReducer = (state: Array<Client> = [], action: Action): Array
     }
     case ClientActions.RECEIVE_MESSAGE:
     {
-      const message = (<ReceiveMessageAction>action).message;
-      const clientId = (<ReceiveMessageAction>action).clientId;
+      const { message, clientId } = <any>action;
       const client = state.find(c => c.id === clientId );
       const messages = [...client.messages, message];
       const newClient = Object.assign({}, client, { messages });
@@ -61,8 +74,23 @@ export const ClientsReducer = (state: Array<Client> = [], action: Action): Array
       })
       return newState;
     }
+    case ClientActions.CLIENT_OPEN:
+    {
+      const  { time, clientId } = action;
+      const client = state.find(c => c.id === clientId );
+      const newClient = Object.assign({}, client, { connectedAtTime: time });
+      const newState = state.map(c => {
+        if (c.id === clientId) {
+          return newClient;
+        } else {
+          return c;
+        }
+      })
+      return newState;
+    }
     default:
     {
+
       return state;
     }
 

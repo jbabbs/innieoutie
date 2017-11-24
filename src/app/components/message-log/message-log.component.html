@@ -2,18 +2,18 @@
   <strong>Message Log</strong>
 </div>
 <div class="table-header">
-  <div class="direction-col">&nbsp;</div>
-  <div class="time-col">Time</div>
-  <div class="data-col">Data</div>
-  <div class="actions-col">&nbsp;</div>
+  <div class="direction-col table-cell">&nbsp;</div>
+  <div class="time-col table-cell">Time</div>
+  <div class="data-col table-cell">Data</div>
+  <div class="actions-col table-cell">&nbsp;</div>
 </div>
 <div class="table-body-container">
   <div class="table-body">
     <div class="table-row" *ngFor="let message of client.messages">
-      <div class="direction-col">{{messageDirection(message)}}</div>
-      <div class="time-col">{{message.time}}</div>
-      <div class="data-col">{{message.data}}</div>
-      <div class="actions-col"><i class="fa fa-ellipsis-v"></i></div>
+      <div class="direction-col table-cell">{{messageDirection(message)}}</div>
+      <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
+      <div class="data-col table-cell">{{message.data}}</div>
+      <div class="actions-col table-cell"><i class="fa fa-ellipsis-v"></i></div>
     </div>
   </div>
 </div>

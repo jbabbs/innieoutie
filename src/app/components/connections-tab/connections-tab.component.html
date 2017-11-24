@@ -2,8 +2,9 @@
   <button class="pull-right btn btn-outline-primary" (click)="onNewConnectionClick()">New</button>
 </div>
 <div class="connection-items">
-  <div *ngFor="let connection of connections" class="connection-item">
-    <div class="connection-text">{{connection?.name}}</div>
+  <div *ngFor="let connection of connections" class="connection-item" (dblclick)="onConnectClick(connection)">
+    <div class="connection-name">{{connection?.name}}</div>
+    <div class="connection-url"><i>{{connection?.url}}</i></div>
     <div ngbDropdown class="connection-options">
       <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
       <div ngbDropdownMenu>

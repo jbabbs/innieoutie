@@ -11,10 +11,16 @@ const initialState: Project = {
   connections: [],
   clients: [],
   nextClientNumber: 1,
+  activeClientTabIdx: 0,
 };
 
 export const ProjectReducer = (state: Project = initialState, action: Action): Project => {
   switch (action.type) {
+    case ProjectActions.SET_SELECTED_CLIENT_TAB:
+    {
+      const { idx } = <any>action;
+      return Object.assign({}, state, { activeClientTabIdx: idx })
+    }
     case ProjectActions.SET_PROJECT_NAME:
     {
       const name: string = (<SetProjectNameAction>action).name;

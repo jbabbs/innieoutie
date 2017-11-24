@@ -7,8 +7,6 @@ export interface Client {
   id: number;
   name: string;
   webSocket$: WebSocketSubject<string>,
-  subcription?: Subscription, // subscribing connects the socket
-  config: WebSocketSubjectConfig,
   connection: IConnection,
   messages: Array<ClientMessage>,
   connectedAtTime?: number; // unix timestamp
