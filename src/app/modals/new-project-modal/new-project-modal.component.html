@@ -6,8 +6,8 @@
 </div>
 <div class="modal-body">
   <label>Name</label>
-  <input [(ngModel)]="projectName" />
+  <input appFocus [(ngModel)]="projectName" />
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(projectName)">Save</button>
+  <button type="button" class="btn btn-outline-primary" (click)="activeModal.close(projectName)">Save</button>
 </div>

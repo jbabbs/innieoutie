@@ -8,8 +8,9 @@
     <div ngbDropdown class="connection-options">
       <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
       <div ngbDropdownMenu>
-        <button class="dropdown-item" (click)="onDeleteConnectionClick(connection)">Delete</button>
         <button class="dropdown-item" (click)="onConnectClick(connection)">Connect</button>
+        <button class="dropdown-item" (click)="onEditConnectionClick(connection)">Edit</button>
+        <button class="dropdown-item" (click)="onDeleteConnectionClick(connection)">Delete</button>
       </div>
     </div>
   </div>

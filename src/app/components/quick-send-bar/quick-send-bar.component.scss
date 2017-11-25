@@ -7,6 +7,11 @@
   align-content: center;
 }
 
+.stringify-label {
+  align-self: center;
+  margin: 0 0 0 $min-padding;
+}
+
 .text-input {
   flex-grow: 1;
 }

@@ -14,6 +14,17 @@ export const ConnectionsReducer = (state: Array<IConnection> = [], action: Actio
       const id = (<RemoveConnectionAction>action).id;
       return state.filter(con => con.id !== id);
     }
+    case ConnectionActions.UPDATE_CONNECTION:
+    {
+      const connection = (<AddConnectionAction>action).connection;
+      return state.map(con => {
+        if (con.id === connection.id) {
+          return Object.assign({}, con, connection);
+        } else {
+          return con;
+        }
+      });
+    }
     default:
     {
       return state;

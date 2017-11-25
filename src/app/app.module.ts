@@ -24,6 +24,7 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
 import { NewConnectionModalComponent } from './modals/new-connection-modal/new-connection-modal.component';
 import { WebSocketService } from './services/web-socket.service';
 import { NewMessageModalComponent } from './modals/new-message-modal/new-message-modal.component';
+import { FocusDirective } from './directives/focus.directive';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { NewMessageModalComponent } from './modals/new-message-modal/new-message
     MessagesTabComponent,
     NewConnectionModalComponent,
     NewMessageModalComponent,
+    FocusDirective,
   ],
   imports: [
     BrowserModule,

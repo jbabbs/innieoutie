@@ -23,7 +23,7 @@ export class WebSocketService {
       this.store.dispatch(clientOpened(id));
     };
     socket.onmessage = (msg: MessageEvent) => {
-      this.store.dispatch(receiveMessage(id, JSON.parse(msg.data)));
+      this.store.dispatch(receiveMessage(id, msg.data));
     }
     this.store.dispatch(reconnectClient(socket, id));
   }
@@ -38,15 +38,16 @@ export class WebSocketService {
       this.store.dispatch(clientOpened(id));
     };
     socket.onmessage = (msg: MessageEvent) => {
-      this.store.dispatch(receiveMessage(id, JSON.parse(msg.data)));
+      this.store.dispatch(receiveMessage(id, msg.data));
     }
     const client: Client = { socket, name, connection, id, messages: [] };
     this.store.dispatch(createClient(client));
   }
 
-  sendMessage(message: string, client: Client) {
-    client.socket.send(JSON.stringify(message));
-    this.store.dispatch(sendMessage(client.id, message));
+  sendMessage(message: string, client: Client, stringify?: boolean) {
+    const msg = stringify ? JSON.stringify(message) : message;
+    client.socket.send(msg);
+    this.store.dispatch(sendMessage(client.id, msg));
   }
 
   disconnectClient(client: Client) {

@@ -1,5 +1,6 @@
 export interface Message {
+  id: number,
   name: string,
-  type: 'json'|'string',
+  stringify: boolean,
   data: string,
 }

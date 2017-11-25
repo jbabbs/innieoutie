@@ -8,8 +8,9 @@
     <div ngbDropdown class="message-options">
       <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
       <div ngbDropdownMenu>
-        <button class="dropdown-item" (click)="onDeleteMessageClick(message)">Delete</button>
         <button class="dropdown-item" (click)="onSendMessageClick(message)">Send</button>
+        <button class="dropdown-item" (click)="onEditMessageClick(message)">Edit</button>
+        <button class="dropdown-item" (click)="onDeleteMessageClick(message)">Delete</button>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ import { AppState } from '../../redux/app.reducer';
 import { AppStore } from '../../redux/app.store';
 import { Message } from '../../redux/message/message.model';
 import { Client } from '../../redux/client/client.model';
+import { NewMessageModalComponent } from '../../modals/new-message-modal/new-message-modal.component';
 
 @Component({
   selector: 'app-messages-tab',
@@ -45,12 +46,34 @@ export class MessagesTabComponent implements OnInit, OnDestroy {
     }
   }
 
-  onNewClick() {
+  onEditMessageClick(oldMessage: Message) {
+    const modalRef = this.modalService.open(NewMessageModalComponent, {size: 'lg'});
+    modalRef.componentInstance.title = 'Edit Connection';
+    modalRef.componentInstance.initial = oldMessage;
+    modalRef.result.then(
+      newMessage => {
+        // make sure to keep same id
+        const msg = Object.assign({}, oldMessage, newMessage);
+        this.dbService.updateMessage(msg);
+      }
+    ).catch(err => {  });
+  }
 
+  onNewClick() {
+    const modalRef = this.modalService.open(NewMessageModalComponent, {size: 'lg'});
+    modalRef.result.then(
+      (messageOut: Message) => {
+        this.dbService.addMessageToCurrentProject(<any>messageOut);
+      }
+    ).catch(
+      err => {
+
+      }
+    );
   }
 
   onDeleteMessageClick(message: Message) {
-
+    this.dbService.deleteMessage(message.id);
   }
 
   onSendMessageClick(message: Message) {

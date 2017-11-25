@@ -13,6 +13,7 @@ import { AppState } from '../../redux/app.reducer';
 export class QuickSendBarComponent implements OnInit {
   @Input() client: Client;
   @Input() message: string;
+  @Input() stringify: boolean;
 
   constructor(
     private wsService: WebSocketService,
@@ -23,7 +24,7 @@ export class QuickSendBarComponent implements OnInit {
   }
 
   onSendClick($event) {
-    this.wsService.sendMessage(this.message, this.client);
+    this.wsService.sendMessage(this.message, this.client, this.stringify);
     $event.preventDefault();
   }
 
@@ -36,6 +37,6 @@ export class QuickSendBarComponent implements OnInit {
   }
 
   onEnterUp($event) {
-    this.wsService.sendMessage(this.message, this.client);
+    this.onSendClick($event);
   }
 }

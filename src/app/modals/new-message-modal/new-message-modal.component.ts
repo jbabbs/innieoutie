@@ -9,9 +9,10 @@ import { Message } from '../../redux/message/message.model';
   styleUrls: ['./new-message-modal.component.scss']
 })
 export class NewMessageModalComponent implements OnInit {
+  public title = 'New Message';
   public form: FormGroup;
   public errors: string;
-  @Input() public initial: Message;
+  public initial: any = { };
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
 
@@ -20,9 +21,9 @@ export class NewMessageModalComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       name: [this.initial.name, Validators.required],
-      type: [this.initial.type, Validators.required],
+      stringify: this.initial.stringify,
       data: [this.initial.data, Validators.required],
-    })
+    });
   }
 
   onSaveClick() {

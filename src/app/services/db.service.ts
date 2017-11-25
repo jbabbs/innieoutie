@@ -6,9 +6,9 @@ import { AppState } from '../redux/app.reducer';
 import { IProject } from '../db/project.interface';
 import { setCurrentProject } from '../redux/app.actions';
 import { IConnection } from '../db/connection.interface';
-import { createConnection, removeConnection } from '../redux/connection/connection.actions';
+import { createConnection, removeConnection, updateConnection } from '../redux/connection/connection.actions';
 import { IMessage } from '../db/message.interface';
-import { createMessage } from '../redux/message/message.actions';
+import { createMessage, deleteMessage, updateMessage } from '../redux/message/message.actions';
 
 @Injectable()
 export class DbService {
@@ -20,6 +20,7 @@ export class DbService {
   async createProjectAndSetCurrent(project: IProject) {
     const id = await db.projects.put(project);
     project.id = id;
+    console.log('project', project);
     this.store.dispatch(setCurrentProject(<any>project));
   }
 
@@ -27,6 +28,7 @@ export class DbService {
     await db.transaction('rw', db.projects, db.connections, async () => {
       return Promise.all([
         db.connections.where('projectId').equals(id).delete(),
+        db.messages.where('projectId').equals(id).delete(),
         db.projects.delete(id),
       ]);
     });
@@ -69,8 +71,23 @@ export class DbService {
     this.store.dispatch(createConnection(connection));
   }
 
+  async updateConnection(connection: IConnection) {
+    await db.connections.put(connection);
+    this.store.dispatch(updateConnection(connection));
+  }
+
+  async updateMessage(message: IMessage) {
+    await db.messages.put(message);
+    this.store.dispatch(updateMessage(message));
+  }
+
   async deleteConnection(connectionId: number) {
     await db.connections.delete(connectionId);
     this.store.dispatch(removeConnection(connectionId));
+  }
+
+  async deleteMessage(messageId: number) {
+    await db.messages.delete(messageId);
+    this.store.dispatch(deleteMessage(messageId));
   }
 }

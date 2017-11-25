@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">New Connection</h4>
+  <h4 class="modal-title">{{title}}</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Dismiss')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -9,7 +9,7 @@
     <div class="form-group row">
       <label for="connectionName" class="col-sm-2 col-form-label">Name</label>
       <div class="col-sm-8">
-        <input formControlName="name" type="text" class="form-control" id="connectionName">
+        <input appFocus formControlName="name" type="text" class="form-control" id="connectionName">
       </div>
       <div class="col-sm-2 col-form-label">
         <i>Required</i>
@@ -34,5 +34,5 @@
   <div class="alert alert-danger" *ngIf="errors">{{errors}}</div>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-dark" (click)="onSaveClick()">Save</button>
+  <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
 </div>

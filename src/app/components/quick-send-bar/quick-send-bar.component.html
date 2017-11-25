@@ -1,7 +1,8 @@
 <div class="quick-send-bar">
-  <select>
-    <option *ngFor="let option of ['String', 'JSON']">{{option}}</option>
-  </select>
-  <input class="text-input" [(ngModel)]="message" (keyup.enter)="onEnterUp($event)"/>
+  <input class="text-input" [(ngModel)]="message" (keydown.enter)="onEnterUp($event)"/>
   <button type="button" class="btn btn-primary" (click)="onSendClick($event)" [disabled]="isSendDisabled()">Send</button>
+  <label class="stringify-label">
+    stringify&nbsp;
+    <input class="stringify-input" type="checkbox" [checked]="stringify" (change)="stringify = !stringify">
+  </label>
 </div>

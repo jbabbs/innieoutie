@@ -6,6 +6,7 @@ import { Store } from 'redux';
 import { AppStore } from '../../redux/app.store';
 import { DbService } from '../../services/db.service';
 import { WebSocketService } from '../../services/web-socket.service';
+import { IConnection } from '../../db/connection.interface';
 
 @Component({
   selector: 'app-connections-tab',
@@ -40,11 +41,24 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
       connection => {
         this.dbService.addConnectionToCurrentProject(connection);
       }
-    ).catch(
-      err => {
+    ).catch(err => {  });
+  }
 
+  onEditConnectionClick(oldMessage: IConnection) {
+    const modalRef = this.modalService.open(NewConnectionModalComponent, {size: 'lg'});
+    modalRef.componentInstance.title = 'Edit Connection';
+    modalRef.componentInstance.initial = {
+      name: oldMessage.name,
+      protocol: oldMessage.protocolString,
+      url: oldMessage.url
+    };
+    modalRef.result.then(
+      newMessage => {
+        // make sure to keep same id
+        const c2 = Object.assign({}, oldMessage, newMessage);
+        this.dbService.updateConnection(c2);
       }
-    );
+    ).catch(err => {  });
   }
 
   onConnectClick(connection) {

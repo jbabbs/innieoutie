@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -10,17 +10,20 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 export class NewConnectionModalComponent implements OnInit {
   public form: FormGroup;
   public errors: string;
+  public title = 'New Connection';
+  public initial: any = { };
 
   constructor(public activeModal: NgbActiveModal, private fb: FormBuilder) {
-    this.form = fb.group({
-      name: ['', Validators.required],
-      url: ['demos.kaazing.com/echo', Validators.required],
-      protocolString: '',
-    })
+
   }
 
   ngOnInit() {
-
+    const { name, url, protocol } = this.initial;
+    this.form = this.fb.group({
+      name: [name || '', Validators.required],
+      url: [url || 'demos.kaazing.com/echo', Validators.required],
+      protocolString: protocol || '',
+    })
   }
 
   onSaveClick() {
