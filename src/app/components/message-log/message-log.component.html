@@ -4,6 +4,7 @@
 <div class="table-header">
   <div class="direction-col table-cell">&nbsp;</div>
   <div class="time-col table-cell">Time</div>
+  <div class="length-col table-cell">Length</div>
   <div class="data-col table-cell">Data</div>
   <div class="actions-col table-cell">&nbsp;</div>
 </div>
@@ -12,8 +13,17 @@
     <div class="table-row" *ngFor="let message of client.messages">
       <div class="direction-col table-cell">{{messageDirection(message)}}</div>
       <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
+      <div class="length-col table-cell">{{message.len}}</div>
       <div class="data-col table-cell">{{message.data}}</div>
-      <div class="actions-col table-cell"><i class="fa fa-ellipsis-v"></i></div>
+      <div class="actions-col table-cell">
+        <div ngbDropdown class="connection-options" placement="bottom-right">
+          <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
+          <div ngbDropdownMenu>
+            <button class="dropdown-item" (click)="onSaveMessageClick(message)">Save</button>
+            <button class="dropdown-item" (click)="onResendMessageClick(message)">Resend</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

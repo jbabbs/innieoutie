@@ -10,7 +10,6 @@ import {
 
 @Injectable()
 export class WebSocketService {
-
   constructor(
     @Inject(AppStore) private store: Store<AppState> | null
   ) { }
@@ -31,7 +30,7 @@ export class WebSocketService {
 
   createClientAndConnect(connection: IConnection) {
     const state = this.store.getState();
-    const id = state.currentProject.nextClientNumber;
+    const id = state.nextClientNumber;
     const name = `Client ${id}`;
     const url = `ws://${connection.url}`;
     const socket = new WebSocket(url, connection.protocolString || undefined);

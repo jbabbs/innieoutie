@@ -6,7 +6,7 @@ import { Client } from '../../redux/client/client.model';
 import { formatTimeSince } from '../../utils/time';
 import { WebSocketService } from '../../services/web-socket.service';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
-import { setSelectedClientTab } from '../../redux/project/project.actions';
+import { setSelectedClientTab } from '../../redux/app.actions';
 
 @Component({
   selector: 'app-client-pane',
@@ -42,7 +42,10 @@ export class ClientPaneComponent implements OnInit {
 
   getActiveTabId() {
     const state = this.store.getState();
-    return `client-tab-${state.currentProject.activeClientTabIdx}`;
+    if (!state.currentProject) {
+      return;
+    }
+    return `client-tab-${state.activeClientTabIdx}`;
   }
 
   onTabChange(event: NgbTabChangeEvent) {

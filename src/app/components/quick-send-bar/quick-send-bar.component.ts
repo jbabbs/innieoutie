@@ -34,4 +34,8 @@ export class QuickSendBarComponent implements OnInit {
     }
     return !this.message || !connected;
   }
+
+  onEnterUp($event) {
+    this.wsService.sendMessage(this.message, this.client);
+  }
 }

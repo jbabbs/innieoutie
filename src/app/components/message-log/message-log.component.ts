@@ -5,6 +5,12 @@ import { AppState } from '../../redux/app.reducer';
 import { Store } from 'redux';
 import { ClientMessage, ClientMessageDirection } from '../../redux/client/client-message.model';
 import { formatTime } from '../../utils/time';
+import { sendMessage } from '../../redux/client/client.actions';
+import { WebSocketService } from '../../services/web-socket.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NewMessageModalComponent } from '../../modals/new-message-modal/new-message-modal.component';
+import { DbService } from '../../services/db.service';
+import { Message } from '../../redux/message/message.model';
 
 @Component({
   selector: 'app-message-log',
@@ -15,12 +21,16 @@ export class MessageLogComponent implements OnInit, OnDestroy {
   @Input() public client: Client;
   private storeUnsubscribe: any;
 
-  constructor(@Inject(AppStore) private store: Store<AppState> | null) {
+  constructor(
+    @Inject(AppStore) private store: Store<AppState> | null,
+    private wsService: WebSocketService,
+    private dbService: DbService,
+    private modalService: NgbModal,
+  ) {
     this.storeUnsubscribe = this.store.subscribe(() => this.onStateChange());
   }
 
   ngOnInit() {
-    console.log('init this tab');
   }
 
   ngOnDestroy() {
@@ -45,6 +55,25 @@ export class MessageLogComponent implements OnInit, OnDestroy {
       default:
         return '';
     }
+  }
+
+  onSaveMessageClick(message: ClientMessage) {
+    const modalRef = this.modalService.open(NewMessageModalComponent, {size: 'lg'});
+    modalRef.componentInstance.initial = { data: message.data };
+    modalRef.result.then(
+      (messageOut: Message) => {
+          this.dbService.addMessageToCurrentProject(<any>messageOut);
+      }
+    ).catch(
+      err => {
+
+      }
+    );
+
+  }
+
+  onResendMessageClick(message: ClientMessage) {
+    this.wsService.sendMessage(message.data, this.client);
   }
 
 }

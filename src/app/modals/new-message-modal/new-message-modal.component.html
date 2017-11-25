@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title">New Message</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Dismiss')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="form-group row">
+      <label for="messageName" class="col-sm-2 col-form-label"><span class="pull-right">Name</span></label>
+      <div class="col-sm-6">
+        <input formControlName="name" type="text" class="form-control" id="messageName">
+      </div>
+      <label class="col-sm-2 col-form-label" for="messageType"><span class="pull-right">Type</span></label>
+      <div class="col-sm-2">
+        <select formControlName="type" class="form-control" id="messageType">
+          <option value="json">JSON</option>
+          <option value="string">string</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="messageData" class="col-sm-2 col-form-label"><span class="pull-right">Data</span></label>
+      <div class="col-sm-10">
+        <textarea formControlName="data" type="text" class="form-control" id="messageData" rows="12"></textarea>
+      </div>
+    </div>
+  </form>
+  <div class="alert alert-danger" *ngIf="errors">{{errors}}</div>
+</div>
+<div class="modal-footer clearfix">
+  <button type="button" class="pull-right btn btn-outline-dark" (click)="onSaveClick()">Save</button>
+</div>

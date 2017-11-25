@@ -4,23 +4,18 @@ import { ProjectActions, SetProjectNameAction } from './project.actions';
 import { ConnectionsReducer } from '../connection/connections.reducer';
 import { ClientsReducer } from '../client/clients.reducer';
 import { ClientActions } from '../client/client.actions';
+import { MessagesReducer } from '../message/message.reducer';
 
 const initialState: Project = {
   id: null,
   name: null,
   connections: [],
   clients: [],
-  nextClientNumber: 1,
-  activeClientTabIdx: 0,
+  messages: [],
 };
 
 export const ProjectReducer = (state: Project = initialState, action: Action): Project => {
   switch (action.type) {
-    case ProjectActions.SET_SELECTED_CLIENT_TAB:
-    {
-      const { idx } = <any>action;
-      return Object.assign({}, state, { activeClientTabIdx: idx })
-    }
     case ProjectActions.SET_PROJECT_NAME:
     {
       const name: string = (<SetProjectNameAction>action).name;
@@ -29,14 +24,14 @@ export const ProjectReducer = (state: Project = initialState, action: Action): P
     case ClientActions.CREATE_CLIENT:
     {
       const clients = ClientsReducer(state.clients, action);
-      const nextClientNumber = state.nextClientNumber + 1;
-      return Object.assign({}, state, { nextClientNumber, clients });
+      return Object.assign({}, state, { clients });
     }
     default:
     {
       const clients = ClientsReducer(state.clients, action);
       const connections = ConnectionsReducer(state.connections, action);
-      return Object.assign({}, state, { clients, connections });
+      const messages = MessagesReducer(state.messages, action);
+      return Object.assign({}, state, { clients, connections, messages });
     }
   }
 };

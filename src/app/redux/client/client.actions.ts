@@ -56,7 +56,7 @@ export const sendMessage: ActionCreator<SendMessageAction> = (clientId: number, 
     data,
     time: +new Date(),
     direction: ClientMessageDirection.SENT,
-    size: data.length,
+    len: data.length,
   };
 
   return {
@@ -76,7 +76,7 @@ export const receiveMessage: ActionCreator<ReceiveMessageAction> = (clientId: nu
     data,
     time: +new Date(),
     direction: ClientMessageDirection.RECEIVED,
-    size: data.length,
+    len: data.length,
   };
 
   return {

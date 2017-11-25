@@ -8,8 +8,20 @@ $item-border: 1px solid grey;
 
 .message-item {
   &:last-child {
-    border-bottom: $item-border;
+    border-bottom: 1px solid $grid-border-color;
   }
-  border-top: $item-border;
-  padding: $min-padding;
+  border-top: 1px solid $grid-border-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.message-name {
+  padding-left: $min-padding;
+}
+
+.message-data {
+  text-align: right;
+  flex-grow: 1;
+  color: grey;
 }

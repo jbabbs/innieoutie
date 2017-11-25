@@ -7,6 +7,8 @@ import { IProject } from '../db/project.interface';
 import { setCurrentProject } from '../redux/app.actions';
 import { IConnection } from '../db/connection.interface';
 import { createConnection, removeConnection } from '../redux/connection/connection.actions';
+import { IMessage } from '../db/message.interface';
+import { createMessage } from '../redux/message/message.actions';
 
 @Injectable()
 export class DbService {
@@ -18,7 +20,7 @@ export class DbService {
   async createProjectAndSetCurrent(project: IProject) {
     const id = await db.projects.put(project);
     project.id = id;
-    this.store.dispatch(setCurrentProject(project));
+    this.store.dispatch(setCurrentProject(<any>project));
   }
 
   async deleteProjectAndUnsetCurrent(id: number) {
@@ -36,8 +38,22 @@ export class DbService {
     // It is possible there are no projects created
     if (project) {
       project.connections = await db.connections.where('projectId').equals(project.id).toArray() || [];
-      this.store.dispatch(setCurrentProject(project));
+      project.messages = await db.messages.where('projectId').equals(project.id).toArray() || [];
+      this.store.dispatch(setCurrentProject(<any>project));
     }
+  }
+
+  async addMessageToCurrentProject(message: IMessage) {
+    const state = this.store.getState();
+    if (!state.currentProject) {
+      throw new Error('No current project to add message to');
+    }
+    await db.transaction('rw', db.projects, db.messages, async() => {
+      message.projectId = state.currentProject.id;
+      const id = await db.messages.put(message);
+      message.id = id;
+    });
+    this.store.dispatch(createMessage(message));
   }
 
   async addConnectionToCurrentProject(connection: IConnection) {

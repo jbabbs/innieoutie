@@ -2,8 +2,16 @@
   <button class="pull-right btn btn-outline-primary" (click)="onNewClick()">New</button>
 </div>
 <div class="message-items">
-  <div *ngFor="let message of messageItems" class="message-item">
-    {{message?.name}} 1
+  <div *ngFor="let message of messages" class="message-item" (dblclick)="onSendMessageClick(message)">
+    <div class="message-name">{{message?.name}}</div>
+    <div class="message-data"><i>{{message?.data}}</i></div>
+    <div ngbDropdown class="message-options">
+      <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
+      <div ngbDropdownMenu>
+        <button class="dropdown-item" (click)="onDeleteMessageClick(message)">Delete</button>
+        <button class="dropdown-item" (click)="onSendMessageClick(message)">Send</button>
+      </div>
+    </div>
   </div>
 </div>
 

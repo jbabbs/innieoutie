@@ -2,6 +2,6 @@
   <select>
     <option *ngFor="let option of ['String', 'JSON']">{{option}}</option>
   </select>
-  <input class="text-input" [(ngModel)]="message"/>
+  <input class="text-input" [(ngModel)]="message" (keyup.enter)="onEnterUp($event)"/>
   <button type="button" class="btn btn-primary" (click)="onSendClick($event)" [disabled]="isSendDisabled()">Send</button>
 </div>

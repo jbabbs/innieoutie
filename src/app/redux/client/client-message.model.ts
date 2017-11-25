@@ -6,6 +6,6 @@ export enum ClientMessageDirection {
 export interface ClientMessage {
   direction: ClientMessageDirection;
   data: string;
-  size: number;
+  len: number;
   time: number;
 }

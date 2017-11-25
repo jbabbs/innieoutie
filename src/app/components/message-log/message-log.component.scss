@@ -4,6 +4,17 @@ app-message-log {
   padding: $min-padding;
 }
 
+.length-col {
+  min-width: 4.5rem;
+  text-align: right;
+}
+
+.dropdown-trigger {
+  min-height: 0;
+  height: inherit;
+  line-height: 0;
+}
+
 .title {
   padding: $min-padding;
 }
@@ -25,10 +36,11 @@ app-message-log {
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid #cdcdcd;
+  align-items: center;
 }
 
 .time-col {
-  min-width: 7rem;
+  min-width: 5.5rem;
   text-align: right;
 }
 

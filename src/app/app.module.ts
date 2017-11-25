@@ -23,6 +23,7 @@ import { ConnectionsTabComponent } from './components/connections-tab/connection
 import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
 import { NewConnectionModalComponent } from './modals/new-connection-modal/new-connection-modal.component';
 import { WebSocketService } from './services/web-socket.service';
+import { NewMessageModalComponent } from './modals/new-message-modal/new-message-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { WebSocketService } from './services/web-socket.service';
     ConnectionsTabComponent,
     MessagesTabComponent,
     NewConnectionModalComponent,
+    NewMessageModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ import { WebSocketService } from './services/web-socket.service';
   entryComponents: [
     NewProjectModalComponent,
     NewConnectionModalComponent,
+    NewMessageModalComponent,
     ErrorModalComponent,
   ]
 })
