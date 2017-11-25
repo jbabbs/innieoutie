@@ -20,7 +20,6 @@ export class DbService {
   async createProjectAndSetCurrent(project: IProject) {
     const id = await db.projects.put(project);
     project.id = id;
-    console.log('project', project);
     this.store.dispatch(setCurrentProject(<any>project));
   }
 
