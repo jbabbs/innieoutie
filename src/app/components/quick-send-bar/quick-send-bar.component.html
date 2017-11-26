@@ -1,8 +1,18 @@
 <div class="quick-send-bar">
-  <input class="text-input" [(ngModel)]="message" (keydown.enter)="onEnterUp($event)"/>
-  <button type="button" class="btn btn-primary" (click)="onSendClick($event)" [disabled]="isSendDisabled()">Send</button>
-  <label class="stringify-label">
-    stringify&nbsp;
-    <input class="stringify-input" type="checkbox" [checked]="stringify" (change)="stringify = !stringify">
-  </label>
+  <div class="input-group">
+    <span class="input-group-addon">
+      <label class="stringify-label">
+        Validate JSON&nbsp;
+        <input class="stringify-input" type="checkbox" [checked]="validate" (change)="validate = !validate">
+      </label>
+    </span>
+    <input #input type="text" class="form-control text-input" [(ngModel)]="message" trigger="manual"
+           (keydown.enter)="onEnterUp($event)" [ngbTooltip]="shouldShowValidationMessage() && validationMessage"/>
+    <span class="input-group-addon validation-addon" *ngIf="validate">
+      <i class="fa" [ngClass]="getValidationIcon()" [style.color]="getValidationColor()"></i>
+    </span>
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-primary" (click)="onSendClick($event)" [disabled]="isSendDisabled()">Send</button>
+    </span>
+  </div>
 </div>

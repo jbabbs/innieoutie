@@ -18,13 +18,12 @@ export class DbService {
   }
 
   async createProjectAndSetCurrent(project: IProject) {
-    const id = await db.projects.put(project);
-    project.id = id;
+    project.id = await db.projects.put(project);
     this.store.dispatch(setCurrentProject(<any>project));
   }
 
   async deleteProjectAndUnsetCurrent(id: number) {
-    await db.transaction('rw', db.projects, db.connections, async () => {
+    await db.transaction('rw', db.projects, db.connections, db.messages, async () => {
       return Promise.all([
         db.connections.where('projectId').equals(id).delete(),
         db.messages.where('projectId').equals(id).delete(),
@@ -49,11 +48,8 @@ export class DbService {
     if (!state.currentProject) {
       throw new Error('No current project to add message to');
     }
-    await db.transaction('rw', db.projects, db.messages, async() => {
-      message.projectId = state.currentProject.id;
-      const id = await db.messages.put(message);
-      message.id = id;
-    });
+    message.projectId = state.currentProject.id;
+    message.id = await db.messages.put(message);
     this.store.dispatch(createMessage(message));
   }
 
@@ -62,11 +58,8 @@ export class DbService {
     if (!state.currentProject) {
       throw new Error('No current project to add connection to');
     }
-    await db.transaction('rw', db.projects, db.connections, async() => {
-      connection.projectId = state.currentProject.id;
-      const id = await db.connections.put(connection);
-      connection.id = id;
-    });
+    connection.projectId = state.currentProject.id;
+    connection.id = await db.connections.put(connection);
     this.store.dispatch(createConnection(connection));
   }
 
