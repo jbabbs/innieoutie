@@ -5,9 +5,8 @@ import { AppState } from '../../redux/app.reducer';
 import { Store } from 'redux';
 import { ClientMessage, ClientMessageDirection } from '../../redux/client/client-message.model';
 import { formatTime } from '../../utils/time';
-import { sendMessage } from '../../redux/client/client.actions';
 import { WebSocketService } from '../../services/web-socket.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NewMessageModalComponent } from '../../modals/new-message-modal/new-message-modal.component';
 import { DbService } from '../../services/db.service';
 import { Message } from '../../redux/message/message.model';
@@ -59,7 +58,7 @@ export class MessageLogComponent implements OnInit, OnDestroy {
 
   onSaveMessageClick(message: ClientMessage) {
     const modalRef = this.modalService.open(NewMessageModalComponent, {size: 'lg'});
-    modalRef.componentInstance.initial = { data: message.data };
+    modalRef.componentInstance.formValue = { string: message.data, type: 'string' };
     modalRef.result.then(
       (messageOut: Message) => {
           this.dbService.addMessageToCurrentProject(<any>messageOut);

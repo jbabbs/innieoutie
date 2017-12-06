@@ -4,7 +4,7 @@ import { ProjectActions, SetProjectNameAction } from './project.actions';
 import { ConnectionsReducer } from '../connection/connections.reducer';
 import { ClientsReducer } from '../client/clients.reducer';
 import { ClientActions } from '../client/client.actions';
-import { MessagesReducer } from '../message/message.reducer';
+import { MessagesReducer } from '../message/messages.reducer';
 
 const initialState: Project = {
   id: null,

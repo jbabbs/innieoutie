@@ -29,7 +29,7 @@ export class NewConnectionModalComponent implements OnInit {
   onSaveClick() {
     this.errors = '';
     if (!this.form.valid) {
-      this.errors = 'Form not valid';
+      this.errors = 'A required field is missing';
       return;
     }
     this.activeModal.close(this.form.value);

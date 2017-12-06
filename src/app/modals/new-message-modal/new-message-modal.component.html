@@ -5,25 +5,34 @@
   </button>
 </div>
 <div class="modal-body">
-  <form [formGroup]="form">
-    <div class="form-group row">
-      <label for="messageName" class="col-sm-2 col-form-label"><span class="pull-right">Name</span></label>
-      <div class="col-sm-6">
-        <input appFocus formControlName="name" type="text" class="form-control" id="messageName">
-      </div>
-      <label class="col-sm-2 col-form-label" for="stringify"><span class="pull-right">stringify</span></label>
-      <div class="col-sm-2" class="stringify-container">
-        <input id="stringify" type="checkbox" formControlName="stringify">
-      </div>
+  <div class="form-group row">
+    <label for="messageName" class="col-sm-2 col-form-label"><span class="pull-right">Name</span></label>
+    <div class="col-sm-6">
+      <input appFocus formControlName="name" type="text" class="form-control" id="messageName">
     </div>
-    <div class="form-group row">
-      <label for="messageData" class="col-sm-2 col-form-label"><span class="pull-right">Data</span></label>
-      <div class="col-sm-10">
-        <textarea formControlName="data" type="text" class="form-control" id="messageData" rows="12"></textarea>
-      </div>
+    <label class="col-sm-2 col-form-label" for="type"><span class="pull-right">Type</span></label>
+    <div class="col-sm-2">
+      <select class="form-control" id="type" type="checkbox">
+        <option value="string">String</option>
+        <option value="file">File</option>
+      </select>
     </div>
-  </form>
-  <div class="alert alert-danger" *ngIf="errors">{{errors}}</div>
+  </div>
+  <!-- Hide elements so we can retain the value when switching types -->
+  <div [hidden]="type === 'file'" class="form-group row">
+    <label for="string" class="col-sm-2 col-form-label"><span class="pull-right">Data</span></label>
+    <div class="col-sm-10">
+      <textarea required formControlName="string" type="string" class="form-control" id="string" rows="12"></textarea>
+      <div class="alert alert-danger" *ngIf="errors">{{errors}}</div>
+    </div>
+  </div>
+  <div [hidden]="type === 'string'" class="form-group row">
+    <label for="file" class="col-sm-2 col-form-label"><span class="pull-right">Data</span></label>
+    <div class="col-sm-10">
+      <input required type="file" class="form-control" id="file" (change)="onFileChange($event.target.files[0])">
+    </div>
+  </div>
+
 </div>
 <div class="modal-footer clearfix">
   <button type="button" class="pull-right btn btn-outline-primary" (click)="onSaveClick()">Save</button>

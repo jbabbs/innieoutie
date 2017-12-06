@@ -105,7 +105,6 @@ export class QuickSendBarComponent implements OnInit {
   }
 
   shouldShowValidationMessage() {
-    console.log()
     return this.validate && this.validationState === 'invalid';
   }
 }

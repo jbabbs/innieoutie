@@ -16,7 +16,6 @@ import { appStoreProviders } from './redux/app.store';
 import { DbService } from './services/db.service';
 import { ProjectPaneComponent } from './components/project-pane/project-pane.component';
 import { ClientPaneComponent } from './components/client-pane/client-pane.component';
-import { NetworkLogComponent } from './components/network-log/network-log.component';
 import { MessageLogComponent } from './components/message-log/message-log.component';
 import { QuickSendBarComponent } from './components/quick-send-bar/quick-send-bar.component';
 import { ConnectionsTabComponent } from './components/connections-tab/connections-tab.component';
@@ -33,7 +32,6 @@ import { FocusDirective } from './directives/focus.directive';
     ErrorModalComponent,
     ProjectPaneComponent,
     ClientPaneComponent,
-    NetworkLogComponent,
     MessageLogComponent,
     QuickSendBarComponent,
     ConnectionsTabComponent,

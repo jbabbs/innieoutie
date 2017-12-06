@@ -1,21 +1,16 @@
 import { Action, Reducer } from 'redux';
 import { Project } from './project/project.model';
 import { ProjectReducer } from './project/project.reducer';
-import { Prefs } from './prefs/prefs.model';
-import { PrefsReducer } from './prefs/prefs.reducer';
 import { AppActions } from './app.actions';
-import { ProjectActions } from './project/project.actions';
 import { ClientActions } from './client/client.actions';
 
 export interface AppState {
-  prefs: Prefs;
   currentProject?: Project;
   nextClientNumber: number;
   activeClientTabIdx: number;
 }
 
 const initialState: AppState = {
-  prefs: { },
   currentProject: null,
   nextClientNumber: 1,
   activeClientTabIdx: 0,
@@ -41,9 +36,8 @@ export const appReducer: Reducer<AppState> = (state: AppState = initialState, ac
     }
     default:
     {
-      const prefs = PrefsReducer(state.prefs, action);
       const currentProject = state.currentProject === null ? null : ProjectReducer(state.currentProject, action);
-      return Object.assign({}, state, { prefs, currentProject });
+      return Object.assign({}, state, { currentProject });
     }
   }
 };

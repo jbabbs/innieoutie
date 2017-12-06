@@ -44,10 +44,9 @@ export class WebSocketService {
     this.store.dispatch(createClient(client));
   }
 
-  sendMessage(message: string, client: Client, stringify?: boolean) {
-    const msg = stringify ? JSON.stringify(message) : message;
-    client.socket.send(msg);
-    this.store.dispatch(sendMessage(client.id, msg));
+  sendMessage(message: string, client: Client) {
+    client.socket.send(message);
+    this.store.dispatch(sendMessage(client.id, message));
   }
 
   disconnectClient(client: Client) {

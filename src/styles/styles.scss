@@ -35,7 +35,7 @@ html, body {
 }
 
 // Nasty Flex box stuff goes here, everything else should be encapsulated inside the component css
-// Consider using `display: grid`
+// TODO: Consider using `display: grid`
 app-project-pane {
   height: 100%;
   display: flex;
@@ -90,10 +90,6 @@ app-client-pane {
             .logs {
               flex-grow: 1;
               display: flex;
-
-              app-network-log {
-                flex: 1;
-              }
 
               app-message-log {
                 flex: 1;

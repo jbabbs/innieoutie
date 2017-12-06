@@ -15,12 +15,10 @@
             <div class="connection-actions">
               <button class="btn btn-primary" (click)="onDisconnectClick(client)" *ngIf="shouldShowDisconnect(client)">Disconnect</button>
               <button class="btn btn-primary" (click)="onConnectClick(client)" *ngIf="shouldShowConnect(client)">Connect</button>
-              <!--<button class="btn btn-primary" (click)="onReconnectClick(client)">Reconnect</button>-->
             </div>
           </div>
           <div class="logs">
             <app-message-log class="message-log" [client]="client"></app-message-log>
-            <!--<app-network-log class="network-log" [client]="client"></app-network-log>-->
           </div>
           <app-quick-send-bar class="quick-bar" [client]="client"></app-quick-send-bar>
         </div>

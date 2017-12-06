@@ -3,5 +3,5 @@ export interface IMessage {
   projectId: number;
   name: string;
   data: string;
-  stringify: boolean;
+  type: string;
 }

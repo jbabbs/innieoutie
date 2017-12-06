@@ -1,6 +1,6 @@
 export interface Message {
   id: number,
   name: string,
-  stringify: boolean,
   data: string,
+  type: string, // string or file
 }
