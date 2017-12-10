@@ -13,7 +13,7 @@
     <div class="table-row" *ngFor="let message of client.messages">
       <div class="direction-col table-cell">{{messageDirection(message)}}</div>
       <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
-      <div class="length-col table-cell">{{message.len}}</div>
+      <div class="length-col table-cell">{{message.len | bytes}}</div>
       <div class="data-col table-cell">{{message.data}}</div>
       <div class="actions-col table-cell">
         <div ngbDropdown class="connection-options" placement="bottom-right">

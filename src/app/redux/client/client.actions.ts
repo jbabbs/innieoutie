@@ -1,6 +1,5 @@
 import { Action, ActionCreator } from 'redux';
 import { Client } from './client.model';
-import { Subscription } from 'rxjs/Subscription';
 import { ClientMessage, ClientMessageDirection } from './client-message.model';
 
 export enum ClientActions {
@@ -51,7 +50,7 @@ export interface SendMessageAction extends Action {
   message: ClientMessage;
 }
 
-export const sendMessage: ActionCreator<SendMessageAction> = (clientId: number, data: string | File) => {
+export const sendMessage: ActionCreator<SendMessageAction> = (clientId: number, data: any) => {
   const message: ClientMessage = {
     data,
     time: +new Date(),
@@ -71,7 +70,7 @@ export interface ReceiveMessageAction extends Action {
   message: ClientMessage;
 }
 
-export const receiveMessage: ActionCreator<ReceiveMessageAction> = (clientId: number, data: string | Blob) => {
+export const receiveMessage: ActionCreator<ReceiveMessageAction> = (clientId: number, data: any) => {
   const message: ClientMessage = {
     data,
     time: +new Date(),

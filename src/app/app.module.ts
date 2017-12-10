@@ -24,6 +24,7 @@ import { NewConnectionModalComponent } from './modals/new-connection-modal/new-c
 import { WebSocketService } from './services/web-socket.service';
 import { NewMessageModalComponent } from './modals/new-message-modal/new-message-modal.component';
 import { FocusDirective } from './directives/focus.directive';
+import { BytesPipe } from './pipes/bytes.pipe';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { FocusDirective } from './directives/focus.directive';
     NewConnectionModalComponent,
     NewMessageModalComponent,
     FocusDirective,
+    BytesPipe,
   ],
   imports: [
     BrowserModule,

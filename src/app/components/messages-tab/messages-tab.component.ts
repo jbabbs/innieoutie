@@ -48,7 +48,7 @@ export class MessagesTabComponent implements OnInit, OnDestroy {
 
   onEditMessageClick(oldMessage: Message) {
     const modalRef = this.modalService.open(NewMessageModalComponent, {size: 'lg'});
-    modalRef.componentInstance.title = 'Edit Connection';
+    modalRef.componentInstance.title = 'Edit Message';
     modalRef.componentInstance.initial = oldMessage;
     modalRef.result.then(
       newMessage => {

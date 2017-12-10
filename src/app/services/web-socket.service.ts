@@ -44,7 +44,7 @@ export class WebSocketService {
     this.store.dispatch(createClient(client));
   }
 
-  sendMessage(message: string | File, client: Client) {
+  sendMessage(message: any, client: Client) {
     client.socket.send(message);
     this.store.dispatch(sendMessage(client.id, message));
   }
