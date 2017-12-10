@@ -1,6 +1,6 @@
 import { app, BrowserWindow, screen } from 'electron';
+import './src/main-proc/ws-server';
 import { setMenu } from './src/menus';
-import * as path from 'path';
 
 let win, serve;
 const args = process.argv.slice(1);
