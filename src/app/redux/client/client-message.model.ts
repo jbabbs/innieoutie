@@ -5,7 +5,7 @@ export enum ClientMessageDirection {
 
 export interface ClientMessage {
   direction: ClientMessageDirection;
-  data: string;
+  data: string | Blob | File;
   len: number;
   time: number;
 }

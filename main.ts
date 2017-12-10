@@ -44,7 +44,7 @@ function createWindow() {
     win = null;
   });
 
-  setMenu();
+  //setMenu();
 }
 
 try {

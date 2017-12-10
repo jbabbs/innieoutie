@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Message } from '../../redux/message/message.model';
+import { IMessage } from '../../db/message.interface';
 
 @Component({
   selector: 'app-new-message-modal',
@@ -67,7 +68,13 @@ export class NewMessageModalComponent implements OnInit {
       return;
     }
 
-    this.activeModal.close(this.formValue);
+    const { type, string, file, name } = this.formValue;
+    const ret: any = {
+      data: type === 'string' ? string : file,
+      name,
+      type,
+    };
+    this.activeModal.close(ret);
   }
 
 }

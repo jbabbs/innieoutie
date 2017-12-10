@@ -62,8 +62,8 @@ export class MessagesTabComponent implements OnInit, OnDestroy {
   onNewClick() {
     const modalRef = this.modalService.open(NewMessageModalComponent, {size: 'lg'});
     modalRef.result.then(
-      (messageOut: Message) => {
-        this.dbService.addMessageToCurrentProject(<any>messageOut);
+      async (messageOut: Message) => {
+        await this.dbService.addMessageToCurrentProject(<any>messageOut);
       }
     ).catch(
       err => {

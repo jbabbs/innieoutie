@@ -51,12 +51,12 @@ export interface SendMessageAction extends Action {
   message: ClientMessage;
 }
 
-export const sendMessage: ActionCreator<SendMessageAction> = (clientId: number, data: string) => {
+export const sendMessage: ActionCreator<SendMessageAction> = (clientId: number, data: string | File) => {
   const message: ClientMessage = {
     data,
     time: +new Date(),
     direction: ClientMessageDirection.SENT,
-    len: data.length,
+    len: data.length || data.size,
   };
 
   return {
@@ -71,12 +71,12 @@ export interface ReceiveMessageAction extends Action {
   message: ClientMessage;
 }
 
-export const receiveMessage: ActionCreator<ReceiveMessageAction> = (clientId: number, data: string) => {
+export const receiveMessage: ActionCreator<ReceiveMessageAction> = (clientId: number, data: string | Blob) => {
   const message: ClientMessage = {
     data,
     time: +new Date(),
     direction: ClientMessageDirection.RECEIVED,
-    len: data.length,
+    len: data.length || data.size,
   };
 
   return {
