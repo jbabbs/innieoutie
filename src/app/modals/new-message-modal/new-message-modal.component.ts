@@ -11,7 +11,7 @@ import { IMessage } from '../../db/message.interface';
 })
 export class NewMessageModalComponent implements OnInit {
   public title: 'New Message'|'Edit Message' = 'New Message';
-  public errors: { [key: string]: string } = { file: '', string: '', name: '' };
+  public errors: { [key: string]: string } = { file: '', string: '', name: '', type: '' };
   public formValue = { file: null, type: 'string', string: '', name: '' };
 
   constructor(public activeModal: NgbActiveModal) {
@@ -58,7 +58,6 @@ export class NewMessageModalComponent implements OnInit {
     if (!name) {
       this.errors.name = 'Name cannot be blank';
     }
-    console.log(this.errors);
   }
 
   onSaveClick() {

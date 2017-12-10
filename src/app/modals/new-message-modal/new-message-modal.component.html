@@ -9,6 +9,7 @@
     <label for="messageName" class="col-sm-2 col-form-label"><span class="pull-right">Name</span></label>
     <div class="col-sm-6">
       <input appFocus [(ngModel)]="formValue.name" type="text" class="form-control" id="messageName">
+      <div class="alert alert-danger" *ngIf="errors.name">{{errors.name}}</div>
     </div>
     <label class="col-sm-2 col-form-label" for="type"><span class="pull-right">Type</span></label>
     <div class="col-sm-2">
@@ -16,6 +17,7 @@
         <option value="string">String</option>
         <option value="file">File</option>
       </select>
+      <div class="alert alert-danger" *ngIf="errors.type">{{errors.type}}</div>
     </div>
   </div>
   <!-- Hide elements so we can retain the value when switching types -->
@@ -23,7 +25,7 @@
     <label for="string" class="col-sm-2 col-form-label"><span class="pull-right">Data</span></label>
     <div class="col-sm-10">
       <textarea required [(ngModel)]="formValue.string" type="string" class="form-control" id="string" rows="12"></textarea>
-      <div class="alert alert-danger" *ngIf="errors.file">{{errors.file}}</div>
+      <div class="alert alert-danger" *ngIf="errors.string">{{errors.string}}</div>
     </div>
   </div>
   <div [hidden]="formValue.type === 'string'" class="form-group row">
