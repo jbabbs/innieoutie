@@ -49,7 +49,18 @@ export class MessagesTabComponent implements OnInit, OnDestroy {
   onEditMessageClick(oldMessage: Message) {
     const modalRef = this.modalService.open(NewMessageModalComponent, {size: 'lg'});
     modalRef.componentInstance.title = 'Edit Message';
-    modalRef.componentInstance.initial = oldMessage;
+    const { name, data, type } = oldMessage;
+    const val: any = {
+      name,
+      type,
+    };
+    if (type === 'string') {
+      val.string = data;
+    }
+    if (type === 'file') {
+      val.file = data;
+    }
+    modalRef.componentInstance.formValue = val;
     modalRef.result.then(
       newMessage => {
         // make sure to keep same id

@@ -22,7 +22,7 @@
   <div [hidden]="formValue.type === 'file'" class="form-group row">
     <label for="string" class="col-sm-2 col-form-label"><span class="pull-right">Data</span></label>
     <div class="col-sm-10">
-      <textarea required [(ngModel)]="string" type="string" class="form-control" id="string" rows="12"></textarea>
+      <textarea required [(ngModel)]="formValue.string" type="string" class="form-control" id="string" rows="12"></textarea>
       <div class="alert alert-danger" *ngIf="errors.file">{{errors.file}}</div>
     </div>
   </div>

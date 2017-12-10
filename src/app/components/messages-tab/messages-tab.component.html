@@ -6,7 +6,7 @@
     <div class="message-name">{{message?.name}}</div>
     <div class="message-data">
       <i *ngIf="message.type === 'string'">{{message?.data}}</i>
-      <i *ngIf="message.type === 'file'">{{ message?.data?.name}}</i>
+      <i *ngIf="message.type === 'file'">{{message?.data?.name}}</i>
     </div>
     <div ngbDropdown class="message-options">
       <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>

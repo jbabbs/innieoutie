@@ -25,6 +25,7 @@ import { WebSocketService } from './services/web-socket.service';
 import { NewMessageModalComponent } from './modals/new-message-modal/new-message-modal.component';
 import { FocusDirective } from './directives/focus.directive';
 import { BytesPipe } from './pipes/bytes.pipe';
+import { BeautifyJsonPipe } from './pipes/beautify-json.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { BytesPipe } from './pipes/bytes.pipe';
     NewMessageModalComponent,
     FocusDirective,
     BytesPipe,
+    BeautifyJsonPipe,
   ],
   imports: [
     BrowserModule,

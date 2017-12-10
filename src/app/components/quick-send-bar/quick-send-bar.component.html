@@ -1,8 +1,8 @@
 <div class="quick-send-bar">
   <div class="input-group">
-    <span class="input-group-addon">
+    <span class="input-group-addon" container="body" [ngbTooltip]="'Input must be valid json before message can be sent'">
       <label class="validate-label">
-        Validate JSON&nbsp;
+        JSON&nbsp;
         <input type="checkbox" [checked]="validate" (change)="validate = !validate">
       </label>
     </span>

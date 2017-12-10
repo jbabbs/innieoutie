@@ -58,6 +58,7 @@ export class NewMessageModalComponent implements OnInit {
     if (!name) {
       this.errors.name = 'Name cannot be blank';
     }
+    console.log(this.errors);
   }
 
   onSaveClick() {

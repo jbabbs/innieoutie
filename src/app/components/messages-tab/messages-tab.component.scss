@@ -24,4 +24,7 @@ $item-border: 1px solid grey;
   text-align: right;
   flex-grow: 1;
   color: grey;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

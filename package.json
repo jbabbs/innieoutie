@@ -108,9 +108,11 @@
     "dexie": "^2.0.1",
     "enhanced-resolve": "3.3.0",
     "font-awesome": "4.7.0",
+    "json-beautify": "^1.0.1",
     "redux": "^3.7.2",
     "reselect": "^3.0.1",
     "rxjs": "5.4.3",
+    "ws": "^3.3.2",
     "zone.js": "0.8.17"
   },
   "devDependencies": {

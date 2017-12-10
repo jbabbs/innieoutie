@@ -36,7 +36,6 @@ app-message-log {
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid #cdcdcd;
-  align-items: center;
 }
 
 .time-col {
@@ -46,6 +45,9 @@ app-message-log {
 
 .data-col {
   flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .direction-col {
