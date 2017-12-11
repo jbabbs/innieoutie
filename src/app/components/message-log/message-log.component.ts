@@ -75,4 +75,16 @@ export class MessageLogComponent implements OnInit, OnDestroy {
     this.wsService.sendMessage(message.data, this.client);
   }
 
+  fileContents(data: any) {
+    if (!data) {
+      return '';
+    }
+    if (data.name) {
+      return data.name;
+    }
+    if (data.size) {
+      return `Blob Data`;
+    }
+  }
+
 }

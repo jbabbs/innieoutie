@@ -15,7 +15,12 @@
       <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
       <div class="length-col table-cell">{{message.len | bytes}}</div>
       <div class="data-col table-cell" (dblclick)="message.beautify = !message.beautify">
-        <code [style.white-space]="message.beautify ? 'pre-wrap' : 'nowrap'"><i class="fa" [ngClass]="message.beautify ? 'fa-caret-down' : 'fa-caret-right'"></i>&nbsp;<br *ngIf="message.beautify">{{ message.beautify ? (message?.data | beautifyJson) : message?.data}}</code>
+        <ng-container *ngIf="message.type === 'string'">
+          <code [style.white-space]="message.beautify ? 'pre-wrap' : 'nowrap'"><i class="fa" [ngClass]="message.beautify ? 'fa-caret-down' : 'fa-caret-right'"></i>&nbsp;<br *ngIf="message.beautify">{{ message.beautify ? (message?.data | beautifyJson) : message?.data}}</code>
+        </ng-container>
+        <ng-container *ngIf="message.type !== 'string'">
+          {{fileContents(message?.data)}}
+        </ng-container>
       </div>
       <div class="actions-col table-cell">
         <div ngbDropdown class="connection-options" placement="bottom-right">
