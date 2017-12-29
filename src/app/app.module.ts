@@ -26,6 +26,7 @@ import { NewMessageModalComponent } from './modals/new-message-modal/new-message
 import { FocusDirective } from './directives/focus.directive';
 import { BytesPipe } from './pipes/bytes.pipe';
 import { BeautifyJsonPipe } from './pipes/beautify-json.pipe';
+import { LogDataComponent } from './components/log-data/log-data.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { BeautifyJsonPipe } from './pipes/beautify-json.pipe';
     FocusDirective,
     BytesPipe,
     BeautifyJsonPipe,
+    LogDataComponent,
   ],
   imports: [
     BrowserModule,

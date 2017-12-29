@@ -1,0 +1,13 @@
+<ng-container *ngIf="type() === 'JSON'">
+  <!-- We message be careful to remove white space here -->
+  <code [style.white-space]="message.beautify ? 'pre-wrap' : 'nowrap'"><i (click)="message.beautify = !message.beautify" class="fa" [ngClass]="message.beautify ? 'fa-caret-down' : 'fa-caret-right'"></i>&nbsp;<br *ngIf="message.beautify">{{ message.beautify ? (message?.data | beautifyJson) : message?.data}}</code>
+</ng-container>
+<ng-container *ngIf="type() === 'String'">
+  {{message.data}}
+</ng-container>
+<ng-container *ngIf="type() === 'File'">
+  File
+</ng-container>
+<ng-container *ngIf="type() === 'Blob'">
+  Blob
+</ng-container>
