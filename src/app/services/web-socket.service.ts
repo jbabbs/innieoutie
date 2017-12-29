@@ -8,6 +8,7 @@ import {
   createClient, receiveMessage, sendMessage, clientOpened, closeClient, removeClient, reconnectClient
 } from '../redux/client/client.actions';
 import { EchoServerUrl } from '../../constants';
+import { IProxy } from '../db/proxy.interface';
 
 @Injectable()
 export class WebSocketService {
@@ -36,7 +37,7 @@ export class WebSocketService {
   createClientAndConnect(server: IServer) {
     const state = this.store.getState();
     const id = state.nextClientNumber;
-    const name = `Client ${id}`;
+    const name = `${server.name} ${id}`;
     const url = server.url;
     const socket = new WebSocket(url, server.protocolString || undefined);
     this._attachSocketListeners(socket, id);
@@ -59,5 +60,9 @@ export class WebSocketService {
   disconnectClientAndRemove(client: Client) {
     this.disconnectClient(client);
     this.store.dispatch((removeClient(client.id)));
+  }
+
+  proxyListen(proxy: IProxy) {
+
   }
 }

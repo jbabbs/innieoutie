@@ -9,6 +9,8 @@ import { IServer } from '../db/server.interface';
 import { createServer, removeServer, updateServer } from '../redux/server/server.actions';
 import { IMessage } from '../db/message.interface';
 import { createMessage, deleteMessage, updateMessage } from '../redux/message/message.actions';
+import { IProxy } from '../db/proxy.interface';
+import { createProxy, removeProxy } from '../redux/proxy/proxy.actions';
 
 @Injectable()
 export class DbService {
@@ -53,6 +55,26 @@ export class DbService {
     this.store.dispatch(createMessage(message));
   }
 
+  async addProxyToCurrentProject(proxy: IProxy) {
+    const state = this.store.getState();
+    if (!state.currentProject) {
+      throw new Error('No current project to add project to');
+    }
+    proxy.projectId = state.currentProject.id;
+    proxy.id = await db.proxies.put(proxy);
+    this.store.dispatch(createProxy(proxy));
+  }
+
+  async updateProxy(proxy: IProxy) {
+    await db.proxies.put(proxy);
+    this.store.dispatch(updateServer(proxy));
+  }
+
+  async deleteProxy(proxyId: number) {
+    await db.proxies.delete(proxyId);
+    this.store.dispatch(removeProxy(proxyId));
+  }
+
   async addServerToCurrentProject(server: IServer) {
     const state = this.store.getState();
     if (!state.currentProject) {
@@ -63,19 +85,14 @@ export class DbService {
     this.store.dispatch(createServer(server));
   }
 
-  async updateServer(server: IServer) {
-    await db.servers.put(server);
-    this.store.dispatch(updateServer(server));
+  async deleteServer(serverId: number) {
+    await db.servers.delete(serverId);
+    this.store.dispatch(removeServer(serverId));
   }
 
   async updateMessage(message: IMessage) {
     await db.messages.put(message);
     this.store.dispatch(updateMessage(message));
-  }
-
-  async deleteServer(serverId: number) {
-    await db.servers.delete(serverId);
-    this.store.dispatch(removeServer(serverId));
   }
 
   async deleteMessage(messageId: number) {

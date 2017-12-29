@@ -53,7 +53,7 @@ export class ServersTabComponent implements OnInit, OnDestroy {
       newMessage => {
         // make sure to keep same id
         const c2 = Object.assign({}, oldServer, newMessage);
-        this.dbService.updateServer(c2);
+        this.dbService.updateProxy(c2);
       }
     ).catch(err => {  });
   }
@@ -67,6 +67,8 @@ export class ServersTabComponent implements OnInit, OnDestroy {
   }
 
   onStateChange() {
+    // This is necessary because sometimes this tab was being rendered even if state.currentProject was null
+    // This will prevent any exceptions from being thrown
     const state = this.store.getState();
     if (!state.currentProject) {
       this.servers = [];

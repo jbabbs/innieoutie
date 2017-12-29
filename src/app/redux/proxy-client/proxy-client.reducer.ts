@@ -1,33 +1,32 @@
-import { Client } from './client.model';
-import { ClientActions } from './client.actions';
+import { ProxyClient } from './proxy-client.model';
+import { ProxyClientActions } from './proxy-client.actions';
 
-export const client = (state: Client, action: any): Client => {
+export const proxyClient = (state: ProxyClient, action: any): ProxyClient => {
   switch (action.type) {
-    case ClientActions.RECONNECT_CLIENT:
+    case ProxyClientActions.RECONNECT_PROXY_CLIENT:
     {
       const { socket } = <any>action;
       return Object.assign({}, state, { socket });
     }
-    case ClientActions.CLIENT_CLOSED:
+    case ProxyClientActions.PROXY_CLIENT_CLOSED:
     {
       return state;
     }
-    case ClientActions.SEND_MESSAGE:
+    case ProxyClientActions.SEND_PROXY_MESSAGE:
     {
       const { message } = <any>action;
       const messages = [...state.messages, message];
       return Object.assign({}, state, { messages });
     }
-    case ClientActions.RECEIVE_MESSAGE:
+    case ProxyClientActions.RECEIVE_PROXY_MESSAGE:
     {
       const { message } = <any>action;
       const messages = [...state.messages, message];
       return Object.assign({}, state, { messages });
     }
-    case ClientActions.CLIENT_OPEN:
+    case ProxyClientActions.PROXY_CLIENT_OPEN:
     {
-      const  { time } = action;
-      return Object.assign({}, state, { connectedAtTime: time });
+      return state;
     }
     default:
       return state;

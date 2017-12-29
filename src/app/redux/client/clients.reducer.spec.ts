@@ -1,17 +1,8 @@
 import { deepFreeze } from 'test-utils/deep-freeze';
 import { ClientsReducer } from './clients.reducer';
-import { sendMessage, setClientName } from './client.actions';
+import { sendMessage } from './client.actions';
 
-fdescribe('Client Reducer', () => {
-  it('should rename a client', () => {
-    const initial = [{name: '1', id: 0 }, {name: '2', id: 1}];
-    deepFreeze(initial);
-    const action = setClientName(0, '3');
-    const actual: any = ClientsReducer(<any>initial, action);
-    const expected = [{name: '3', id: 0}, {name: '2', id: 1}];
-    expect(expected).toEqual(actual);
-  });
-
+describe('Client Reducer', () => {
   it ('should add a message to a client', () => {
     const initial = [{name: '1', id: 0, messages: [] }, {name: '2', id: 1, messages: []}];
     deepFreeze(initial);

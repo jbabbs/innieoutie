@@ -11,6 +11,11 @@
   </div>
 </div>
 <ngb-tabset class="tab-set">
+  <ngb-tab title="Proxies">
+    <ng-template ngbTabContent>
+      <app-proxies-tab></app-proxies-tab>
+    </ng-template>
+  </ngb-tab>
   <ngb-tab title="Servers">
     <ng-template ngbTabContent>
       <app-servers-tab></app-servers-tab>
@@ -19,11 +24,6 @@
   <ngb-tab title="Messages">
     <ng-template ngbTabContent>
       <app-messages-tab></app-messages-tab>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab title="Proxies">
-    <ng-template ngbTabContent>
-      <app-proxies-tab></app-proxies-tab>
     </ng-template>
   </ngb-tab>
 </ngb-tabset>

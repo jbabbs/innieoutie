@@ -19,13 +19,13 @@ export class NewServerModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    const { name, url, protocolString, isEchoServer } = this.initial;
     this.form = this.fb.group({
-      name: [name || '', Validators.required],
-      url: [url || 'ws://demos.kaazing.com/echo', Validators.required],
-      isEchoServer: !!isEchoServer,
-      protocolString: protocolString || '',
-    })
+      name: ['', Validators.required],
+      url: ['ws://demos.kaazing.com/echo', Validators.required],
+      isEchoServer: false,
+      protocolString: '',
+    });
+    this.form.patchValue(this.initial);
     this.onIsEchoServerChange();
   }
 
@@ -35,13 +35,10 @@ export class NewServerModalComponent implements OnInit {
       this.errors = 'A required field is missing';
       return;
     }
-    console.log('old value', this.form.value);
     if (this.form.value.isEchoServer) {
-      console.log('is echo');
       this.form.controls.url.enable();
       this.form.patchValue({url: EchoServerUrl});
     }
-    console.log('new value: ', this.form.value);
     this.activeModal.close(this.form.value);
   }
 

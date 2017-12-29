@@ -5,6 +5,7 @@ import { ServerReducer } from '../server/servers.reducer';
 import { ClientsReducer } from '../client/clients.reducer';
 import { ClientActions } from '../client/client.actions';
 import { MessagesReducer } from '../message/messages.reducer';
+import { ProxyReducer } from '../proxy/proxy.reducer';
 
 const initialState: Project = {
   id: null,
@@ -12,6 +13,7 @@ const initialState: Project = {
   servers: [],
   clients: [],
   messages: [],
+  proxies: [],
 };
 
 export const ProjectReducer = (state: Project = initialState, action: Action): Project => {
@@ -31,7 +33,8 @@ export const ProjectReducer = (state: Project = initialState, action: Action): P
       const clients = ClientsReducer(state.clients, action);
       const servers = ServerReducer(state.servers, action);
       const messages = MessagesReducer(state.messages, action);
-      return Object.assign({}, state, { clients, servers, messages });
+      const proxies = ProxyReducer(state.proxies, action);
+      return Object.assign({}, state, { clients, servers, messages, proxies });
     }
   }
 };
