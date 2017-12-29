@@ -18,13 +18,14 @@ export class NewServerModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    const { name, url, protocol, isEchoServer } = this.initial;
+    const { name, url, protocolString, isEchoServer } = this.initial;
     this.form = this.fb.group({
       name: [name || '', Validators.required],
       url: [url || 'ws://demos.kaazing.com/echo', Validators.required],
       isEchoServer: !!isEchoServer,
-      protocolString: protocol || '',
+      protocolString: protocolString || '',
     })
+    this.onIsEchoServerChange();
   }
 
   onSaveClick() {
@@ -42,7 +43,6 @@ export class NewServerModalComponent implements OnInit {
     } else {
       this.form.controls.url.enable();
     }
-
   }
 
 }

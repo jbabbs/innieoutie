@@ -44,18 +44,14 @@ export class ServersTabComponent implements OnInit, OnDestroy {
     ).catch(err => {  });
   }
 
-  onEditServerClick(oldMessage: IServer) {
+  onEditServerClick(oldServer: IServer) {
     const modalRef = this.modalService.open(NewServerModalComponent, {size: 'lg'});
     modalRef.componentInstance.title = 'Edit Server';
-    modalRef.componentInstance.initial = {
-      name: oldMessage.name,
-      protocol: oldMessage.protocolString,
-      url: oldMessage.url
-    };
+    modalRef.componentInstance.initial = oldServer;
     modalRef.result.then(
       newMessage => {
         // make sure to keep same id
-        const c2 = Object.assign({}, oldMessage, newMessage);
+        const c2 = Object.assign({}, oldServer, newMessage);
         this.dbService.updateServer(c2);
       }
     ).catch(err => {  });

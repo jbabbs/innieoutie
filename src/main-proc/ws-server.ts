@@ -14,12 +14,8 @@ import { EchoServerPort } from '../constants';
 
 const wss = new WebSocket.Server({port: EchoServerPort});
 
-console.log('wss', wss);
-
-wss.on('server', function connection(ws) {
-  console.log('on server', ws);
+wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
-    console.log('on message', message);
     ws.send(message);
   });
 });
