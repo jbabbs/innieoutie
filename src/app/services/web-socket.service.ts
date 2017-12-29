@@ -19,7 +19,16 @@ export class WebSocketService {
     if (server.isEchoServer) {
       return EchoServerUrl;
     } else {
-      return `${server.url}`;
+      return server.url;
+    }
+  }
+
+  _attachSocketListeners(socket, clientId) {
+    socket.onopen = () => {
+      this.store.dispatch(clientOpened(clientId));
+    };
+    socket.onmessage = (msg: MessageEvent) => {
+      this.store.dispatch(receiveMessage(clientId, msg.data));
     }
   }
 
@@ -28,12 +37,7 @@ export class WebSocketService {
     const id = client.id;
     const url = this._getServerUrl(server);
     const socket = new WebSocket(url, server.protocolString || undefined);
-    socket.onopen = () => {
-      this.store.dispatch(clientOpened(id));
-    };
-    socket.onmessage = (msg: MessageEvent) => {
-      this.store.dispatch(receiveMessage(id, msg.data));
-    }
+    this._attachSocketListeners(socket, id);
     this.store.dispatch(reconnectClient(socket, id));
   }
 
@@ -43,12 +47,7 @@ export class WebSocketService {
     const name = `Client ${id}`;
     const url = this._getServerUrl(server);
     const socket = new WebSocket(url, server.protocolString || undefined);
-    socket.onopen = () => {
-      this.store.dispatch(clientOpened(id));
-    };
-    socket.onmessage = (msg: MessageEvent) => {
-      this.store.dispatch(receiveMessage(id, msg.data));
-    }
+    this._attachSocketListeners(socket, id);
     const client: Client = { socket, name, server: server, id, messages: [] };
     this.store.dispatch(createClient(client));
   }
