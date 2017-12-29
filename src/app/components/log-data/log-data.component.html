@@ -1,5 +1,5 @@
 <ng-container *ngIf="type() === 'JSON'">
-  <!-- We message be careful to remove white space here -->
+  <!-- We must be careful to remove all white space here -->
   <code [style.white-space]="message.beautify ? 'pre-wrap' : 'nowrap'"><i (click)="message.beautify = !message.beautify" class="fa" [ngClass]="message.beautify ? 'fa-caret-down' : 'fa-caret-right'"></i>&nbsp;<br *ngIf="message.beautify">{{ message.beautify ? (message?.data | beautifyJson) : message?.data}}</code>
 </ng-container>
 <ng-container *ngIf="type() === 'String'">
