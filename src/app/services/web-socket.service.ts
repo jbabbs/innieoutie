@@ -15,14 +15,6 @@ export class WebSocketService {
     @Inject(AppStore) private store: Store<AppState> | null
   ) { }
 
-  _getServerUrl(server: IServer) {
-    if (server.isEchoServer) {
-      return EchoServerUrl;
-    } else {
-      return server.url;
-    }
-  }
-
   _attachSocketListeners(socket, clientId) {
     socket.onopen = () => {
       this.store.dispatch(clientOpened(clientId));
@@ -35,7 +27,7 @@ export class WebSocketService {
   reconnectClient(client: Client) {
     const server = client.server;
     const id = client.id;
-    const url = this._getServerUrl(server);
+    const url = server.url
     const socket = new WebSocket(url, server.protocolString || undefined);
     this._attachSocketListeners(socket, id);
     this.store.dispatch(reconnectClient(socket, id));
@@ -45,7 +37,7 @@ export class WebSocketService {
     const state = this.store.getState();
     const id = state.nextClientNumber;
     const name = `Client ${id}`;
-    const url = this._getServerUrl(server);
+    const url = server.url;
     const socket = new WebSocket(url, server.protocolString || undefined);
     this._attachSocketListeners(socket, id);
     const client: Client = { socket, name, server: server, id, messages: [] };

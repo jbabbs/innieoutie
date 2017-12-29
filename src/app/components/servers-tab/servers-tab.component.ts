@@ -39,6 +39,7 @@ export class ServersTabComponent implements OnInit, OnDestroy {
   onNewServerClick() {
     this.modalService.open(NewServerModalComponent, {size: 'lg'}).result.then(
       server => {
+        console.log(server);
         this.dbService.addServerToCurrentProject(server);
       }
     ).catch(err => {  });

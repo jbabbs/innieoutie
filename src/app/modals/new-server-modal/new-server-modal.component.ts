@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { EchoServerUrl } from '../../../constants';
 
 @Component({
   selector: 'app-new-server-modal',
@@ -34,6 +35,13 @@ export class NewServerModalComponent implements OnInit {
       this.errors = 'A required field is missing';
       return;
     }
+    console.log('old value', this.form.value);
+    if (this.form.value.isEchoServer) {
+      console.log('is echo');
+      this.form.controls.url.enable();
+      this.form.patchValue({url: EchoServerUrl});
+    }
+    console.log('new value: ', this.form.value);
     this.activeModal.close(this.form.value);
   }
 
