@@ -1,10 +1,10 @@
 @import "src/styles/variables";
 
-.connection-actions-bar {
+.server-actions-bar {
   padding: $min-padding;
 }
 
-.connection-item {
+.server-item {
   &:last-child {
     border-bottom: 1px solid $grid-border-color;
   }
@@ -14,11 +14,11 @@
   justify-content: space-between;
 }
 
-.connection-name {
+.server-name {
   padding-left: $min-padding;
 }
 
-.connection-url {
+.server-url {
   text-align: right;
   flex-grow: 1;
   color: grey;

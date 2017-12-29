@@ -5,8 +5,8 @@ import { Store } from 'redux';
 import { AppState } from '../redux/app.reducer';
 import { IProject } from '../db/project.interface';
 import { setCurrentProject } from '../redux/app.actions';
-import { IConnection } from '../db/connection.interface';
-import { createConnection, removeConnection, updateConnection } from '../redux/connection/connection.actions';
+import { IServer } from '../db/server.interface';
+import { createServer, removeServer, updateServer } from '../redux/server/server.actions';
 import { IMessage } from '../db/message.interface';
 import { createMessage, deleteMessage, updateMessage } from '../redux/message/message.actions';
 
@@ -23,9 +23,9 @@ export class DbService {
   }
 
   async deleteProjectAndUnsetCurrent(id: number) {
-    await db.transaction('rw', db.projects, db.connections, db.messages, async () => {
+    await db.transaction('rw', db.projects, db.servers, db.messages, async () => {
       return Promise.all([
-        db.connections.where('projectId').equals(id).delete(),
+        db.servers.where('projectId').equals(id).delete(),
         db.messages.where('projectId').equals(id).delete(),
         db.projects.delete(id),
       ]);
@@ -37,7 +37,7 @@ export class DbService {
     const project: IProject = await db.projects.toCollection().first();
     // It is possible there are no projects created
     if (project) {
-      project.connections = await db.connections.where('projectId').equals(project.id).toArray() || [];
+      project.servers = await db.servers.where('projectId').equals(project.id).toArray() || [];
       project.messages = await db.messages.where('projectId').equals(project.id).toArray() || [];
       this.store.dispatch(setCurrentProject(<any>project));
     }
@@ -53,19 +53,19 @@ export class DbService {
     this.store.dispatch(createMessage(message));
   }
 
-  async addConnectionToCurrentProject(connection: IConnection) {
+  async addServerToCurrentProject(server: IServer) {
     const state = this.store.getState();
     if (!state.currentProject) {
-      throw new Error('No current project to add connection to');
+      throw new Error('No current project to add server to');
     }
-    connection.projectId = state.currentProject.id;
-    connection.id = await db.connections.put(connection);
-    this.store.dispatch(createConnection(connection));
+    server.projectId = state.currentProject.id;
+    server.id = await db.servers.put(server);
+    this.store.dispatch(createServer(server));
   }
 
-  async updateConnection(connection: IConnection) {
-    await db.connections.put(connection);
-    this.store.dispatch(updateConnection(connection));
+  async updateServer(server: IServer) {
+    await db.servers.put(server);
+    this.store.dispatch(updateServer(server));
   }
 
   async updateMessage(message: IMessage) {
@@ -73,9 +73,9 @@ export class DbService {
     this.store.dispatch(updateMessage(message));
   }
 
-  async deleteConnection(connectionId: number) {
-    await db.connections.delete(connectionId);
-    this.store.dispatch(removeConnection(connectionId));
+  async deleteServer(serverId: number) {
+    await db.servers.delete(serverId);
+    this.store.dispatch(removeServer(serverId));
   }
 
   async deleteMessage(messageId: number) {

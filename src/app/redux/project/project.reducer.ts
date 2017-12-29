@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { Project } from './project.model';
 import { ProjectActions, SetProjectNameAction } from './project.actions';
-import { ConnectionsReducer } from '../connection/connections.reducer';
+import { ServerReducer } from '../server/servers.reducer';
 import { ClientsReducer } from '../client/clients.reducer';
 import { ClientActions } from '../client/client.actions';
 import { MessagesReducer } from '../message/messages.reducer';
@@ -9,7 +9,7 @@ import { MessagesReducer } from '../message/messages.reducer';
 const initialState: Project = {
   id: null,
   name: null,
-  connections: [],
+  servers: [],
   clients: [],
   messages: [],
 };
@@ -29,9 +29,9 @@ export const ProjectReducer = (state: Project = initialState, action: Action): P
     default:
     {
       const clients = ClientsReducer(state.clients, action);
-      const connections = ConnectionsReducer(state.connections, action);
+      const servers = ServerReducer(state.servers, action);
       const messages = MessagesReducer(state.messages, action);
-      return Object.assign({}, state, { clients, connections, messages });
+      return Object.assign({}, state, { clients, servers, messages });
     }
   }
 };

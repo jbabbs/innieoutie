@@ -1,5 +1,6 @@
 import { ipcMain } from 'electron';
 import * as WebSocket from 'ws';
+import { EchoServerPort } from '../constants';
 
 // ipcMain.on('asynchronous-message', (event, arg) => {
 //   console.log(arg) // prints "ping"
@@ -11,10 +12,14 @@ import * as WebSocket from 'ws';
 //   event.returnValue = 'pong'
 // })
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({port: EchoServerPort});
 
-wss.on('connection', function connection(ws) {
+console.log('wss', wss);
+
+wss.on('server', function connection(ws) {
+  console.log('on server', ws);
   ws.on('message', function incoming(message) {
+    console.log('on message', message);
     ws.send(message);
   });
 });

@@ -18,9 +18,9 @@ import { ProjectPaneComponent } from './components/project-pane/project-pane.com
 import { ClientPaneComponent } from './components/client-pane/client-pane.component';
 import { MessageLogComponent } from './components/message-log/message-log.component';
 import { QuickSendBarComponent } from './components/quick-send-bar/quick-send-bar.component';
-import { ConnectionsTabComponent } from './components/connections-tab/connections-tab.component';
+import { ServersTabComponent } from './components/servers-tab/servers-tab.component';
 import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
-import { NewConnectionModalComponent } from './modals/new-connection-modal/new-connection-modal.component';
+import { NewServerModalComponent } from './modals/new-server-modal/new-server-modal.component';
 import { WebSocketService } from './services/web-socket.service';
 import { NewMessageModalComponent } from './modals/new-message-modal/new-message-modal.component';
 import { FocusDirective } from './directives/focus.directive';
@@ -37,9 +37,9 @@ import { LogDataComponent } from './components/log-data/log-data.component';
     ClientPaneComponent,
     MessageLogComponent,
     QuickSendBarComponent,
-    ConnectionsTabComponent,
+    ServersTabComponent,
     MessagesTabComponent,
-    NewConnectionModalComponent,
+    NewServerModalComponent,
     NewMessageModalComponent,
     FocusDirective,
     BytesPipe,
@@ -64,7 +64,7 @@ import { LogDataComponent } from './components/log-data/log-data.component';
   ],
   entryComponents: [
     NewProjectModalComponent,
-    NewConnectionModalComponent,
+    NewServerModalComponent,
     NewMessageModalComponent,
     ErrorModalComponent,
   ]

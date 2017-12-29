@@ -51,10 +51,10 @@ app-project-pane {
     .tab-pane {
       @include fill-parent-vertical();
 
-      app-connections-tab, app-messages-tab {
+      app-servers-tab, app-messages-tab {
         @include fill-parent-vertical();
 
-        .connection-items, .message-items {
+        .server-items, .message-items {
           flex-grow: 1;
           overflow-y: auto;
         }

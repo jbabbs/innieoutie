@@ -1,11 +1,11 @@
-import { IConnection } from '../../db/connection.interface';
+import { IServer } from '../../db/server.interface';
 import { Client } from '../client/client.model';
 import { Message } from '../message/message.model';
 
 export interface Project {
   id: any;
   name: string;
-  connections: Array<IConnection>;
+  servers: Array<IServer>;
   clients: Array<Client>;
   messages: Array<Message>;
 }

@@ -1,9 +1,9 @@
-import { IConnection } from './connection.interface';
+import { IServer } from './server.interface';
 import { IMessage } from './message.interface';
 
 export interface IProject {
   id?: number;
   name: string;
-  connections: IConnection[];
+  servers: IServer[];
   messages: IMessage[];
 }

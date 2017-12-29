@@ -1,20 +1,20 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NewConnectionModalComponent } from '../../modals/new-connection-modal/new-connection-modal.component';
+import { NewServerModalComponent } from '../../modals/new-server-modal/new-server-modal.component';
 import { AppState } from '../../redux/app.reducer';
 import { Store } from 'redux';
 import { AppStore } from '../../redux/app.store';
 import { DbService } from '../../services/db.service';
 import { WebSocketService } from '../../services/web-socket.service';
-import { IConnection } from '../../db/connection.interface';
+import { IServer } from '../../db/server.interface';
 
 @Component({
-  selector: 'app-connections-tab',
-  templateUrl: './connections-tab.component.html',
-  styleUrls: ['./connections-tab.component.scss']
+  selector: 'app-servers-tab',
+  templateUrl: './servers-tab.component.html',
+  styleUrls: ['./servers-tab.component.scss']
 })
-export class ConnectionsTabComponent implements OnInit, OnDestroy {
-  public connections: Array<any> = [];
+export class ServersTabComponent implements OnInit, OnDestroy {
+  public servers: Array<any> = [];
   private storeUnsubscribe;
 
   constructor(
@@ -36,17 +36,17 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
     this.storeUnsubscribe();
   }
 
-  onNewConnectionClick() {
-    this.modalService.open(NewConnectionModalComponent, {size: 'lg'}).result.then(
-      connection => {
-        this.dbService.addConnectionToCurrentProject(connection);
+  onNewServerClick() {
+    this.modalService.open(NewServerModalComponent, {size: 'lg'}).result.then(
+      server => {
+        this.dbService.addServerToCurrentProject(server);
       }
     ).catch(err => {  });
   }
 
-  onEditConnectionClick(oldMessage: IConnection) {
-    const modalRef = this.modalService.open(NewConnectionModalComponent, {size: 'lg'});
-    modalRef.componentInstance.title = 'Edit Connection';
+  onEditServerClick(oldMessage: IServer) {
+    const modalRef = this.modalService.open(NewServerModalComponent, {size: 'lg'});
+    modalRef.componentInstance.title = 'Edit Server';
     modalRef.componentInstance.initial = {
       name: oldMessage.name,
       protocol: oldMessage.protocolString,
@@ -56,25 +56,25 @@ export class ConnectionsTabComponent implements OnInit, OnDestroy {
       newMessage => {
         // make sure to keep same id
         const c2 = Object.assign({}, oldMessage, newMessage);
-        this.dbService.updateConnection(c2);
+        this.dbService.updateServer(c2);
       }
     ).catch(err => {  });
   }
 
-  onConnectClick(connection) {
-    this.wsService.createClientAndConnect(connection);
+  onConnectClick(server) {
+    this.wsService.createClientAndConnect(server);
   }
 
-  onDeleteConnectionClick(connection) {
-    this.dbService.deleteConnection(connection.id);
+  onDeleteServerClick(server) {
+    this.dbService.deleteServer(server.id);
   }
 
   onStateChange() {
     const state = this.store.getState();
     if (!state.currentProject) {
-      this.connections = [];
+      this.servers = [];
     } else {
-      this.connections = state.currentProject.connections;
+      this.servers = state.currentProject.servers;
     }
   }
 }
