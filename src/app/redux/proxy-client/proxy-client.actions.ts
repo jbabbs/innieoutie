@@ -13,12 +13,12 @@ export enum ProxyClientActions {
 }
 
 export interface CreateClientAction extends Action {
-  proxyClient: ProxyClient;
+  client: ProxyClient;
 }
 
-export const createProxyClient: ActionCreator<CreateClientAction> = (proxyClient: ProxyClient) => ({
+export const createProxyClient: ActionCreator<CreateClientAction> = (client: ProxyClient) => ({
   type: ProxyClientActions.CREATE_PROXY_CLIENT,
-  proxyClient,
+  client,
 });
 
 

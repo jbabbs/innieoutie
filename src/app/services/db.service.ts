@@ -41,6 +41,7 @@ export class DbService {
     if (project) {
       project.servers = await db.servers.where('projectId').equals(project.id).toArray() || [];
       project.messages = await db.messages.where('projectId').equals(project.id).toArray() || [];
+      project.proxies = await db.proxies.where('projectId').equals(project.id).toArray() || [];
       this.store.dispatch(setCurrentProject(<any>project));
     }
   }

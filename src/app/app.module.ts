@@ -70,6 +70,7 @@ import { NewProxyModalComponent } from './modals/new-proxy-modal/new-proxy-modal
     NewProjectModalComponent,
     NewServerModalComponent,
     NewMessageModalComponent,
+    NewProxyModalComponent,
     ErrorModalComponent,
   ]
 })

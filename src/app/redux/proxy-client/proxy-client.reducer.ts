@@ -1,7 +1,7 @@
 import { ProxyClient } from './proxy-client.model';
 import { ProxyClientActions } from './proxy-client.actions';
 
-export const proxyClient = (state: ProxyClient, action: any): ProxyClient => {
+export const ProxyClientReducer = (state: ProxyClient, action: any): ProxyClient => {
   switch (action.type) {
     case ProxyClientActions.RECONNECT_PROXY_CLIENT:
     {

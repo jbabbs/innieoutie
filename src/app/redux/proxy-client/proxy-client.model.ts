@@ -1,12 +1,16 @@
 import { Client } from '../client/client.model';
+import * as WebSocket from 'ws';
+import { IProxy } from '../../db/proxy.interface';
+
+// export enum ProxyStatus {
+//   Idle = 'Idle',
+//   Listening = 'Listening',
+//   Connected = 'Connected',
+//   Error = 'Error',
+// }
 
 export interface ProxyClient extends Client {
-  socketOutgoing: WebSocket;
-  // id: number;
-  // name: string;
-  // socket: WebSocket,
-  // server: IServer,
-  // messages: Array<ClientMessage>,
-  // connectedAtTime?: number; // unix timestamp
-  // disconnectedAtTime?: number; // unit timestamp
+  proxy: IProxy;
+  mainServer: WebSocket; // should only be used on main process
+  mainSocket?; // should only be used on main process
 }

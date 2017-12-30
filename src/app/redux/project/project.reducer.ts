@@ -6,6 +6,8 @@ import { ClientsReducer } from '../client/clients.reducer';
 import { ClientActions } from '../client/client.actions';
 import { MessagesReducer } from '../message/messages.reducer';
 import { ProxyReducer } from '../proxy/proxy.reducer';
+import { ProxyClientsReducer } from '../proxy-client/proxy-clients.reducer';
+import { ProxyClient } from '../proxy-client/proxy-client.model';
 
 const initialState: Project = {
   id: null,
@@ -23,14 +25,10 @@ export const ProjectReducer = (state: Project = initialState, action: Action): P
       const name: string = (<SetProjectNameAction>action).name;
       return Object.assign({}, state, { name });
     }
-    case ClientActions.CREATE_CLIENT:
-    {
-      const clients = ClientsReducer(state.clients, action);
-      return Object.assign({}, state, { clients });
-    }
     default:
     {
-      const clients = ClientsReducer(state.clients, action);
+      let clients = ClientsReducer(state.clients, action);
+      clients = ProxyClientsReducer(<any>clients, action);
       const servers = ServerReducer(state.servers, action);
       const messages = MessagesReducer(state.messages, action);
       const proxies = ProxyReducer(state.proxies, action);

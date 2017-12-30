@@ -17,7 +17,8 @@
     },
     "types": [
       "node",
-      "jasmine"
+      "jasmine",
+      "ws"
     ],
     "typeRoots": [
       "node_modules/@types"

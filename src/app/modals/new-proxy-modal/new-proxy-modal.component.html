@@ -1,3 +1,47 @@
-<p>
-  new-proxy-modal works!
-</p>
+<div class="modal-header">
+  <h4 class="modal-title">{{title}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Dismiss')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="form-group row">
+      <label for="serverName" class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-8">
+        <input appFocus formControlName="name" type="text" class="form-control" id="serverName">
+      </div>
+      <div class="col-sm-2 col-form-label">
+        <i>Required</i>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="serverUrl" class="col-sm-2 col-form-label">URL</label>
+      <div class="col-sm-8">
+        <input formControlName="url" type="text" class="form-control" id="serverUrl">
+      </div>
+      <div class="col-sm-2 col-form-label">
+        <i>Required</i>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="echoServer" class="col-sm-2 col-form-label ">Echo Server</label>
+      <div class="col-sm-8">
+        <input formControlName="isEchoServer" type="checkbox" id="echoServer" (change)="onIsEchoServerChange()">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="listenPort" class="col-sm-2 col-form-label">Listen Port</label>
+      <div class="col-sm-8">
+        <input formControlName="listenPort" type="number" class="form-control" id="listenPort">
+      </div>
+      <div class="col-sm-2 col-form-label">
+        <i>Required</i>
+      </div>
+    </div>
+  </form>
+  <div class="alert alert-danger" *ngIf="errors">{{errors}}</div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-primary" (click)="onSaveClick()">Save</button>
+</div>

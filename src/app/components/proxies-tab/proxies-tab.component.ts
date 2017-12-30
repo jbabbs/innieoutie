@@ -58,7 +58,7 @@ export class ProxiesTabComponent implements OnInit, OnDestroy {
     ).catch(err => {  });
   }
 
-  onConnectClick(proxy) {
+  onListenClick(proxy) {
     this.wsService.proxyListen(proxy);
   }
 
@@ -73,7 +73,7 @@ export class ProxiesTabComponent implements OnInit, OnDestroy {
     if (!state.currentProject) {
       this.proxies = [];
     } else {
-      this.proxies = state.currentProject.servers;
+      this.proxies = state.currentProject.proxies;
     }
   }
 

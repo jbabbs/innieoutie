@@ -2,15 +2,15 @@
   <button class="pull-right btn btn-outline-primary" (click)="onNewProxyClick()">New</button>
 </div>
 <div class="server-items">
-  <div *ngFor="let proxy of proxies" class="server-item" (dblclick)="onConnectClick(server)">
+  <div *ngFor="let proxy of proxies" class="server-item" (dblclick)="onListenClick(proxy)">
     <div class="server-name">{{proxy?.name}}</div>
-    <div class="server-url"><i>{{proxy?.sourcePort}}</i> -&gt {{proxy.serverUrl}}</div>
+    <div class="server-url"><i>{{proxy?.listenPort}}</i> -&gt; {{proxy.url}}</div>
     <div ngbDropdown class="server-options">
       <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
       <div ngbDropdownMenu>
-        <button class="dropdown-item" (click)="onListenClick(server)">Listen For Connections</button>
-        <button class="dropdown-item" (click)="onEditProxyClick(server)">Edit</button>
-        <button class="dropdown-item" (click)="onDeleteProxyClick(server)">Delete</button>
+        <button class="dropdown-item" (click)="onListenClick(proxy)">Listen For Connections</button>
+        <button class="dropdown-item" (click)="onEditProxyClick(proxy)">Edit</button>
+        <button class="dropdown-item" (click)="onDeleteProxyClick(proxy)">Delete</button>
       </div>
     </div>
   </div>
