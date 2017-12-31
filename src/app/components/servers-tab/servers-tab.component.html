@@ -2,16 +2,23 @@
   <button class="pull-right btn btn-outline-primary" (click)="onNewServerClick()">New</button>
 </div>
 <div class="server-items">
-  <div *ngFor="let server of servers" class="server-item" (dblclick)="onConnectClick(server)">
-    <div class="server-name">{{server?.name}}</div>
-    <div class="server-url"><i>{{server?.url}}</i></div>
-    <div ngbDropdown class="server-options">
-      <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
-      <div ngbDropdownMenu>
-        <button class="dropdown-item" (click)="onConnectClick(server)">Connect</button>
-        <button class="dropdown-item" (click)="onEditServerClick(server)">Edit</button>
-        <button class="dropdown-item" (click)="onDeleteServerClick(server)">Delete</button>
+  <div *ngFor="let server of servers" class="server-item" (dblclick)="onNewClientClick(server)">
+    <div class="server-item-main">
+      <div class="server-name">{{server?.name}}</div>
+      <div class="server-url"><i>{{server?.url}}</i></div>
+
+      <div ngbDropdown class="server-options">
+        <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
+        <div ngbDropdownMenu>
+          <button class="dropdown-item" (click)="onNewClientClick(server)">New Client</button>
+          <button class="dropdown-item" (click)="onListenClick(server)">Listen For Clients</button>
+          <button class="dropdown-item" (click)="onEditServerClick(server)">Edit</button>
+          <button class="dropdown-item" (click)="onDeleteServerClick(server)">Delete</button>
+        </div>
       </div>
+    </div>
+    <div class="server-item-proxy" *ngIf="server.proxyServerId">
+      <i class="fa fa-assistive-listening-systems"></i><i>&nbsp;Listening on {{getListenAddress(server)}}</i>
     </div>
   </div>
 </div>

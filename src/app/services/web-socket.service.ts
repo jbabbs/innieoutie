@@ -2,16 +2,18 @@ import { Inject, Injectable } from '@angular/core';
 import { Store } from 'redux';
 import { AppState } from '../redux/app.reducer';
 import { AppStore } from '../redux/app.store';
-import { IServer } from '../db/server.interface';
 import { Client } from '../redux/client/client.model';
 import {
   createClient, receiveMessage, sendMessage, clientOpened, closeClient, removeClient, reconnectClient
 } from '../redux/client/client.actions';
-import { ProxyConnected, ProxyListen, ProxyMessageReceived } from '../../constants';
-import { IProxy } from '../db/proxy.interface';
+
 import { ElectronService } from './electron.service';
-import { createProxyClient, sendProxyMessage } from '../redux/proxy-client/proxy-client.actions';
-import { ProxyClient } from '../redux/proxy-client/proxy-client.model';
+import { Server } from '../redux/server/server.model';
+import {
+  ProxyConnected, ProxyConnectedArgs, ProxyListen, ProxyListenReturn, ProxyMessageReceived,
+  ProxyMessageReceivedArgs, ProxySendMessage, ProxySendMessageArgs
+} from '../../ipc';
+import { updateServer } from '../redux/server/server.actions';
 
 @Injectable()
 export class WebSocketService {
@@ -25,24 +27,30 @@ export class WebSocketService {
   _setupIpc() {
     const ipcRenderer = this.electron.ipcRenderer;
 
-    ipcRenderer.on(ProxyMessageReceived, (event, arg) => {
-      console.log('got a message', arg);
-      const { message, socket } = arg;
+    ipcRenderer.on(ProxyMessageReceived, (event, args: ProxyMessageReceivedArgs) => {
+      console.log('got a message', args);
       const state = this.store.getState();
+      const { data, socketId } = args;
       const client = state.currentProject.clients.find(c => {
-        console.log('server socket', socket, 'item in list', c);
-        if (!c.socket) {
-          return;
-        }
-        return c.socket['id'] === socket.id;
+        return c.proxySocketId === socketId;
       })
-      this.sendMessage(message, client);
+      if (!client) {
+        throw new Error('Message received from proxy, but associated client not found');
+      }
+      this.sendMessage(data, client);
     });
 
-    ipcRenderer.on(ProxyConnected, (event, args) => {
+    ipcRenderer.on(ProxyConnected, (event, args: ProxyConnectedArgs) => {
       console.log('proxy connected', args);
-      const { proxy, server } = args;
-      this.createProxyClientAndConnect(proxy, server);
+      const state = this.store.getState();
+      const { socketId, serverId } = args;
+      const server = state.currentProject.servers.find(s => {
+        return s.proxyServerId === serverId;
+      });
+      if (!server) {
+        throw new Error('Proxy server connected, but associated server was not found');
+      }
+      this.createClientAndConnect(server, socketId);
     });
   }
 
@@ -52,6 +60,22 @@ export class WebSocketService {
     };
     socket.onmessage = (msg: MessageEvent) => {
       this.store.dispatch(receiveMessage(clientId, msg.data));
+
+      const state = this.store.getState();
+      const client: Client = state.currentProject.clients.find(c => c.id === clientId);
+
+      if (!client) {
+        throw new Error('Client not found');
+      }
+
+      if (client.proxySocketId) {
+        // echo the message back
+        const m: ProxySendMessageArgs = {
+          data: msg.data,
+          socketId: client.proxySocketId,
+        }
+        this.electron.ipcRenderer.send(ProxySendMessage, m);
+      }
     }
   }
 
@@ -64,7 +88,7 @@ export class WebSocketService {
     this.store.dispatch(reconnectClient(socket, id));
   }
 
-  createClientAndConnect(server: IServer) {
+  createClientAndConnect(server: Server, proxySocketId?: number) {
     const state = this.store.getState();
     const id = state.nextClientNumber;
     const name = `${server.name} ${id}`;
@@ -72,28 +96,15 @@ export class WebSocketService {
     const socket = new WebSocket(url, server.protocolString || undefined);
     this._attachSocketListeners(socket, id);
     const client: Client = { socket, name, server: server, id, messages: [] };
+    if (proxySocketId) {
+      client.proxySocketId = proxySocketId;
+    }
     this.store.dispatch(createClient(client));
-  }
-
-  createProxyClientAndConnect(proxy: IProxy, server) {
-    const state = this.store.getState();
-    const id = state.nextClientNumber;
-    const name = `${proxy.name} ${id}`;
-    const url = proxy.url;
-    const socket = new WebSocket(url, server.protocolString || undefined);
-    this._attachSocketListeners(socket, id);
-    const proxyClient: ProxyClient = { socket, name, id, messages: [], mainServer: server, proxy: proxy, server: proxy };
-    this.store.dispatch(createProxyClient(proxyClient));
   }
 
   sendMessage(message: any, client: Client) {
     client.socket.send(message);
     this.store.dispatch(sendMessage(client.id, message));
-  }
-
-  sendProxyMessage(message: any, client: ProxyClient) {
-    client.socket.send(message);
-    this.store.dispatch(sendProxyMessage(client.id, message));
   }
 
   disconnectClient(client: Client) {
@@ -108,7 +119,11 @@ export class WebSocketService {
     this.store.dispatch((removeClient(client.id)));
   }
 
-  proxyListen(proxy: IProxy) {
-    this.electron.ipcRenderer.send(ProxyListen, proxy);
+  proxyListen(server: Server) {
+    const res: ProxyListenReturn = this.electron.ipcRenderer.sendSync(ProxyListen);
+    const { port, serverId } = res;
+    server.proxyListenPort = port;
+    server.proxyServerId = serverId;
+    this.store.dispatch(updateServer(server));
   }
 }

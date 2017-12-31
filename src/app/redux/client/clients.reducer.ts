@@ -1,7 +1,6 @@
 import { Client } from './client.model';
 import { ClientActions, CreateClientAction } from './client.actions';
 import { client as clientReducer } from './client.reducer';
-import { ProxyClientActions } from '../proxy-client/proxy-client.actions';
 
 export const ClientsReducer = (state: Array<Client> = [], action: any): Array<Client> => {
   switch (action.type) {

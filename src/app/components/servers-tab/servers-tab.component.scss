@@ -9,9 +9,16 @@
     border-bottom: 1px solid $grid-border-color;
   }
   border-top: 1px solid $grid-border-color;
+}
+
+.server-item-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.server-item-proxy {
+  padding: $min-padding;
 }
 
 .server-name {

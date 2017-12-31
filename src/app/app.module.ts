@@ -27,8 +27,6 @@ import { FocusDirective } from './directives/focus.directive';
 import { BytesPipe } from './pipes/bytes.pipe';
 import { BeautifyJsonPipe } from './pipes/beautify-json.pipe';
 import { LogDataComponent } from './components/log-data/log-data.component';
-import { ProxiesTabComponent } from './components/proxies-tab/proxies-tab.component';
-import { NewProxyModalComponent } from './modals/new-proxy-modal/new-proxy-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,8 +45,6 @@ import { NewProxyModalComponent } from './modals/new-proxy-modal/new-proxy-modal
     BytesPipe,
     BeautifyJsonPipe,
     LogDataComponent,
-    ProxiesTabComponent,
-    NewProxyModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +66,6 @@ import { NewProxyModalComponent } from './modals/new-proxy-modal/new-proxy-modal
     NewProjectModalComponent,
     NewServerModalComponent,
     NewMessageModalComponent,
-    NewProxyModalComponent,
     ErrorModalComponent,
   ]
 })

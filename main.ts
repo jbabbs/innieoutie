@@ -1,5 +1,6 @@
 import { app, BrowserWindow, screen } from 'electron';
-import './src/main-proc/ws-server';
+import './src/main-proc/proxy-servers';
+import './src/main-proc/echo-server';
 import { setMenu } from './src/menus';
 
 let win, serve;

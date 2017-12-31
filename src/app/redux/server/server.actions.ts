@@ -1,6 +1,5 @@
 import { Action, ActionCreator } from 'redux';
 import { IServer } from '../../db/server.interface';
-import { EchoServerUrl } from '../../../constants';
 
 export enum ServerActions {
   CREATE_SERVER = 'CREATE_SERVER',

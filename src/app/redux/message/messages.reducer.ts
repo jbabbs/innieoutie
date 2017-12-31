@@ -1,5 +1,3 @@
-import { IServer } from '../../db/server.interface';
-import { Action } from 'redux';
 import { Message } from './message.model';
 import { MessageActions } from './message.actions';
 

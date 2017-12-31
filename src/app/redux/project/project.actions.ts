@@ -1,6 +1,4 @@
 import { Action, ActionCreator } from 'redux';
-import { Project } from './project.model';
-import { IServer } from "../../db/server.interface";
 
 export enum ProjectActions {
   SET_PROJECT_NAME = 'SET_PROJECT_NAME',

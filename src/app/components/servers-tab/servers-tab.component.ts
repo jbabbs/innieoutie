@@ -6,7 +6,7 @@ import { Store } from 'redux';
 import { AppStore } from '../../redux/app.store';
 import { DbService } from '../../services/db.service';
 import { WebSocketService } from '../../services/web-socket.service';
-import { IServer } from '../../db/server.interface';
+import { Server } from '../../redux/server/server.model';
 
 @Component({
   selector: 'app-servers-tab',
@@ -14,7 +14,7 @@ import { IServer } from '../../db/server.interface';
   styleUrls: ['./servers-tab.component.scss']
 })
 export class ServersTabComponent implements OnInit, OnDestroy {
-  public servers: Array<any> = [];
+  public servers: Array<Server> = [];
   private storeUnsubscribe;
 
   constructor(
@@ -39,27 +39,30 @@ export class ServersTabComponent implements OnInit, OnDestroy {
   onNewServerClick() {
     this.modalService.open(NewServerModalComponent, {size: 'lg'}).result.then(
       server => {
-        console.log(server);
         this.dbService.addServerToCurrentProject(server);
       }
     ).catch(err => {  });
   }
 
-  onEditServerClick(oldServer: IServer) {
+  onEditServerClick(oldServer: Server) {
     const modalRef = this.modalService.open(NewServerModalComponent, {size: 'lg'});
     modalRef.componentInstance.title = 'Edit Server';
     modalRef.componentInstance.initial = oldServer;
     modalRef.result.then(
       newMessage => {
         // make sure to keep same id
-        const c2 = Object.assign({}, oldServer, newMessage);
-        this.dbService.updateProxy(c2);
+        const s = Object.assign({}, oldServer, newMessage);
+        this.dbService.updateServer(s);
       }
     ).catch(err => {  });
   }
 
-  onConnectClick(server) {
+  onNewClientClick(server: Server) {
     this.wsService.createClientAndConnect(server);
+  }
+
+  onListenClick(server: Server) {
+    this.wsService.proxyListen(server);
   }
 
   onDeleteServerClick(server) {
@@ -75,5 +78,9 @@ export class ServersTabComponent implements OnInit, OnDestroy {
     } else {
       this.servers = state.currentProject.servers;
     }
+  }
+
+  getListenAddress(server: Server) {
+    return `ws://localhost:${server.proxyListenPort}`;
   }
 }
