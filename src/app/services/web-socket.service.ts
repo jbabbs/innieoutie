@@ -10,7 +10,7 @@ import {
 import { ElectronService } from './electron.service';
 import { Server } from '../redux/server/server.model';
 import {
-  ProxyBindFailed, ProxyBindFailedArgs,
+  ProxyBindFailed, ProxyBindFailedArgs, ProxyCloseSocket, ProxyCloseSocketArgs,
   ProxyConnected, ProxyConnectedArgs, ProxyListen, ProxyListenReturn, ProxyMessageReceived,
   ProxyMessageReceivedArgs, ProxySendMessage, ProxySendMessageArgs, ProxySocketError, ProxySocketErrorArgs
 } from '../../ipc';
@@ -85,13 +85,38 @@ export class WebSocketService {
     });
   }
 
+  _closeProxySocket(clientId, error?: Error) {
+    const state = this.store.getState();
+    const client: Client = state.currentProject.clients.find(c => c.id === clientId);
+
+    if (!client) {
+      throw new Error('Client not found');
+    }
+
+    client.disconnectedAtTime = +new Date();
+
+    if (error) {
+      client.error = error;
+    }
+
+    if (client.proxySocketId) {
+      // Close the proxy socket
+      delete client.proxySocketId;
+
+      if (client.proxySocketId) {
+        const args: ProxyCloseSocketArgs = { socketId: client.proxySocketId };
+        this.electron.ipcRenderer.send(ProxyCloseSocket, args);
+      }
+    }
+
+    this.store.dispatch(updateClient(client));
+  }
+
   _attachSocketListeners(socket, clientId) {
     socket.onopen = () => {
       this.store.dispatch(clientOpened(clientId));
     };
     socket.onmessage = (msg: MessageEvent) => {
-      this.store.dispatch(receiveMessage(clientId, msg.data));
-
       const state = this.store.getState();
       const client: Client = state.currentProject.clients.find(c => c.id === clientId);
 
@@ -107,9 +132,13 @@ export class WebSocketService {
         }
         this.electron.ipcRenderer.send(ProxySendMessage, m);
       }
+      this.store.dispatch(receiveMessage(clientId, msg.data));
     }
     socket.onclose = () => {
-      this.store.dispatch(closeClient(clientId));
+      this._closeProxySocket(clientId);
+    }
+    socket.onerror = err => {
+      this._closeProxySocket(clientId, err);
     }
   }
 

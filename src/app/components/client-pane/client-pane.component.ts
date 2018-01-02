@@ -3,7 +3,7 @@ import { AppStore } from '../../redux/app.store';
 import { Store } from 'redux';
 import { AppState } from '../../redux/app.reducer';
 import { Client } from '../../redux/client/client.model';
-import { formatTimeSince } from '../../utils/time';
+import { formatTime, formatTimeSince } from '../../utils/time';
 import { WebSocketService } from '../../services/web-socket.service';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { setSelectedClientTab } from '../../redux/app.actions';
@@ -72,6 +72,10 @@ export class ClientPaneComponent implements OnInit {
   }
 
   getClientStateText(client: Client) {
+    if (client.disconnectedAtTime && !client.error) {
+      const duration = client.disconnectedAtTime - client.connectedAtTime;
+      return `Server closed connection at ${formatTime(duration)}`;
+    }
     if (!client.socket) {
       return 'Not Connected';
     }
