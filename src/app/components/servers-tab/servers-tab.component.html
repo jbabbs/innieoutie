@@ -11,7 +11,7 @@
         <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
         <div ngbDropdownMenu>
           <button class="dropdown-item" (click)="onNewClientClick(server)">New Client</button>
-          <button class="dropdown-item" (click)="onListenClick(server)">Listen For Clients</button>
+          <button class="dropdown-item" (click)="onListenClick(server)" [disabled]="shouldDisableListen(server)">Listen For Clients</button>
           <button class="dropdown-item" (click)="onEditServerClick(server)">Edit</button>
           <button class="dropdown-item" (click)="onDeleteServerClick(server)">Delete</button>
         </div>

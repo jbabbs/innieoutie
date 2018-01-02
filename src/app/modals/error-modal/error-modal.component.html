@@ -1,9 +1,12 @@
 <div class="modal-header">
-  <h4 class="modal-title">Error</h4>
+  <h4 class="modal-title">{{title}}</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Dismiss')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <pre><code>Something went wrong :(</code></pre>
+  <pre *ngIf="!error"><code>Something went wrong :(</code></pre>
+  <div *ngIf="error">
+    {{error | json}}
+  </div>
 </div>

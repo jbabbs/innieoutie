@@ -4,22 +4,25 @@ import { AppState } from '../redux/app.reducer';
 import { AppStore } from '../redux/app.store';
 import { Client } from '../redux/client/client.model';
 import {
-  createClient, receiveMessage, sendMessage, clientOpened, closeClient, removeClient, reconnectClient
+  createClient, receiveMessage, sendMessage, clientOpened, closeClient, removeClient, reconnectClient, updateClient
 } from '../redux/client/client.actions';
 
 import { ElectronService } from './electron.service';
 import { Server } from '../redux/server/server.model';
 import {
+  ProxyBindFailed, ProxyBindFailedArgs,
   ProxyConnected, ProxyConnectedArgs, ProxyListen, ProxyListenReturn, ProxyMessageReceived,
-  ProxyMessageReceivedArgs, ProxySendMessage, ProxySendMessageArgs
+  ProxyMessageReceivedArgs, ProxySendMessage, ProxySendMessageArgs, ProxySocketError, ProxySocketErrorArgs
 } from '../../ipc';
 import { updateServer } from '../redux/server/server.actions';
+import { ErrorModalService } from './error-modal.service';
 
 @Injectable()
 export class WebSocketService {
   constructor(
     @Inject(AppStore) private store: Store<AppState> | null,
     private electron: ElectronService,
+    private errorModalService: ErrorModalService,
   ) {
     this._setupIpc();
   }
@@ -28,7 +31,6 @@ export class WebSocketService {
     const ipcRenderer = this.electron.ipcRenderer;
 
     ipcRenderer.on(ProxyMessageReceived, (event, args: ProxyMessageReceivedArgs) => {
-      console.log('got a message', args);
       const state = this.store.getState();
       const { data, socketId } = args;
       const client = state.currentProject.clients.find(c => {
@@ -40,8 +42,20 @@ export class WebSocketService {
       this.sendMessage(data, client);
     });
 
+    ipcRenderer.on(ProxyBindFailed, (event, args: ProxyBindFailedArgs) => {
+      const { error, serverId } = args;
+      this.errorModalService.showErrorModal(error, 'Proxy WebSocket.Server error.');
+      const state = this.store.getState();
+      const server = state.currentProject.servers.find(s => s.proxyServerId === serverId);
+      if (!server) {
+        throw new Error('Server bind failed, but unable to find server object');
+      }
+      delete server.proxyServerId;
+      delete server.proxyListenPort;
+      this.store.dispatch(updateServer(server));
+    })
+
     ipcRenderer.on(ProxyConnected, (event, args: ProxyConnectedArgs) => {
-      console.log('proxy connected', args);
       const state = this.store.getState();
       const { socketId, serverId } = args;
       const server = state.currentProject.servers.find(s => {
@@ -51,6 +65,23 @@ export class WebSocketService {
         throw new Error('Proxy server connected, but associated server was not found');
       }
       this.createClientAndConnect(server, socketId);
+    });
+
+    ipcRenderer.on(ProxySocketError, (event, args: ProxySocketErrorArgs) => {
+      const { error, socketId } = args;
+      // We don't need to show the error message. Instead, set client tab to red.
+      // this.errorModalService.showErrorModal(error, 'Proxy WebSocket error.');
+      const state = this.store.getState();
+      const client = state.currentProject.clients.find(s => s.id === socketId);
+      if (!client) {
+        throw new Error('Proxy error, but associated client not found.');
+      }
+      client.error = error;
+      if (client.socket) {
+        client.socket.close();
+        delete client.socket;
+      }
+      this.store.dispatch(updateClient(client));
     });
   }
 
@@ -69,13 +100,16 @@ export class WebSocketService {
       }
 
       if (client.proxySocketId) {
-        // echo the message back
+        // echo the message back to the proxy
         const m: ProxySendMessageArgs = {
           data: msg.data,
           socketId: client.proxySocketId,
         }
         this.electron.ipcRenderer.send(ProxySendMessage, m);
       }
+    }
+    socket.onclose = () => {
+      this.store.dispatch(closeClient(clientId));
     }
   }
 
@@ -108,10 +142,9 @@ export class WebSocketService {
   }
 
   disconnectClient(client: Client) {
-    client.socket.onclose = () => {
-      this.store.dispatch(closeClient(client.id));
+    if (client.socket) {
+      client.socket.close();
     }
-    client.socket.close();
   }
 
   disconnectClientAndRemove(client: Client) {

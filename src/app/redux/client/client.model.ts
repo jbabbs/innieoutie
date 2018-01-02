@@ -10,4 +10,5 @@ export interface Client {
   connectedAtTime?: number; // unix timestamp
   disconnectedAtTime?: number; // unit timestamp
   proxySocketId?: number;
+  error?: Error;
 }

@@ -7,6 +7,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./error-modal.component.scss']
 })
 export class ErrorModalComponent implements OnInit {
+  public error: Error;
+  public title = 'Uh-oh!';
 
   constructor(public activeModal: NgbActiveModal) { }
 

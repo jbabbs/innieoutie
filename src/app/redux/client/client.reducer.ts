@@ -29,6 +29,11 @@ export const client = (state: Client, action: any): Client => {
       const  { time } = action;
       return Object.assign({}, state, { connectedAtTime: time });
     }
+    case ClientActions.UPDATE_CLIENT:
+    {
+      const { cl } = <any>action;
+      return Object.assign({}, state, cl);
+    }
     default:
       return state;
   }

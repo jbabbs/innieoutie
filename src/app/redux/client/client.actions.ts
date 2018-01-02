@@ -10,6 +10,7 @@ export enum ClientActions {
   RECONNECT_CLIENT = 'RECONNECT_CLIENT',
   SEND_MESSAGE = 'SEND_MESSAGE',
   RECEIVE_MESSAGE = 'RECEIVE_MESSAGE',
+  UPDATE_CLIENT = 'UPDATE_CLIENT',
 }
 
 export interface CreateClientAction extends Action {
@@ -81,6 +82,11 @@ export const reconnectClient = (socket, clientId) => ({
   type: ClientActions.RECONNECT_CLIENT,
   clientId,
   socket,
+});
+
+export const updateClient = (client) => ({
+  type: ClientActions.UPDATE_CLIENT,
+  client,
 });
 
 

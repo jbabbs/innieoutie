@@ -56,6 +56,9 @@ export class ClientPaneComponent implements OnInit {
   }
 
   getConnectionStateColor(client: Client) {
+    if (client.error) {
+      return 'red';
+    }
     if (!client.socket) {
       return 'transparent';
     }

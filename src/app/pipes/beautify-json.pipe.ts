@@ -16,7 +16,7 @@ export class BeautifyJsonPipe implements PipeTransform {
       obj = JSON.parse(value);
       return beautify(obj, null, 2, 100);
     } catch (e) {
-      console.warn('Beautify failed:',e);
+      console.warn('Beautify failed:', e);
       return value;
     }
 

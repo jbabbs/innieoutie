@@ -71,13 +71,16 @@ export class ServersTabComponent implements OnInit, OnDestroy {
 
   onStateChange() {
     // This is necessary because sometimes this tab was being rendered even if state.currentProject was null
-    // This will prevent any exceptions from being thrown
     const state = this.store.getState();
     if (!state.currentProject) {
       this.servers = [];
     } else {
       this.servers = state.currentProject.servers;
     }
+  }
+
+  shouldDisableListen(server: Server): boolean {
+    return !!(server.proxyListenPort || server.proxyServerId);
   }
 
   getListenAddress(server: Server) {
