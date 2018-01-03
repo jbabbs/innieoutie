@@ -12,15 +12,15 @@ app-message-log {
 .dropdown-trigger {
   min-height: 0;
   height: inherit;
-  line-height: 0;
+  line-height: inherit;
 }
 
 .title {
   padding: $min-padding;
 }
 
-.table-body, .table-header {
-  padding: $min-padding;
+.table-header {
+  //padding: $min-padding;
 }
 
 .table-body {
@@ -36,6 +36,7 @@ app-message-log {
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid #cdcdcd;
+  padding: 0 $min-padding;
 }
 
 .time-col {

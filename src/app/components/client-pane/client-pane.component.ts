@@ -109,7 +109,7 @@ export class ClientPaneComponent implements OnInit {
   }
 
   shouldShowDisconnect(client: Client) {
-    if (!client.socket) {
+    if (!client.socket || !!client.proxySocketId) {
       return false;
     }
     const readyState = client.socket.readyState
@@ -117,6 +117,9 @@ export class ClientPaneComponent implements OnInit {
   }
 
   shouldShowConnect(client: Client) {
+    if (client.proxySocketId) {
+      return false;
+    }
     if (!client.socket) {
       return true;
     }
