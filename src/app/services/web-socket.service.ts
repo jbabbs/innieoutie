@@ -4,7 +4,8 @@ import { AppState } from '../redux/app.reducer';
 import { AppStore } from '../redux/app.store';
 import { Client } from '../redux/client/client.model';
 import {
-  createClient, receiveMessage, sendMessage, clientOpened, closeClient, removeClient, reconnectClient, updateClient
+  createClient, receiveMessage, sendMessage, clientOpened, removeClient, reconnectClient, updateClient,
+  logError
 } from '../redux/client/client.actions';
 
 import { ElectronService } from './electron.service';
@@ -35,7 +36,7 @@ export class WebSocketService {
       const { data, socketId } = args;
       const client = state.currentProject.clients.find(c => {
         return c.proxySocketId === socketId;
-      })
+      });
       if (!client) {
         throw new Error('Message received from proxy, but associated client not found');
       }
@@ -53,7 +54,7 @@ export class WebSocketService {
       delete server.proxyServerId;
       delete server.proxyListenPort;
       this.store.dispatch(updateServer(server));
-    })
+    });
 
     ipcRenderer.on(ProxyConnected, (event, args: ProxyConnectedArgs) => {
       const state = this.store.getState();
@@ -129,14 +130,14 @@ export class WebSocketService {
         const m: ProxySendMessageArgs = {
           data: msg.data,
           socketId: client.proxySocketId,
-        }
+        };
         this.electron.ipcRenderer.send(ProxySendMessage, m);
       }
       this.store.dispatch(receiveMessage(clientId, msg.data));
-    }
+    };
     socket.onclose = () => {
       this._closeProxySocket(clientId);
-    }
+    };
     socket.onerror = err => {
       this._closeProxySocket(clientId, err);
     }
@@ -145,7 +146,7 @@ export class WebSocketService {
   reconnectClient(client: Client) {
     const server = client.server;
     const id = client.id;
-    const url = server.url
+    const url = server.url;
     const socket = new WebSocket(url, server.protocolString || undefined);
     this._attachSocketListeners(socket, id);
     this.store.dispatch(reconnectClient(socket, id));
@@ -158,7 +159,7 @@ export class WebSocketService {
     const url = server.url;
     const socket = new WebSocket(url, server.protocolString || undefined);
     this._attachSocketListeners(socket, id);
-    const client: Client = { socket, name, server: server, id, messages: [] };
+    const client: Client = { socket, name, server: server, id, events: [] };
     if (proxySocketId) {
       client.proxySocketId = proxySocketId;
     }
@@ -166,7 +167,12 @@ export class WebSocketService {
   }
 
   sendMessage(message: any, client: Client) {
-    client.socket.send(message);
+    try {
+      client.socket.send(message);
+    } catch (e) {
+      this.store.dispatch(logError(client.id, e.message));
+      return;
+    }
     this.store.dispatch(sendMessage(client.id, message));
   }
 

@@ -15,14 +15,20 @@ export const client = (state: Client, action: any): Client => {
     case ClientActions.SEND_MESSAGE:
     {
       const { message } = <any>action;
-      const messages = [...state.messages, message];
-      return Object.assign({}, state, { messages });
+      const events = [...state.events, message];
+      return Object.assign({}, state, { events });
+    }
+    case ClientActions.LOG_ERROR:
+    {
+      const { error } = <any>action;
+      const events = [...state.events, error];
+      return Object.assign({}, state, { events });
     }
     case ClientActions.RECEIVE_MESSAGE:
     {
       const { message } = <any>action;
-      const messages = [...state.messages, message];
-      return Object.assign({}, state, { messages });
+      const events = [...state.events, message];
+      return Object.assign({}, state, { events });
     }
     case ClientActions.CLIENT_OPEN:
     {
@@ -31,8 +37,8 @@ export const client = (state: Client, action: any): Client => {
     }
     case ClientActions.UPDATE_CLIENT:
     {
-      const { cl } = <any>action;
-      return Object.assign({}, state, cl);
+      const { newClient } = <any>action;
+      return Object.assign({}, state, newClient);
     }
     default:
       return state;

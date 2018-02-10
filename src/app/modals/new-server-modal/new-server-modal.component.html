@@ -5,7 +5,7 @@
   </button>
 </div>
 <div class="modal-body">
-  <form [formGroup]="form">
+  <form [formGroup]="form" (keydown.enter)="onSaveClick()">
     <div class="form-group row">
       <label for="serverName" class="col-sm-2 col-form-label">Name</label>
       <div class="col-sm-8">
@@ -22,12 +22,6 @@
       </div>
       <div class="col-sm-2 col-form-label">
         <i>Required</i>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="echoServer" class="col-sm-2 col-form-label ">Echo Server</label>
-      <div class="col-sm-8">
-        <input formControlName="isEchoServer" type="checkbox" id="echoServer" (change)="onIsEchoServerChange()">
       </div>
     </div>
     <div class="form-group row">

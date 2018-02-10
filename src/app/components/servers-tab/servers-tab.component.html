@@ -10,8 +10,8 @@
       <div ngbDropdown class="server-options">
         <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
         <div ngbDropdownMenu>
-          <button class="dropdown-item" (click)="onNewClientClick(server)">New Client</button>
-          <button class="dropdown-item" (click)="onListenClick(server)" [disabled]="shouldDisableListen(server)">Listen For Clients</button>
+          <button class="dropdown-item" (click)="onNewClientClick(server)">Spawn New Client</button>
+          <button class="dropdown-item" (click)="onListenClick(server)" [disabled]="shouldDisableListen(server)">Listen For Clients (Proxy)</button>
           <button class="dropdown-item" (click)="onEditServerClick(server)">Edit</button>
           <button class="dropdown-item" (click)="onDeleteServerClick(server)">Delete</button>
         </div>
@@ -21,5 +21,12 @@
       <i class="fa fa-assistive-listening-systems"></i><i>&nbsp;Listening on {{getListenAddress(server)}}</i>
     </div>
   </div>
+  <ng-container *ngIf="!servers || !servers.length">
+    <div style="margin: 5em 1em 0 1em; text-align: center;">
+      <i>Click the&nbsp;</i>
+      <a href (click)="onNewServerClick()">New</a>
+      <i>button to create define a server to connect to</i>
+    </div>
+  </ng-container>
 </div>
 

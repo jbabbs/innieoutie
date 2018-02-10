@@ -10,7 +10,7 @@
 </div>
 <div class="table-body-container">
   <div class="table-body">
-    <div class="table-row" *ngFor="let message of client.messages">
+    <div class="table-row" *ngFor="let message of client.events">
       <div class="direction-col table-cell">{{messageDirection(message)}}</div>
       <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
       <div class="length-col table-cell">{{message.len | bytes}}</div>

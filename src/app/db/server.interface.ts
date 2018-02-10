@@ -4,5 +4,4 @@ export interface IServer {
   name: string;
   url: string;
   projectId: number;
-  isEchoServer: boolean;
 }

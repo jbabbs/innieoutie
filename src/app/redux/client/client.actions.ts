@@ -1,6 +1,6 @@
 import { Action, ActionCreator } from 'redux';
 import { Client } from './client.model';
-import { ClientMessage, ClientMessageDirection } from './client-message.model';
+import { ClientError, ClientMessage, ClientMessageDirection } from './client-message.model';
 
 export enum ClientActions {
   CREATE_CLIENT = 'CREATE_CLIENT',
@@ -9,6 +9,7 @@ export enum ClientActions {
   CLIENT_OPEN = 'CLIENT_OPENED',
   RECONNECT_CLIENT = 'RECONNECT_CLIENT',
   SEND_MESSAGE = 'SEND_MESSAGE',
+  LOG_ERROR = 'LOG_ERROR',
   RECEIVE_MESSAGE = 'RECEIVE_MESSAGE',
   UPDATE_CLIENT = 'UPDATE_CLIENT',
 }
@@ -28,12 +29,10 @@ export interface SendMessageAction extends Action {
 }
 
 export const sendMessage: ActionCreator<SendMessageAction> = (clientId: number, data: any) => {
-  const message: ClientMessage = {
-    data,
-    time: +new Date(),
-    direction: ClientMessageDirection.SENT,
-    len: data.length || data.size,
-  };
+  const message = new ClientMessage();
+  message.data = data;
+  message.direction = ClientMessageDirection.SENT;
+  message.len = data.length || data.size;
 
   return {
     type: ClientActions.SEND_MESSAGE,
@@ -48,12 +47,10 @@ export interface ReceiveMessageAction extends Action {
 }
 
 export const receiveMessage: ActionCreator<ReceiveMessageAction> = (clientId: number, data: any) => {
-  const message: ClientMessage = {
-    data,
-    time: +new Date(),
-    direction: ClientMessageDirection.RECEIVED,
-    len: data.length || data.size,
-  };
+  const message = new ClientMessage();
+  message.data = data;
+  message.direction = ClientMessageDirection.RECEIVED;
+  message.len = data.length || data.size;
 
   return {
     type: ClientActions.RECEIVE_MESSAGE,
@@ -66,12 +63,12 @@ export const clientOpened = (clientId: number) => ({
   type: ClientActions.CLIENT_OPEN,
   clientId: clientId,
   time: +new Date(),
-})
+});
 
 export const closeClient = (clientId: number) => ({
   type: ClientActions.CLIENT_CLOSED,
   clientId: clientId,
-})
+});
 
 export const removeClient = (clientId: number) => ({
   type: ClientActions.REMOVE_CLIENT,
@@ -88,6 +85,17 @@ export const updateClient = (client) => ({
   type: ClientActions.UPDATE_CLIENT,
   client,
 });
+
+export const logError = (clientId: number, message) => {
+  const errorEvent = new ClientError();
+  errorEvent.message = message;
+
+  return {
+    type: ClientActions.LOG_ERROR,
+    clientId,
+    errorEvent,
+  };
+};
 
 
 

@@ -1,4 +1,4 @@
-import { ClientMessage } from './client-message.model';
+import { ClientEvent } from './client-message.model';
 import { Server } from '../server/server.model';
 
 export interface Client {
@@ -6,7 +6,7 @@ export interface Client {
   name: string;
   socket: WebSocket,
   server: Server,
-  messages: Array<ClientMessage>,
+  events: Array<ClientEvent>,
   connectedAtTime?: number; // unix timestamp
   disconnectedAtTime?: number; // unit timestamp
   proxySocketId?: number;
