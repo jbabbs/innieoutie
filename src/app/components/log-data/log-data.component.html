@@ -1,6 +1,6 @@
 <ng-container *ngIf="type() === 'JSON'">
-  <!-- We must be careful to remove all white space here -->
-  <code [style.white-space]="message.beautify ? 'pre-wrap' : 'nowrap'"><i (click)="message.beautify = !message.beautify" class="fa" [ngClass]="message.beautify ? 'fa-caret-down' : 'fa-caret-right'"></i>&nbsp;<br *ngIf="message.beautify">{{ message.beautify ? (message?.data | beautifyJson) : message?.data}}</code>
+  <!-- be sure remove all white space here, as we are using 'white-space: pre-wrap' -->
+  <div (dblclick)="onCodeDoubleClick(message)"><code [style.white-space]="message.beautify ? 'pre-wrap' : 'nowrap'"><i (click)="message.beautify = !message.beautify" *ngIf="shouldShowCollapseIcon(message)" class="fa" [ngClass]="message.beautify ? 'fa-caret-down' : 'fa-caret-right'"></i><span *ngIf="shouldShowCollapseIcon(message)">&nbsp;</span>{{ message.beautify ? (message?.data | beautifyJson) : message?.data}}</code></div>
 </ng-container>
 <ng-container *ngIf="type() === 'String'">
   {{message.data}}

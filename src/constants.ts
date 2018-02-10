@@ -1,3 +1,3 @@
-export const EchoServerPort = 8080;
-export const ProxyServerPort = 8081;
+export const EchoServerPort = 9000;
+export const ProxyServerPort = 9001;
 export const EchoServerUrl = `ws://localhost:${EchoServerPort}`;
