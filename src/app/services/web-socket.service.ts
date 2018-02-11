@@ -139,6 +139,8 @@ export class WebSocketService {
       this._closeProxySocket(clientId);
     };
     socket.onerror = err => {
+      console.log('got an error', err);
+      this.store.dispatch(logError(clientId, err));
       this._closeProxySocket(clientId, err);
     }
   }
@@ -167,18 +169,15 @@ export class WebSocketService {
   }
 
   sendMessage(message: any, client: Client) {
-    try {
-      client.socket.send(message);
-    } catch (e) {
-      this.store.dispatch(logError(client.id, e.message));
-      return;
-    }
+    client.socket.send(message);
     this.store.dispatch(sendMessage(client.id, message));
   }
 
   disconnectClient(client: Client) {
     if (client.socket) {
       client.socket.close();
+    } else {
+      console.error('tried to close a missing socket');
     }
   }
 
