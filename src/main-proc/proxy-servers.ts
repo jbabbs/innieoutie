@@ -2,9 +2,8 @@ import { ipcMain } from 'electron';
 import * as WebSocket from 'ws';
 import {
   ProxyConnected, ProxyListen, ProxyListenReturn, ProxyMessageReceived, ProxyMessageReceivedArgs, ProxySendMessage,
-  ProxySendMessageArgs, ProxyBindFailed, ProxyBindFailedArgs, ProxySocketErrorArgs, ProxySocketError
+  ProxySendMessageArgs, ProxyBindFailed, ProxyBindFailedArgs, ProxySocketErrorArgs, ProxySocketError, ProxyListenArgs
 } from '../ipc';
-import { ProxyServerPort } from '../constants';
 import { isString } from 'util';
 
 // generate unique ids for servers and sockets so we can communicate between the main thread and render
@@ -14,8 +13,8 @@ const sockets: Map<number, WebSocket> = new Map();
 let nextServerId = 1;
 let nextSocketId = 1;
 
-ipcMain.on(ProxyListen, (event): void => {
-  const port = ProxyServerPort + nextServerId - 1;
+ipcMain.on(ProxyListen, (event, _args: ProxyListenArgs): void => {
+  const port = _args.port;
   const server = new WebSocket.Server({ port });
   const serverId = nextServerId;
   servers.set(serverId, server);
@@ -56,7 +55,7 @@ ipcMain.on(ProxyListen, (event): void => {
     });
   });
 
-  const ret: ProxyListenReturn = { port, serverId };
+  const ret: ProxyListenReturn = { serverId };
   event.returnValue = ret;
 });
 

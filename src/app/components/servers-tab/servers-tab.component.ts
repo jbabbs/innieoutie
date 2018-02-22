@@ -7,6 +7,8 @@ import { AppStore } from '../../redux/app.store';
 import { DbService } from '../../services/db.service';
 import { WebSocketService } from '../../services/web-socket.service';
 import { Server } from '../../redux/server/server.model';
+import { NewProjectModalComponent } from '../../modals/new-project-modal/new-project-modal.component';
+import { SelectPortModalComponent } from '../../modals/select-port-modal/select-port-modal.component';
 
 @Component({
   selector: 'app-servers-tab',
@@ -62,7 +64,15 @@ export class ServersTabComponent implements OnInit, OnDestroy {
   }
 
   onListenClick(server: Server) {
-    this.wsService.proxyListen(server);
+    const modalRef = this.modalService.open(SelectPortModalComponent);
+    modalRef.result.then(portNumber => {
+      server.proxyListenPort = portNumber
+      this.wsService.proxyListen(server);
+      //this.dbService.createProjectAndSetCurrent({ name: projectName, servers: [], messages: []});
+    }).catch(err => {
+      // modal dismissed
+    });
+    //this.wsService.proxyListen(server);
   }
 
   onDeleteServerClick(server) {
@@ -70,9 +80,9 @@ export class ServersTabComponent implements OnInit, OnDestroy {
   }
 
   onStateChange() {
-    // This is necessary because sometimes this tab was being rendered even if state.currentProject was null
     const state = this.store.getState();
     if (!state.currentProject) {
+      // This check is necessary because sometimes this tab was being rendered even when the project was deleted
       this.servers = [];
     } else {
       this.servers = state.currentProject.servers;

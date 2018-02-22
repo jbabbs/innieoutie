@@ -12,20 +12,21 @@
         <div ngbDropdownMenu>
           <button class="dropdown-item" (click)="onNewClientClick(server)">Spawn New Client</button>
           <button class="dropdown-item" (click)="onListenClick(server)" [disabled]="shouldDisableListen(server)">Listen For Clients (Proxy)</button>
-          <button class="dropdown-item" (click)="onEditServerClick(server)">Edit</button>
+          <button class="dropdown-item" (click)="onEditServerClick(server)">Edit Settings</button>
           <button class="dropdown-item" (click)="onDeleteServerClick(server)">Delete</button>
         </div>
       </div>
     </div>
     <div class="server-item-proxy" *ngIf="server.proxyServerId">
-      <i class="fa fa-assistive-listening-systems"></i><i>&nbsp;Listening on {{getListenAddress(server)}}</i>
+      <i class="fa fa-circle-o-notch fa-spin"></i><i>&nbsp;Listening on {{getListenAddress(server)}}</i>
     </div>
   </div>
   <ng-container *ngIf="!servers || !servers.length">
     <div style="margin: 5em 1em 0 1em; text-align: center;">
-      <i>Click&nbsp;</i>
-      <a href (click)="onNewServerClick()">New</a>
-      <i>to create server connection settings. Double click servers to connect.</i>
+      <i>Click</i><a href (click)="onNewServerClick()">&nbsp;New&nbsp;</a><i>to create server connection settings.</i>
+      <br>
+      <br>
+      <i>TIP: Once you have defined a server connection, you can double click it to connect to the server.</i>
     </div>
   </ng-container>
 </div>

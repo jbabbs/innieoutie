@@ -28,6 +28,7 @@ import { BytesPipe } from './pipes/bytes.pipe';
 import { BeautifyJsonPipe } from './pipes/beautify-json.pipe';
 import { LogDataComponent } from './components/log-data/log-data.component';
 import { ErrorModalService } from './services/error-modal.service';
+import { SelectPortModalComponent } from './modals/select-port-modal/select-port-modal.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ErrorModalService } from './services/error-modal.service';
     BytesPipe,
     BeautifyJsonPipe,
     LogDataComponent,
+    SelectPortModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +71,7 @@ import { ErrorModalService } from './services/error-modal.service';
     NewServerModalComponent,
     NewMessageModalComponent,
     ErrorModalComponent,
+    SelectPortModalComponent,
   ]
 })
 export class AppModule { }

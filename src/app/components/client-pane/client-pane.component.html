@@ -17,9 +17,10 @@
               <button class="btn btn-primary" (click)="onConnectClick(client)" *ngIf="shouldShowConnect(client)">Connect</button>
             </div>
           </div>
-          <div class="alert alert-warning" *ngIf="client.error">
-            {{client.error | json}}
-          </div>
+          <!-- TODO: This doesn't always display informative socket state errors, needs fixin'
+          <!--<div class="alert alert-warning" *ngIf="client.error">-->
+            <!--{{client.error | json}}-->
+          <!--</div>-->
           <div class="logs">
             <app-message-log class="message-log" [client]="client"></app-message-log>
           </div>

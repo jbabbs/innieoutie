@@ -4,7 +4,7 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div class="modal-body">
+<div class="modal-body" (keydown.enter)="onSaveClick()">
   <div class="form-group row">
     <label for="messageName" class="col-sm-2 col-form-label"><span class="pull-right">Name</span></label>
     <div class="col-sm-6">

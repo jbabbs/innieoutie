@@ -9,35 +9,38 @@ export enum MessageType {
 }
 
 export enum ClientMessageDirection {
-  SENT,
-  RECEIVED,
+  SENT = 'SENT',
+  RECEIVED = 'RECEIVED',
 }
 
 // A message or error which shows up in the client log
-export interface ClientEvent {
-  time: number;
-  type();
-}
-
-export class ClientMessage implements ClientEvent {
-  direction: ClientMessageDirection;
-  data: string | Blob | File;
-  len: number;
+export abstract class ClientEvent {
   time: number;
 
   constructor() {
     this.time = +new Date();
   }
 
+  abstract type();
+}
+
+export class ClientMessage extends ClientEvent {
+  direction: ClientMessageDirection;
+  data: string | Blob | File;
+  len: number;
+
+  constructor() {
+    super();
+  }
+
   type() { return 'message'; };
 }
 
-export class ClientError implements ClientEvent {
+export class ClientError extends ClientEvent {
   message: string;
-  time: number;
 
   constructor() {
-    this.time = +new Date();
+    super();
   }
 
   type() { return 'error'; }

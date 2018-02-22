@@ -17,10 +17,11 @@
       </div>
     </div>
   </div>
-  <div style="margin: 5em 1em 0 1em; text-align: center">
-    <i>Click&nbsp;</i>
-    <a href (click)="onNewClick()">New</a>
-    <i>&nbsp;to create stored messages. Double click messages to send.</i>
+  <div style="margin: 5em 1em 0 1em; text-align: center" *ngIf="!messages || !messages.length">
+    <i>Click&nbsp;</i><a href (click)="onNewClick()">New</a><i>&nbsp;to create stored messages.</i>
+    <br>
+    <br>
+    <i>TIP: Double click a message to send to the client in the selected tab.</i>
   </div>
 </div>
 

@@ -139,8 +139,7 @@ export class WebSocketService {
       this._closeProxySocket(clientId);
     };
     socket.onerror = err => {
-      console.log('got an error', err);
-      this.store.dispatch(logError(clientId, err));
+      this.store.dispatch(logError(clientId, err.toString()));
       this._closeProxySocket(clientId, err);
     }
   }
@@ -157,7 +156,7 @@ export class WebSocketService {
   createClientAndConnect(server: Server, proxySocketId?: number) {
     const state = this.store.getState();
     const id = state.nextClientNumber;
-    const name = `${server.name} ${id}`;
+    const name = `${server.name} (${id})`;
     const url = server.url;
     const socket = new WebSocket(url, server.protocolString || undefined);
     this._attachSocketListeners(socket, id);
@@ -187,9 +186,8 @@ export class WebSocketService {
   }
 
   proxyListen(server: Server) {
-    const res: ProxyListenReturn = this.electron.ipcRenderer.sendSync(ProxyListen);
-    const { port, serverId } = res;
-    server.proxyListenPort = port;
+    const res: ProxyListenReturn = this.electron.ipcRenderer.sendSync(ProxyListen, { port: server.proxyListenPort});
+    const { serverId } = res;
     server.proxyServerId = serverId;
     this.store.dispatch(updateServer(server));
   }

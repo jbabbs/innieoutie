@@ -20,8 +20,8 @@ export const client = (state: Client, action: any): Client => {
     }
     case ClientActions.LOG_ERROR:
     {
-      const { error } = <any>action;
-      const events = [...state.events, error];
+      const { errorEvent } = <any>action;
+      const events = [...state.events, errorEvent];
       return Object.assign({}, state, { events });
     }
     case ClientActions.RECEIVE_MESSAGE:

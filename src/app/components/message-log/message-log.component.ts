@@ -3,7 +3,7 @@ import { Client } from '../../redux/client/client.model';
 import { AppStore } from '../../redux/app.store';
 import { AppState } from '../../redux/app.reducer';
 import { Store } from 'redux';
-import { ClientMessage, ClientMessageDirection } from '../../redux/client/client-message.model';
+import { ClientEvent, ClientMessage, ClientMessageDirection } from '../../redux/client/client-message.model';
 import { formatTime } from '../../utils/time';
 import { WebSocketService } from '../../services/web-socket.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -40,6 +40,10 @@ export class MessageLogComponent implements OnInit, OnDestroy {
   }
 
   formatTimeSinceStart(message: ClientMessage) {
+    if (!this.client.connectedAtTime) {
+      // client may not connect but we can still receive error messages
+      return '';
+    }
     const start = this.client.connectedAtTime;
     const diff = message.time - start;
     return formatTime(diff);
@@ -73,5 +77,17 @@ export class MessageLogComponent implements OnInit, OnDestroy {
 
   onResendMessageClick(message: ClientMessage) {
     this.wsService.sendMessage(message.data, this.client);
+  }
+
+  bgColor(message) {
+    if (message.type() === 'error') {
+      return 'rgba(220, 53, 69, 0.32)';
+    } else {
+      if (message.direction === ClientMessageDirection.RECEIVED) {
+        return 'rgba(255, 193, 7, 0.26)';
+      } else if (message.direction === ClientMessageDirection.SENT) {
+        return 'rgba(40, 167, 69, 0.32)';
+      }
+    }
   }
 }

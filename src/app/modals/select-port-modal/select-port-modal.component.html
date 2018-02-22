@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title">Listening Port</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Dismiss')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <label>Name</label>
+  <input appFocus type="number" [(ngModel)]="portNumber" (keyup.enter)="activeModal.close(portNumber)"/>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-primary" (click)="activeModal.close(portNumber)">Save</button>
+</div>

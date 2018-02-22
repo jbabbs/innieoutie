@@ -6,13 +6,16 @@ export const ProxyCloseSocket = 'ProxyCloseSocket';
 export const ProxyBindFailed = 'ProxyBindFailed';
 export const ProxySocketError = 'ProxySocketError';
 
+export interface ProxyListenArgs {
+  port: number;
+}
+
 export interface ProxyMessageReceivedArgs {
   data: string | Blob;
   socketId: number;
 }
 
 export interface ProxyListenReturn {
-  port: number;
   serverId: number;
 }
 

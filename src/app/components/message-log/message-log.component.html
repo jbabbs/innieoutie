@@ -10,23 +10,34 @@
 </div>
 <div class="table-body-container">
   <div class="table-body">
-    <div class="table-row" *ngFor="let message of client.events">
-      <div class="direction-col table-cell">{{messageDirection(message)}}</div>
-      <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
-      <div class="length-col table-cell">{{message.len | bytes}}</div>
-      <div class="data-col table-cell">
-        <app-log-data [message]="message"></app-log-data>
-      </div>
-      <div class="actions-col table-cell">
-        <div ngbDropdown class="server-options" placement="bottom-right">
-          <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
-          <div ngbDropdownMenu>
-            <button class="dropdown-item" (click)="onSaveMessageClick(message)">Save</button>
-            <button class="dropdown-item" (click)="onResendMessageClick(message)">Resend</button>
+    <div *ngFor="let message of client.events">
+      <div class="table-row" *ngIf="message && message.type() === 'message'" [style.background-color]="bgColor(message)">
+        <div class="direction-col table-cell">{{messageDirection(message)}}</div>
+        <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
+        <div class="length-col table-cell">{{message.len | bytes}}</div>
+        <div class="data-col table-cell">
+          <app-log-data [message]="message"></app-log-data>
+        </div>
+        <div class="actions-col table-cell">
+          <div ngbDropdown class="server-options" placement="bottom-right">
+            <div ngbDropdownToggle class="dropdown-trigger"><i class="fa fa-ellipsis-v"></i></div>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item" (click)="onSaveMessageClick(message)">Save</button>
+              <button class="dropdown-item" (click)="onResendMessageClick(message)">Resend</button>
+            </div>
           </div>
         </div>
       </div>
+      <div class="table-row" *ngIf="message && message.type() === 'error'" [style.background-color]="bgColor(message)">
+        <div class="direction-col table-cell">&nbsp;</div>
+        <div class="time-col table-cell">{{formatTimeSinceStart(message)}}</div>
+        <div class="length-col table-cell">&nbsp;</div>
+        <div class="data-col table-cell">
+          {{message.message}}
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
