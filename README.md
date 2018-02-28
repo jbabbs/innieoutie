@@ -1,54 +1,36 @@
 # Introduction
 
-Bootstrap and package your project with Angular 4(+) and Electron (Typescript + SASS + Hot Reload) for creating Desktop applications.
+InnieOutie is a websocket testing tool. InnieOutie can act as a server or client. You can save individual message to send later.
 
-Currently runs with:
+InnieOutie can also sit between your server and client, allowing you to monitor message between your server and client.
+You can inject your own messages into the stream.
 
-- Angular v4.3.5
-- Angular-CLI v1.4.1
-- Electron v1.7.6
-- Electron Packager v9.0.1
+## Running in development mode
 
-With this sample, you can :
-
-- Run your app in a local development environment with Electron & Hot reload
-- Run your app in a production environment
-- Package your app into an executable file for Linux, Windows & Mac
-
-## Getting Started
-
-Clone this repository locally :
+Clone this repository:
 
 ``` bash
-git clone https://github.com/maximegris/angular-electron.git
+git clone https://github.com/jbabbs/innieoutie.git
 ```
 
-Install dependencies with npm :
+Install dependencies with npm:
 
 ``` bash
 npm install
 ```
 
-There is an issue with `yarn` and `node_modules` that are only used in electron on the backend when the application is built by the packager. Please use `npm` as dependencies manager.
-
-If you want to generate Angular components with Angular-cli , you **MUST** install `@angular/cli` in npm global context.  
-Please follow [Angular-cli documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
+To run in development mode with hot reload:
 
 ``` bash
-npm install -g @angular/cli
+npm start  
 ```
-
-## To build for development
-
-- **in a terminal window** -> npm start  
-
-Voila! You can use your Angular + Electron app in a local development environment with hot reload !
 
 The application code is managed by `main.ts`. In this sample, the app runs with a simple Electron window and "Developer Tools" is open.  
 The Angular component contains an example of Electron and NodeJS native lib import. See [Use NodeJS Native libraries](#use-nodejs-native-libraries) charpter if you want to import other native libraries in your project.  
-You can desactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
+You can deactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
 ## To build for production
+
 Create the installer distributable, located in the `release` folder:
 ``` bash
 npm run package
@@ -63,8 +45,8 @@ Your built files are in the /dist folder.
 ## Included Commands
 
 |Command|Description|
-|--|--|
-|`npm run start:web`| Execute the app in the brower |
+|---|---|
+|`npm run start:web`| Execute the app in the browser |
 |`npm run electron:linux`| Builds your application and creates an app consumable on linux system |
 |`npm run electron:windows`| On a Windows OS, builds your application and creates an app consumable in windows 32/64 bit systems |
 |`npm run electron:mac`|  On a MAC OS, builds your application and generates a `.app` file of your application that can be run on Ma |
